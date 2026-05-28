@@ -1,6 +1,6 @@
 # Architecture
 
-This document explains the core coordination model used by the orchestration team: the Change Dependency Graph, execution tiers, mandatory gates, and the reconciliation matrix.
+This document explains the core coordination model used by the orchestration team: the Change Dependency Graph, execution tiers, mandatory gates, and the reconciliation matrix. The CDG is the part of this system that has been **validated in a controlled experiment** — dependency-ordered state-forwarding was the difference between 0/3 and 3/3 on integration correctness (see [../examples/eval/README.md](../examples/eval/README.md)).
 
 ---
 

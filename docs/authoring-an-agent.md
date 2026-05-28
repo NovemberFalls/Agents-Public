@@ -1,20 +1,20 @@
 # Authoring an Agent
 
-A good agent persona is not a list of instructions. It is a character with a point of view, hard-won expertise, and a defined scope — one that a language model can inhabit consistently because the identity itself generates the right behaviors, not just because the rules say so.
+A good agent persona is a character with a point of view, hard-won expertise, and a defined scope — one that a language model can inhabit consistently. That **consistency and legibility** is the real value: it lets an orchestrator and a human reason about what each agent will and won't do.
 
-This document explains how to author a persona that works: one that is predictable, trustworthy, and genuinely useful in a multi-agent system.
+What a persona does *not* do, on the evidence, is make the agent measurably **better** at its task. A placebo-controlled ablation ([../examples/eval/persona-backstory.md](../examples/eval/persona-backstory.md)) found the backstory changes no measurable output — so author personas for legibility and predictability, not for a performance boost the data doesn't support.
+
+This document explains how to author a persona that works: one that is predictable, trustworthy, and easy to reason about in a multi-agent system.
 
 ---
 
-## Why personality matters
+## What personality is for: consistency, not performance
 
-Language models are good at adopting a consistent perspective when that perspective is concrete, specific, and grounded in real professional experience. "You are a security engineer" is thin. "You are an engineer who has spent years watching developers introduce SQL injection through string concatenation because they didn't know parameterized queries existed, and you have never fully recovered from that" is not.
+Language models adopt a more *consistent* perspective when it is concrete, specific, and grounded in real professional experience. "You are a security engineer" is thin. "You are an engineer who spent years watching developers introduce SQL injection through string concatenation, and never fully recovered from that" is not — it gives the model a stable point of view to inhabit.
 
-The second version gives the model something to inhabit. The agent now has a reason to be meticulous — not because the instructions say "be thorough" but because the character would be.
+What that buys you is **legibility and predictability**, not a performance boost. A reader who knows the Security Engineer was burned by JWT edge cases can predict it will probe token-expiry logic even when the brief doesn't mention it — so the orchestrator can reason about what each agent will and won't focus on. That predictability is the real value of a persona.
 
-Personality also makes agent behavior predictable. A user who knows the Security Engineer has been burned by JWT edge cases knows to expect them to probe token expiry logic even when the brief doesn't mention it. That predictability is useful. It means the orchestrator can reason about what each agent will and won't catch.
-
-> **Measured caveat — read this before you believe the above.** The claim that a rich identity beats a thin "you are a security engineer" is exactly what [`examples/eval/persona-backstory.md`](../examples/eval/persona-backstory.md) tested — using *this very example*. On a 7-bug detection task, the full backstory, a checklist-only version, and a naked "you are a security reviewer" all scored identically (7/7). The honest reading: on recognizable work the backstory is **decoration** — the capability is already in the model. It might help on subtler tasks where a bare prompt fails, but that has not been demonstrated. Author personas because they make a roster legible and consistent to reason about — not on the unproven belief that the backstory itself measurably improves output.
+> **Measured caveat.** It is tempting to also claim the rich identity makes the agent *better* at its task. That claim was tested — using *this very example* — in [`examples/eval/persona-backstory.md`](../examples/eval/persona-backstory.md), and it did not hold: on a 7-bug detection task the full backstory, a checklist-only version, and a naked "you are a security reviewer" all scored identically, and a placebo *performance-engineer* backstory matched the security one bug-for-bug. On recognizable work the backstory is **flavor** — the capability is already in the model. Author personas for consistency and legibility, not for an output boost the data doesn't support.
 
 ---
 

@@ -6,9 +6,9 @@
 
 ## What is this?
 
-This repository is a library of Markdown persona files. Each file defines a specialist agent by **role** — a sharp domain scope, explicit behavioral rules, a defined model tier, and a structured report format. There is no application code here: only prompts, patterns, and process.
+This repository is a **coordination model for multi-agent work**, delivered as a library of role-based agent personas. Two ideas carry the weight: a **Change Dependency Graph** that sequences parallel work so no agent ever builds on another's stale output, and **context isolation** — each specialist explores in its own window and returns only a short report, so the coordinator stays lean enough to run a large task without compaction. There is no application code here — only prompts, patterns, and process.
 
-Every persona file is a valid **Claude Code subagent definition**. Drop one into a `~/.claude/agents/` directory and it becomes an agent you can invoke; load its body as a system prompt and it becomes an Agent SDK agent. The agents coordinate through an orchestration loop designed to prevent the most common multi-agent failure mode — specialists working from stale context about what other specialists changed — while keeping the token cost of that coordination under control.
+Every persona file is a valid **Claude Code subagent definition**: drop one into `~/.claude/agents/` and it becomes an agent you can invoke, or load its body as an Agent SDK system prompt. Unusually for a repo like this, **it tests its own claims** — in [examples/eval/](examples/eval/), the coordination discipline is validated in a controlled experiment, while the agent *backstories* are shown, with a placebo control, to make no measurable difference to output. So read it accordingly: **trust the loop, enjoy the personas.**
 
 Four teams are included, all built on the same pattern: an implementation fleet, a strategic advisory board, a creative-writing review board, and a tabletop-RPG pressure-test team.
 
@@ -29,6 +29,15 @@ The naive fix — serialize everything — throws away the efficiency of paralle
 The headline benefit of role-scoped subagents is **context isolation**. When the orchestrator delegates to a specialist, that specialist reads files, greps, and explores in its *own* context window — and returns only a short report. The expensive, token-heavy work stays quarantined; the orchestrator's window holds the plan and the summaries, not the raw exploration, so it can coordinate a large task without bloating into compaction.
 
 Add right-sized models per role (pay Opus rates only where they buy something), skills that load a workflow on demand instead of carrying it in every prompt, and a shared project-brain that is read once instead of re-derived each run. The robust win is **peak context**: any single window stays small, so a large task never bloats into compaction. Total token *spend* is a separate, workload-dependent question — coordination and review gates cost tokens, so for a one-line change the repo prescribes a lightweight single-specialist path instead. The full rationale, including the honest counter-argument, is in **[docs/token-efficiency.md](docs/token-efficiency.md)**, with a worked token ledger on a sample task in **[examples/orchestrated-run/](examples/orchestrated-run/)**.
+
+### What's load-bearing, and what's flavor — measured, not asserted
+
+This repo refuses to take its own design on faith. Both central claims were put to controlled experiments ([examples/eval/](examples/eval/)):
+
+- **The Change Dependency Graph earns its keep.** A 3-arm test (monolith vs. blind-parallel vs. dependency-ordered) on a real codebase: dependency-ordered state-forwarding was the entire difference between **0/3 and 3/3** on integration correctness. The coordination discipline is the load-bearing idea.
+- **The persona backstories do not.** A placebo-controlled ablation found a security reviewer's elaborate red-team backstory caught **no more bugs** than a bare "you are a security reviewer" — and a *performance-engineer* backstory did just as well on security bugs. The rich identities make the roster legible and pleasant to reason about; they are **flavor, not function**.
+
+The honest synthesis: **keep the dependency graph and the context isolation; treat the character sheets as flavor.** Use one agent unless a task genuinely outgrows a single context window — that's where this machinery starts to pay, and the repo prescribes a lightweight path below that line.
 
 ---
 
