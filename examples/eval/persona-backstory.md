@@ -52,16 +52,32 @@ This is direct evidence for cutting the backstories: the repo's own claim that "
 
 ---
 
-## The honest caveat (this is why the eval isn't finished)
+Round 1 hit a **ceiling** (every arm 7/7) — which alone couldn't separate "backstory is useless" from "task too easy." So a second round was run to give the backstory a fair chance.
 
-All three arms hit **7/7 — a ceiling.** That means this test **cannot distinguish "the backstory is useless" from "the task was too easy to need any help."** When every arm maxes out, you learn that the floor (naked role) is already high — not that the persona could never add value on a harder problem.
+---
 
-The discriminating test — the one that would actually be fair to the backstory — uses bugs **subtle enough that the naked baseline misses some**, then checks whether the persona (or even just the checklist) *recovers* the missed ones. Candidates: a second-order injection through a stored value, an auth check that's present but order-dependent and bypassable, a TOCTOU race, a logic flaw in a multi-step flow. Until such a test shows the backstory recovering bugs the naked role misses, **the burden of proof sits with the backstory** — and this round gives it none.
+## Round 2 — the discriminating test (harder fixture + a placebo control)
 
-Other limits: N = 3 (a pilot); one fixture; one persona (security — chosen precisely because it's the *strongest* case for backstory); model held at Sonnet (a different tier could move the floor, but the relative comparison is what matters).
+A second fixture of **8 deliberately subtle bugs** — the kind a casual scan waves through: a JWT `decode` with **no `algorithms=` pin**; an SSRF where the host allowlist is correct but **`follow_redirects=True` defeats it**; a mass-assignment privesc (**`"role"` mistakenly in the editable allowlist**); an IDOR that filters by a **client-supplied `org_id`** (so it *looks* like tenant isolation); a **TOCTOU** double-redeem; a **timing-unsafe** HMAC compare; an **open redirect**; and a per-user response **cached under a global key**.
+
+And a fourth arm to kill the obvious confound:
+- **N — naked**, **R — checklist only**, **P — checklist + security backstory**, **C — placebo: checklist + an equal-length *performance-engineer* backstory.** C isolates whether any P effect is the security *content* or just *more narrative text*. Model held constant (Sonnet), N = 4 per arm.
+
+| Arm | Mean caught / 8 |
+|-----|:----:|
+| N — naked | **8.0** |
+| R — checklist only | **8.0** |
+| P — security backstory | **7.75** |
+| C — placebo (performance backstory) | **8.0** |
+
+**Two things settle it.** First, **the placebo did at least as well as the security persona** — a performance-engineer identity caught the same *security* bugs (8.0 vs the security persona's 7.75), so the security framing is demonstrably not what's doing the work, and it isn't even a "more text" effect. Second, the security persona was the *only* arm that ever missed a bug, and **every arm emitted the same false positive** (a hallucinated "`hmac.new` doesn't exist"), so the backstory improved neither recall nor precision.
+
+The fixture still saturated the naked baseline, so the strict ceiling caveat stands for the *absolute* claim. But that is now **two fixtures of increasing subtlety that both saturate.** At some point, repeatedly failing to construct a security-review task where the bare prompt isn't already at the ceiling **is itself the finding**: for this model, the backstory has no room to add value because the floor is the ceiling.
+
+Limits: scoring against a pre-registered key by a single grader; N small; one model tier; the security domain (chosen precisely because it is the *strongest* case for an adversarial backstory).
 
 ---
 
 ## Bottom line
 
-Pair this with [the CDG eval](README.md): the two together say the same thing from opposite directions. The **coordination discipline (the CDG) earned its keep in a controlled test; the persona backstory did not.** Keep the dependency-ordering. Treat the character sheets as flavor, not function — and if you want to defend them, the harder eval above is how you'd have to do it.
+Across **two fixtures** (one easy, one subtle) and a four-arm matrix with a placebo control, the backstory showed **no measurable benefit** — a *performance* backstory did at least as well as the *security* one. Pair this with [the CDG eval](README.md): the coordination discipline earned its keep in a controlled test; the persona backstory did not, across every test built to give it a chance. **Keep the dependency-ordering. The character sheets are flavor, not function.**
