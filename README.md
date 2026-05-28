@@ -1,4 +1,4 @@
-# agent-fleet
+# team-public
 
 > A collection of AI-agent persona definitions and orchestration patterns for use with Claude Code and the Claude Agent SDK.
 
@@ -134,7 +134,7 @@ Each agent's persona file specifies its preferred model (Sonnet or Opus) and the
 ## Repo Layout
 
 ```
-agent-fleet/
+team-public/
 ├── README.md                        # this file
 ├── LICENSE                          # MIT
 ├── CONTRIBUTING.md                  # how to add agents and teams

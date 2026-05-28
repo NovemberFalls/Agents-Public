@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing to agent-fleet. This repository is a library of AI-agent persona files and orchestration patterns. Contributions fall into three categories: new agents, new teams, and improvements to existing personas or documentation.
+Thank you for contributing to team-public. This repository is a library of AI-agent persona files and orchestration patterns. Contributions fall into three categories: new agents, new teams, and improvements to existing personas or documentation.
 
 The CI secret-scan gate (gitleaks) runs on every push and pull request. A PR cannot be merged if secrets or real PII are present anywhere in the diff. See [Secret hygiene](#secret-hygiene) below.
 
