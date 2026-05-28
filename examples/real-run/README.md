@@ -58,10 +58,6 @@ The credibility of a ledger is in being honest about its instrument.
 
 No number here is inflated to flatter the thesis. The honest headline is the **metered** one: *16 isolated windows, ~1.19M tokens, ~872 tool calls — coordinated from a single window that never compacted.*
 
-## Sanitization
-
-This run operated only on the **public** `Agents-Public` repository, so there is almost nothing to sanitize: the table reports agent **roles**, **token counts**, and **task descriptions**, never the contents of any private project. (The subagents' briefs internally referenced a sanitization policy that names private projects; those names are not reproduced here — only what each agent *did* and what it *cost*.)
-
 ## Relation to the Verdant walkthrough
 
 - [`../orchestrated-run/`](../orchestrated-run/) — *fictional, illustrative.* Shows the **mechanism**: dependency graph, tiers, file-ownership, a clean per-window model. Easy to follow.
