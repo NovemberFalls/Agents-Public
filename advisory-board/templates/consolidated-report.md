@@ -17,16 +17,16 @@ tags: [consolidated, review, "{{PROJECT}}"]
 
 | Agent | Role | Score | Model |
 |-------|------|-------|-------|
-| [Alexandra](../agents/01-alexandra-cfo.md) | CFO | {{score}} / 10 | Opus |
-| [Marcus](../agents/02-marcus-cmo.md) | CMO | {{score}} / 10 | Sonnet |
-| [Priya](../agents/03-priya-cpo.md) | CPO | {{score}} / 10 | Opus |
-| [Dr. Reyes](../agents/04-dr-reyes-cto.md) | CTO | {{score}} / 10 | Opus |
-| [Sophie](../agents/05-sophie-uiux.md) | UI/UX | {{score}} / 10 | Sonnet |
-| [Chen](../agents/06-chen-auditor.md) | Code Auditor | {{score}} / 10 | Sonnet |
-| [Jordan](../agents/07-jordan-gaps.md) | Gap Analyst | {{score}} / 10 | Sonnet |
-| [Kai](../agents/08-kai-devops.md) | DevOps/SRE | {{score}} / 10 | Sonnet |
-| [Viktor](../agents/09-viktor-cso.md) | CSO | {{score}} / 10 | Opus |
-| [Evelyn](../agents/10-evelyn-legal.md) | Legal | {{score}} / 10 | Opus |
+| [CFO Advisor](../agents/01-cfo-advisor.md) | CFO | {{score}} / 10 | Opus |
+| [CMO Advisor](../agents/02-cmo-advisor.md) | CMO | {{score}} / 10 | Sonnet |
+| [CPO Advisor](../agents/03-cpo-advisor.md) | CPO | {{score}} / 10 | Opus |
+| [CTO Advisor](../agents/04-cto-advisor.md) | CTO | {{score}} / 10 | Opus |
+| [UI/UX Lead](../agents/05-uiux-lead.md) | UI/UX | {{score}} / 10 | Sonnet |
+| [Code Auditor](../agents/06-code-auditor.md) | Code Auditor | {{score}} / 10 | Sonnet |
+| [Gap Analyst](../agents/07-gap-analyst.md) | Gap Analyst | {{score}} / 10 | Sonnet |
+| [DevOps/SRE Advisor](../agents/08-devops-sre.md) | DevOps/SRE | {{score}} / 10 | Sonnet |
+| [CSO Advisor](../agents/09-cso-advisor.md) | CSO | {{score}} / 10 | Opus |
+| [Legal Advisor](../agents/10-legal-advisor.md) | Legal | {{score}} / 10 | Opus |
 
 ---
 
@@ -120,7 +120,7 @@ tags: [consolidated, review, "{{PROJECT}}"]
 
 ## Competitive Landscape (Aggregated)
 
-*Compiled from Marcus (CMO) and Jordan (Gap Analyst) reviews.*
+*Compiled from CMO Advisor and Gap Analyst reviews.*
 
 ### Direct Competitors
 
@@ -162,13 +162,13 @@ tags: [consolidated, review, "{{PROJECT}}"]
 
 | Agent | Review File |
 |-------|-------------|
-| Alexandra (CFO) | [Full Review](alexandra-cfo.md) |
-| Marcus (CMO) | [Full Review](marcus-cmo.md) |
-| Priya (CPO) | [Full Review](priya-cpo.md) |
-| Dr. Reyes (CTO) | [Full Review](dr-reyes-cto.md) |
-| Sophie (UI/UX) | [Full Review](sophie-uiux.md) |
-| Chen (Auditor) | [Full Review](chen-auditor.md) |
-| Jordan (Gaps) | [Full Review](jordan-gaps.md) |
-| Kai (DevOps) | [Full Review](kai-devops.md) |
-| Viktor (CSO) | [Full Review](viktor-cso.md) |
-| Evelyn (Legal) | [Full Review](evelyn-legal.md) |
+| CFO Advisor | `cfo-advisor-review.md` |
+| CMO Advisor | `cmo-advisor-review.md` |
+| CPO Advisor | `cpo-advisor-review.md` |
+| CTO Advisor | `cto-advisor-review.md` |
+| UI/UX Lead | `uiux-lead-review.md` |
+| Code Auditor | `code-auditor-review.md` |
+| Gap Analyst | `gap-analyst-review.md` |
+| DevOps/SRE Advisor | `devops-sre-review.md` |
+| CSO Advisor | `cso-advisor-review.md` |
+| Legal Advisor | `legal-advisor-review.md` |

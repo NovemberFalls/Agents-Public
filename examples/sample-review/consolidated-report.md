@@ -16,20 +16,20 @@ Report produced: After all individual reviews complete
 
 ## Individual Scores
 
-The two full reviews in this example are Dr. Reyes (CTO, score 6) and Alexandra (CFO, score 5). The remaining eight scores are illustrative — they represent the kind of scores a project at this stage might receive, but the full reviews are not written out in this example.
+The two full reviews in this example are the CTO Advisor (CTO, score 6) and the CFO Advisor (CFO, score 5). The remaining eight scores are illustrative — they represent the kind of scores a project at this stage might receive, but the full reviews are not written out in this example.
 
 | Agent | Role | Score | Notes |
 |-------|------|-------|-------|
-| Dr. Reyes | CTO | 6 | Strong architecture; sync protocol and E2E test gaps are blockers |
-| Chen | Code Auditor | 6 | Test coverage acceptable except for encryption paths; plugin API surface concern |
-| Marcus | CMO | 5 | Category is crowded; differentiation on privacy/open-source is real but not yet a story |
-| Jordan | Gap Analyst | 5 | Lacks offline collaboration; no mobile story; export formats limited |
-| Priya | CPO | 6 | Local-first is a credible product bet; plugin system is high-ceiling; roadmap is vague beyond sync |
-| Sophie | UI/UX | 7 | Clean, focused UI; keyboard navigation is strong; onboarding for plugin system needs work |
-| Alexandra | CFO | 5 | No infrastructure cost model for sync; no pricing model; contribution sustainability unclear |
-| Viktor | CSO | 5 | Plugin API exposes too much internal state; key management for sync is underspecified |
-| Kai | DevOps/SRE | 6 | No crash reporting; no distributed sync monitoring; CI pipeline is functional but minimal |
-| Evelyn | Legal | 7 | MIT license is clean; no third-party license conflicts found; sync ToS not yet drafted |
+| CTO Advisor | CTO | 6 | Strong architecture; sync protocol and E2E test gaps are blockers |
+| Code Auditor | Code Auditor | 6 | Test coverage acceptable except for encryption paths; plugin API surface concern |
+| CMO Advisor | CMO | 5 | Category is crowded; differentiation on privacy/open-source is real but not yet a story |
+| Gap Analyst | Gap Analyst | 5 | Lacks offline collaboration; no mobile story; export formats limited |
+| CPO Advisor | CPO | 6 | Local-first is a credible product bet; plugin system is high-ceiling; roadmap is vague beyond sync |
+| UI/UX Lead | UI/UX | 7 | Clean, focused UI; keyboard navigation is strong; onboarding for plugin system needs work |
+| CFO Advisor | CFO | 5 | No infrastructure cost model for sync; no pricing model; contribution sustainability unclear |
+| CSO Advisor | CSO | 5 | Plugin API exposes too much internal state; key management for sync is underspecified |
+| DevOps/SRE Advisor | DevOps/SRE | 6 | No crash reporting; no distributed sync monitoring; CI pipeline is functional but minimal |
+| Legal Advisor | Legal | 7 | MIT license is clean; no third-party license conflicts found; sync ToS not yet drafted |
 
 ---
 
@@ -63,21 +63,21 @@ Score = (CTO × 0.10) + (Auditor × 0.10) + (CMO × 0.10) + (Gaps × 0.10)
 
 Items raised independently by two or more board members:
 
-**1. Plugin API exposes too much internal state (Dr. Reyes, Viktor)**
-Both the CTO and CSO independently flagged that the plugin API grants plugins access to the full internal note store. Dr. Reyes frames this as an API stability problem; Viktor frames it as a security problem. Both concerns are valid and the fix addresses both: define a minimal, stable plugin API surface that exposes only what plugins legitimately need.
+**1. Plugin API exposes too much internal state (CTO Advisor, CSO Advisor)**
+Both the CTO and CSO independently flagged that the plugin API grants plugins access to the full internal note store. The CTO Advisor frames this as an API stability problem; the CSO Advisor frames it as a security problem. Both concerns are valid and the fix addresses both: define a minimal, stable plugin API surface that exposes only what plugins legitimately need.
 
-**2. Sync protocol is underspecified for failure cases (Dr. Reyes, Viktor, Kai)**
-The CTO flagged missing conflict resolution rules. Viktor flagged that key management for sync (what happens when a device key is revoked mid-sync?) is unspecified. Kai flagged that there is no monitoring for sync failures in production. Three independent reviewers pointing at the same feature from three angles is a strong signal: the sync feature needs more design work before launch.
+**2. Sync protocol is underspecified for failure cases (CTO Advisor, CSO Advisor, DevOps/SRE Advisor)**
+The CTO flagged missing conflict resolution rules. The CSO Advisor flagged that key management for sync (what happens when a device key is revoked mid-sync?) is unspecified. The DevOps/SRE Advisor flagged that there is no monitoring for sync failures in production. Three independent reviewers pointing at the same feature from three angles is a strong signal: the sync feature needs more design work before launch.
 
-**3. No pricing or cost model for sync (Alexandra, Priya)**
-Alexandra and Priya both noted that the sync feature is the intended monetization path but that no pricing work has been done. Priya adds that the roadmap does not specify when sync will be production-ready, which makes it difficult to plan anything dependent on sync revenue.
+**3. No pricing or cost model for sync (CFO Advisor, CPO Advisor)**
+The CFO Advisor and CPO Advisor both noted that the sync feature is the intended monetization path but that no pricing work has been done. The CPO Advisor adds that the roadmap does not specify when sync will be production-ready, which makes it difficult to plan anything dependent on sync revenue.
 
 ---
 
 ## Conflicts
 
 **Open-source vs. sustainability:**
-Marcus (CMO) rates the market positioning at 5, noting the category is crowded and the open-source positioning, while real, is not yet a coherent story in any public-facing material. Priya (CPO) rates the product at 6, noting the local-first bet and plugin system are credible differentiators. These are not truly in conflict — Marcus is evaluating the communication of the positioning, Priya is evaluating the product decision itself. Both are right within their scope. The resolution: the product bet is sound; the market communication of it needs work.
+The CMO Advisor rates the market positioning at 5, noting the category is crowded and the open-source positioning, while real, is not yet a coherent story in any public-facing material. The CPO Advisor rates the product at 6, noting the local-first bet and plugin system are credible differentiators. These are not truly in conflict — the CMO Advisor is evaluating the communication of the positioning, the CPO Advisor is evaluating the product decision itself. Both are right within their scope. The resolution: the product bet is sound; the market communication of it needs work.
 
 ---
 

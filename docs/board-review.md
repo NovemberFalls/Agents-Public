@@ -10,16 +10,16 @@ The board reviews, scores, and recommends. It does not implement. Implementation
 
 | # | Agent | Role | Domain | Model | Weight |
 |---|-------|------|--------|-------|--------|
-| 1 | Alexandra | CFO | Financial Viability | Opus | 15% |
-| 2 | Marcus | CMO | Market & Positioning | Sonnet | 10% |
-| 3 | Priya | CPO | Product Strategy | Opus | 10% |
-| 4 | Dr. Reyes | CTO | Technical Architecture | Opus | 10% |
-| 5 | Sophie | UI/UX | Design & Experience | Sonnet | 10% |
-| 6 | Chen | Code Auditor | Quality & Debt | Sonnet | 10% |
-| 7 | Jordan | Gap Analyst | Competitive Intel | Sonnet | 10% |
-| 8 | Kai | DevOps/SRE | Reliability & Operations | Sonnet | 10% |
-| 9 | Viktor | CSO | Security & Risk | Opus | 10% |
-| 10 | Evelyn | Legal | Compliance & Risk | Opus | 5% |
+| 1 | CFO Advisor | CFO | Financial Viability | Opus | 15% |
+| 2 | CMO Advisor | CMO | Market & Positioning | Sonnet | 10% |
+| 3 | CPO Advisor | CPO | Product Strategy | Opus | 10% |
+| 4 | CTO Advisor | CTO | Technical Architecture | Opus | 10% |
+| 5 | UI/UX Lead | UI/UX | Design & Experience | Sonnet | 10% |
+| 6 | Code Auditor | Code Auditor | Quality & Debt | Sonnet | 10% |
+| 7 | Gap Analyst | Gap Analyst | Competitive Intel | Sonnet | 10% |
+| 8 | DevOps/SRE Advisor | DevOps/SRE | Reliability & Operations | Sonnet | 10% |
+| 9 | CSO Advisor | CSO | Security & Risk | Opus | 10% |
+| 10 | Legal Advisor | Legal | Compliance & Risk | Opus | 5% |
 
 ---
 
@@ -27,13 +27,13 @@ The board reviews, scores, and recommends. It does not implement. Implementation
 
 | Domain | Board Members | Combined Weight |
 |--------|--------------|-----------------|
-| Technical Foundation | Dr. Reyes (CTO) + Chen (Code Auditor) | 20% |
-| Market Readiness | Marcus (CMO) + Jordan (Gap Analyst) | 20% |
-| Product Quality | Priya (CPO) + Sophie (UI/UX) | 20% |
-| Business Viability | Alexandra (CFO) | 15% |
-| Security & Risk | Viktor (CSO) | 10% |
-| Infrastructure | Kai (DevOps/SRE) | 10% |
-| Legal & Compliance | Evelyn (Legal) | 5% |
+| Technical Foundation | CTO Advisor + Code Auditor | 20% |
+| Market Readiness | CMO Advisor + Gap Analyst | 20% |
+| Product Quality | CPO Advisor + UI/UX Lead | 20% |
+| Business Viability | CFO Advisor | 15% |
+| Security & Risk | CSO Advisor | 10% |
+| Infrastructure | DevOps/SRE Advisor | 10% |
+| Legal & Compliance | Legal Advisor | 5% |
 
 ---
 
@@ -68,25 +68,25 @@ A score of 9 or 10 does not mean perfect. It means the board has no blocking con
 
 Each board member scores against their own rubric, which is defined in their persona file. Common rubric dimensions:
 
-**Alexandra (CFO):** Unit economics, runway, cost structure, revenue model, financial controls.
+**CFO Advisor:** Unit economics, runway, cost structure, revenue model, financial controls.
 
-**Marcus (CMO):** Market positioning, ICP clarity, differentiation, go-to-market readiness, messaging.
+**CMO Advisor:** Market positioning, ICP clarity, differentiation, go-to-market readiness, messaging.
 
-**Priya (CPO):** Product-market fit signal, roadmap coherence, feature prioritization, user feedback loops.
+**CPO Advisor:** Product-market fit signal, roadmap coherence, feature prioritization, user feedback loops.
 
-**Dr. Reyes (CTO):** Architecture soundness, scalability, technical debt load, engineering practices, build vs. buy decisions.
+**CTO Advisor:** Architecture soundness, scalability, technical debt load, engineering practices, build vs. buy decisions.
 
-**Sophie (UI/UX):** User flow clarity, accessibility, design consistency, onboarding experience, friction points.
+**UI/UX Lead:** User flow clarity, accessibility, design consistency, onboarding experience, friction points.
 
-**Chen (Code Auditor):** Code quality, test coverage, dependency hygiene, documentation, maintainability.
+**Code Auditor:** Code quality, test coverage, dependency hygiene, documentation, maintainability.
 
-**Jordan (Gap Analyst):** Competitive landscape, feature gaps, positioning blind spots, substitution risk.
+**Gap Analyst:** Competitive landscape, feature gaps, positioning blind spots, substitution risk.
 
-**Kai (DevOps/SRE):** Deployment reliability, observability, incident response readiness, infrastructure maturity.
+**DevOps/SRE Advisor:** Deployment reliability, observability, incident response readiness, infrastructure maturity.
 
-**Viktor (CSO):** Threat model completeness, vulnerability surface, secrets management, data protection.
+**CSO Advisor:** Threat model completeness, vulnerability surface, secrets management, data protection.
 
-**Evelyn (Legal):** Licensing compliance, terms of service, data handling obligations, regulatory exposure.
+**Legal Advisor:** Licensing compliance, terms of service, data handling obligations, regulatory exposure.
 
 ---
 
@@ -127,7 +127,7 @@ The consolidated report template is in `advisory-board/templates/consolidated-re
 
 ### Handoff to implementation
 
-The consolidated report is the primary input for an implementation run. Nadia reads it and maps every finding to a node in the Change Dependency Graph. The reconciliation matrix at the end of implementation maps every finding back to either IMPLEMENTED, PARTIAL, DEFERRED, or SCOPE CREEP — closing the loop between board review and implementation.
+The consolidated report is the primary input for an implementation run. The Orchestrator reads it and maps every finding to a node in the Change Dependency Graph. The reconciliation matrix at the end of implementation maps every finding back to either IMPLEMENTED, PARTIAL, DEFERRED, or SCOPE CREEP — closing the loop between board review and implementation.
 
 After implementation, the board can re-review and produce a score delta: the change in Readiness Score attributable to the implementation cycle.
 

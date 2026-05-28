@@ -8,11 +8,11 @@ A five-agent review board for manuscript chapters. The team evaluates completed 
 
 | Agent | Role | Profile |
 |-------|------|---------|
-| **Eris** | Continuity — story state, geography, character knowledge, seeds/payoffs | [01-eris-continuity.md](agents/01-eris-continuity.md) |
-| **Morrow** | POV voice — character-specific voice, dialogue, knowledge bleed | [02-morrow-voice.md](agents/02-morrow-voice.md) |
-| **Vael** | Reader surrogate — pacing, emotional landing, confusion, engagement | [03-vael-reader.md](agents/03-vael-reader.md) |
-| **Cael** | Craft audit — the 17-point checklist with taste, overshoot detection | [04-cael-craft.md](agents/04-cael-craft.md) |
-| **Wren** | Canon bridge — shared lore alignment between book and any companion material | [05-wren-canon.md](agents/05-wren-canon.md) |
+| **Continuity Editor** | Continuity — story state, geography, character knowledge, seeds/payoffs | [01-continuity-editor.md](agents/01-continuity-editor.md) |
+| **Voice Editor** | POV voice — character-specific voice, dialogue, knowledge bleed | [02-voice-editor.md](agents/02-voice-editor.md) |
+| **Reader Advocate** | Reader surrogate — pacing, emotional landing, confusion, engagement | [03-reader-advocate.md](agents/03-reader-advocate.md) |
+| **Craft Editor** | Craft audit — the 17-point checklist with taste, overshoot detection | [04-craft-editor.md](agents/04-craft-editor.md) |
+| **Canon Keeper** | Canon bridge — shared lore alignment between book and any companion material | [05-canon-keeper.md](agents/05-canon-keeper.md) |
 
 ---
 
@@ -25,7 +25,7 @@ A five-agent review board for manuscript chapters. The team evaluates completed 
 5. The human (or author session) decides what to act on. No agent has veto power.
 6. The chapter is locked once the author is satisfied with the state.
 
-**Vael reads cold, without craft vocabulary and without other agents' findings.** Her engagement map is the ground truth of reader experience and must not be contaminated by prior analysis.
+**The Reader Advocate reads cold, without craft vocabulary and without other agents' findings.** Its engagement map is the ground truth of reader experience and must not be contaminated by prior analysis.
 
 ---
 
@@ -39,4 +39,4 @@ See [agents/00-roster.md](agents/00-roster.md) for the full roster with per-agen
 
 ## Relationship to Other Teams
 
-Wren serves as a canon bridge between this team and any companion project (such as a TTRPG or worldbuilding project). When the novel depicts magic, races, geography, or culture, Wren ensures alignment with canonical definitions established in the project's world files. Point Wren at your world files and lore documents for each review session.
+The Canon Keeper serves as a canon bridge between this team and any companion project (such as a TTRPG or worldbuilding project). When the novel depicts magic, races, geography, or culture, the Canon Keeper ensures alignment with canonical definitions established in the project's world files. Point the Canon Keeper at your world files and lore documents for each review session.

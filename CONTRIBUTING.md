@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing to team-public. This repository is a library of AI-agent persona files and orchestration patterns. Contributions fall into three categories: new agents, new teams, and improvements to existing personas or documentation.
+Thank you for contributing to Agents-Public. This repository is a library of AI-agent persona files and orchestration patterns. Contributions fall into three categories: new agents, new teams, and improvements to existing personas or documentation.
 
 The CI secret-scan gate (gitleaks) runs on every push and pull request. A PR cannot be merged if secrets or real PII are present anywhere in the diff. See [Secret hygiene](#secret-hygiene) below.
 
@@ -10,29 +10,32 @@ The CI secret-scan gate (gitleaks) runs on every push and pull request. A PR can
 
 ### Filename convention
 
-Agent files use the pattern `NN-firstname-role.md` where `NN` is a zero-padded two-digit sequence number within the team folder.
+Agent files use the pattern `NN-role.md` where `NN` is a zero-padded two-digit sequence number within the team folder. Agents are identified by role, not by personal name — there are NO personal names anywhere in this repository.
 
 Examples:
-- `03-ash-backend.md`
-- `07-jordan-gaps.md`
-- `11-felix-infrastructure.md`
+- `03-backend-engineer.md`
+- `07-gap-analyst.md`
+- `11-infrastructure-engineer.md`
 
 The sequence number determines display order in rosters. If you are inserting an agent between two existing numbers, renumber adjacent files and update the roster.
 
 ### Required YAML frontmatter
 
-Every agent file must begin with a YAML front-matter block containing at minimum:
+Every agent file must begin with a YAML front-matter block. Claude Code reads three fields:
 
 ```yaml
 ---
-name: Firstname
-role: Short Role Title
-model: claude-sonnet-... | claude-opus-...
-tags: [team-name, domain-tag, ...]
+name: backend-engineer        # kebab-case slug: lowercase letters and hyphens only (no capitals, no spaces). This is the invocation slug / subagent_type.
+description: Use for server-side logic, data models, and API design on changes touching the backend.   # REQUIRED. Tells Claude WHEN to delegate to this agent (drives auto-delegation). A file with no description DOES NOT LOAD.
+model: sonnet                 # optional; alias only — sonnet | opus | haiku | inherit. NOT a full model ID.
 ---
 ```
 
-`model` should reflect the agent's default model. If the agent escalates to a more capable model under specific conditions, document that in the **Model Selection** section of the persona body.
+- **`name`** must be a kebab-case slug (lowercase letters and hyphens only). It is the slug Claude Code uses to invoke the agent (the `subagent_type`).
+- **`description`** is required. It is how Claude decides when to delegate, so phrase it as a one-sentence trigger. A subagent file with no `description` does not load.
+- **`model`** is optional and accepts an alias only (`sonnet`, `opus`, `haiku`, `inherit`), never a full model ID. It reflects the agent's default model. If the agent escalates under specific conditions, document that in the **Model Selection** section of the persona body.
+- **`tools:`** is optional (comma- or space-separated); omit it to inherit all tools.
+- Any other keys (such as `role` or `tags`) are silently ignored by Claude Code, so they are harmless but have no effect. Advisory-board agents may add an optional `score_weight` for their scoring formula.
 
 ### Persona section structure
 
@@ -88,7 +91,7 @@ This is a public repository. The secret-scan CI gate (`.github/workflows/secret-
 Do not include in any file:
 
 - API keys, tokens, passwords, or secrets of any kind
-- Real personal names (use fictional names or role labels)
+- Personal names of any kind — agents are identified by role labels only (e.g., "the Backend Engineer"), never by a first name
 - Real company names, domains, or trademarks (use `example.com` and fictional placeholders)
 - Real infrastructure addresses, IP ranges, cloud account IDs, or resource names
 - Any PII
@@ -100,7 +103,7 @@ If you are adapting a persona from a private configuration, strip all project-sp
 ## PR etiquette
 
 - One logical change per PR. If you are adding a new agent and fixing a typo in an existing one, open two PRs.
-- PR title format: `add: NN-name-role to team-name` / `fix: persona section in NN-name-role` / `docs: update architecture.md`
+- PR title format: `add: NN-role to team-name` / `fix: persona section in NN-role` / `docs: update architecture.md`
 - The description should explain the agent's purpose and how they complement the existing roster — not just what files changed.
 - If your PR changes the orchestration loop, scoring formula, or report format for an existing team, call that out explicitly in the PR description. Those are breaking changes for anyone consuming that team's output format.
 - All new agent files must pass the gitleaks scan. The scan is not optional and cannot be bypassed.

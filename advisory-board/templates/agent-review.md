@@ -9,6 +9,8 @@ tags: [review, "{{PROJECT}}", "{{AGENT_ROLE_TAG}}"]
 ---
 
 # {{AGENT_NAME}} — {{PROJECT}} Review
+
+[AGENT REVIEW]
 **Date:** {{YYYY-MM-DD}} | **Version:** {{VERSION_OR_COMMIT}} | **Model:** {{MODEL}}
 
 ---
@@ -111,3 +113,5 @@ tags: [review, "{{PROJECT}}", "{{AGENT_ROLE_TAG}}"]
 ## Key Question for Next Review
 
 > *The single most important question that, if answered, would most change this score in the next cycle.*
+
+[/AGENT REVIEW]

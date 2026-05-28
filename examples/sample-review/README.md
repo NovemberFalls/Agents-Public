@@ -10,7 +10,7 @@ Lumina is an imaginary open-source Markdown note-taking application: a desktop a
 
 The purpose of this example is to show:
 
-1. What an individual agent review looks like in practice (see `dr-reyes-review.md` and `alexandra-review.md`)
+1. What an individual agent review looks like in practice (see `cto-advisor-review.md` and `cfo-advisor-review.md`)
 2. How individual scores are consolidated into a weighted Readiness Score (see `consolidated-report.md`)
 3. The level of specificity and actionability expected in advisory board findings
 
@@ -21,8 +21,8 @@ The purpose of this example is to show:
 | File | Contents |
 |------|----------|
 | `README.md` | This file — context and explanation |
-| `dr-reyes-review.md` | Dr. Reyes (CTO) review of Lumina |
-| `alexandra-review.md` | Alexandra (CFO) review of Lumina |
+| `cto-advisor-review.md` | CTO Advisor review of Lumina |
+| `cfo-advisor-review.md` | CFO Advisor review of Lumina |
 | `consolidated-report.md` | Partial consolidated report with weighted Readiness Score |
 
 Note: only two of the ten board members are shown here. A full review would include all ten agents.
@@ -45,8 +45,8 @@ In the `consolidated-report.md`, all ten agent scores are shown (including illus
 
 ## Using This Example
 
-- Read `dr-reyes-review.md` to understand the depth and structure expected from a technical board member.
-- Read `alexandra-review.md` to see how the CFO perspective differs from the CTO's — same project, different concerns.
+- Read `cto-advisor-review.md` to understand the depth and structure expected from a technical board member.
+- Read `cfo-advisor-review.md` to see how the CFO perspective differs from the CTO's — same project, different concerns.
 - Read `consolidated-report.md` to see how conflicts and consensus emerge across multiple independent reviewers, and how the weighted formula is applied.
 
 When authoring your own agents, use these examples as a calibration target for specificity and tone.

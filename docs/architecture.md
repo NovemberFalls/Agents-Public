@@ -16,7 +16,7 @@ The Change Dependency Graph determines the boundary.
 
 ## Change Dependency Graph (CDG)
 
-The CDG is built by the orchestrator (Nadia) before any specialist writes a line of code.
+The CDG is built by the Orchestrator before any specialist writes a line of code.
 
 **Nodes** are every artifact that will be modified or that acts as a coordination surface:
 - Source files (each file is a node)
@@ -82,25 +82,25 @@ task.py (schema) ─────► tasks.ts (API client uses the schema)
 
 ```
 Tier 1 (parallel):
-  - Sage: write 0012_task_tags.sql
+  - Database Engineer: write 0012_task_tags.sql
   (no dependencies; everything else depends on the schema existing)
 
 Tier 2 (parallel, after Tier 1):
-  - Sage: update db/models/task.py  (depends on Tier 1 migration)
-  - Ash:  update api/schemas/task.py  (can be drafted from the migration)
+  - Database Engineer: update db/models/task.py  (depends on Tier 1 migration)
+  - Backend Engineer:  update api/schemas/task.py  (can be drafted from the migration)
 
 Tier 3 (parallel, after Tier 2):
-  - Ash:  update api/routes/tasks.py  (depends on model + schema)
-  - Finn: update frontend/api/tasks.ts  (depends on finalized schema)
+  - Backend Engineer:  update api/routes/tasks.py  (depends on model + schema)
+  - Frontend Engineer: update frontend/api/tasks.ts  (depends on finalized schema)
 
 Tier 4 (after Tier 3):
-  - Finn: update frontend/components/TaskCard.tsx  (depends on API client shape)
+  - Frontend Engineer: update frontend/components/TaskCard.tsx  (depends on API client shape)
 
 Tier 5:
-  - Sam: write tests for all new endpoints and the updated frontend component
+  - Test Engineer: write tests for all new endpoints and the updated frontend component
 ```
 
-In this example, Tier 1 and Tier 2 are database-specialist work. Tier 3 splits across backend (Ash) and frontend (Finn) — they can run in parallel because their outputs do not depend on each other within Tier 3. Tier 4 waits because the component depends on the finalized API client.
+In this example, Tier 1 and Tier 2 are database-specialist work. Tier 3 splits across the Backend Engineer and the Frontend Engineer — they can run in parallel because their outputs do not depend on each other within Tier 3. Tier 4 waits because the component depends on the finalized API client.
 
 ---
 
@@ -114,31 +114,31 @@ Before any tier executes, the orchestrator scans the tier's planned changes agai
 
 | Keyword / pattern | Auto-invoked agent | Reason |
 |---|---|---|
-| auth, session, JWT, token, password, credential, secret, API key | Zara (Security) | Authentication and secrets surface requires security review |
-| migration, schema change, ALTER TABLE, DROP COLUMN, INDEX | Sage (Database) + Sam (Testing) | Schema changes have irreversible failure modes |
-| deploy, publish, release, live endpoint, public surface | Sam (Testing) — smoke gate | Changes reaching a live surface need verification before full rollout |
+| auth, session, JWT, token, password, credential, secret, API key | Security Engineer | Authentication and secrets surface requires security review |
+| migration, schema change, ALTER TABLE, DROP COLUMN, INDEX | Database Engineer + Test Engineer | Schema changes have irreversible failure modes |
+| deploy, publish, release, live endpoint, public surface | Test Engineer — smoke gate | Changes reaching a live surface need verification before full rollout |
 
-Specialists do not self-gate. The orchestrator is solely responsible for running the keyword scan and adding the appropriate agents. A specialist who touches auth logic does not decide for themselves whether Zara is needed.
+Specialists do not self-gate. The orchestrator is solely responsible for running the keyword scan and adding the appropriate agents. A specialist who touches auth logic does not decide for themselves whether the Security Engineer is needed.
 
-### 2. Code hygiene sweep (Reaper)
+### 2. Code hygiene sweep (Hygiene Auditor)
 
-Reaper runs after every tier, including lightweight single-file tiers. No exceptions. Reaper identifies dead code, unused imports, orphaned files, and stale exports introduced or exposed by the tier's changes. Reaper's hygiene report is included in the integration snapshot passed to the next tier.
+The Hygiene Auditor runs after every tier, including lightweight single-file tiers. No exceptions. The Hygiene Auditor identifies dead code, unused imports, orphaned files, and stale exports introduced or exposed by the tier's changes. Its hygiene report is included in the integration snapshot passed to the next tier.
 
-The final cross-tier Reaper sweep runs after all specialist tiers complete, before the reconciliation matrix is produced.
+The final cross-tier hygiene sweep runs after all specialist tiers complete, before the reconciliation matrix is produced.
 
-### 3. Atlas review gate
+### 3. Code Reviewer gate
 
-Atlas reviews all output from Opus-model specialists before that output reaches Nadia. Atlas can approve or return work for revision. An Atlas-approved review does not block Nadia's own review — Nadia reviews all output — but Atlas catches structural and integration issues at the specialist level before they compound.
+The Code Reviewer reviews all output from Opus-model specialists before that output reaches the Orchestrator. The Code Reviewer can approve or return work for revision. A Code Reviewer-approved review does not block the Orchestrator's own review — the Orchestrator reviews all output — but the Code Reviewer catches structural and integration issues at the specialist level before they compound.
 
 ### 4. Smoke / verification gate
 
-Any tier that touches a live surface (a deployed endpoint, a running service, a public interface) triggers a smoke gate: Sam probes the live surface to verify behavior before the tier is accepted. A failing smoke gate blocks the tier regardless of code-review outcome. The tier does not advance until Sam confirms the live surface behaves as expected.
+Any tier that touches a live surface (a deployed endpoint, a running service, a public interface) triggers a smoke gate: the Test Engineer probes the live surface to verify behavior before the tier is accepted. A failing smoke gate blocks the tier regardless of code-review outcome. The tier does not advance until the Test Engineer confirms the live surface behaves as expected.
 
 ---
 
 ## Reconciliation Matrix
 
-The reconciliation matrix is Nadia's final deliverable — the human-facing record of what the implementation actually did relative to what was asked.
+The reconciliation matrix is the Orchestrator's final deliverable — the human-facing record of what the implementation actually did relative to what was asked.
 
 One row per requirement from the original task brief (and from any advisory board findings that fed the task):
 
@@ -146,7 +146,7 @@ One row per requirement from the original task brief (and from any advisory boar
 |-------------|--------|-------|
 | Add `task_tags` join table | IMPLEMENTED | Migration 0012; model updated |
 | Expose tags in task detail endpoint | IMPLEMENTED | Schema updated; endpoint verified |
-| Display tags in TaskCard | IMPLEMENTED | Finn — keyboard accessible |
+| Display tags in TaskCard | IMPLEMENTED | Frontend Engineer — keyboard accessible |
 | Bulk-tag endpoint | DEFERRED | Out of scope for this tier; separate task filed |
 
 **Status values:**

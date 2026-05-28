@@ -7,31 +7,31 @@ Defines how the team runs sessions, produces findings, and routes them to the ri
 ## Session Types
 
 ### Type 1 — Expert Audit (no play required)
-**Who:** Aldric, Morrigan, Sylvara, Vance
+**Who:** D&D 5e System Expert, WFRP System Expert, Pathfinder 2e System Expert, DC20 System Expert
 **What:** Read the system content. Produce gap reports.
 **When:** Triggered on system content update or new rules content added.
-**Output:** Gap reports → routed to Lyra (rule text), Vesper (AP costs), Oryn (magic trees)
+**Output:** Gap reports → routed to Balance Patcher (rule text), Economy Balancer (AP costs), Magic System Designer (magic trees)
 
 ### Type 2 — Build Submission
-**Who:** Skar, Cipher
+**Who:** Offense Min-Maxer, Combo/Loops Min-Maxer
 **What:** Submit an optimized or exploit build with proof.
 **When:** Triggered after system content is stable enough to build against.
-**Output:** Build report → routed to Lyra (fix), Thane (encounter counter), Vesper (cost audit), Oryn (tree audit if magic)
+**Output:** Build report → routed to Balance Patcher (fix), Adversarial Balancer (encounter counter), Economy Balancer (cost audit), Magic System Designer (tree audit if magic)
 
 ### Type 3 — Party Session
-**Who:** Bram, Talia, Roz, Dane (party) + Holt or Vex (GM)
+**Who:** Player (Warrior), Player (Newcomer), Player (System Convert), Player (Healer/Support) (party) + GM (Casual) or GM (Hardcore)
 **What:** Run a session at a given level with 1-2 combat encounters and 1 social/skill encounter.
 **When:** Scheduled per level bracket — 1, 3, 5, 8, 10, 13, 15, 18, 20.
 **Output:** Full combat log (see [combat-log-format.md](combat-log-format.md)) + per-player session reports + GM session report
 
 ### Type 4 — Build Stress Test
-**Who:** Vex (GM) + Skar/Cipher build as the "party"
-**What:** Vex runs the broken build against Thane's encounter counter.
-**When:** After Skar/Cipher submit a build AND Thane submits a counter.
-**Output:** Counter validation report → back to Thane and Lyra
+**Who:** GM (Hardcore) + Min-Maxer build as the "party"
+**What:** The GM (Hardcore) runs the broken build against the Adversarial Balancer's encounter counter.
+**When:** After a Min-Maxer submits a build AND the Adversarial Balancer submits a counter.
+**Output:** Counter validation report → back to Adversarial Balancer and Balance Patcher
 
 ### Type 5 — VTT Feature Audit
-**Who:** Petra
+**Who:** VTT Specialist
 **What:** Audit each VTT feature as it ships against Foundry/Roll20 benchmarks.
 **When:** After each VTT milestone.
 **Output:** Feature audit + missing features list → VTT backlog
@@ -42,12 +42,12 @@ Defines how the team runs sessions, produces findings, and routes them to the ri
 
 The party plays fixed characters across all sessions. Characters level up between level bracket sessions.
 
-| Player | Character | Build Focus |
-|--------|-----------|-------------|
-| Bram | Bronn Ashvale | Two-handed martial, story-first |
-| Talia | Kira | Fire evoker, newcomer build |
-| Roz | Sel | Ranged archer, D&D-convert build |
-| Dane | Evander | Healer/face, support focus |
+| Player Role | Character | Build Focus |
+|-------------|-----------|-------------|
+| Player (Warrior) | Bronn Ashvale | Two-handed martial, story-first |
+| Player (Newcomer) | Kira | Fire evoker, newcomer build |
+| Player (System Convert) | Sel | Ranged archer, system-convert build |
+| Player (Healer/Support) | Evander | Healer/face, support focus |
 
 Characters are updated with expertise investments after each level bracket session. Players choose their own advancement.
 
@@ -55,22 +55,22 @@ Characters are updated with expertise investments after each level bracket sessi
 
 ## Routing Map
 
-Every finding routes to the right person:
+Every finding routes to the right role:
 
 | Finding Type | Primary | Secondary |
 |-------------|---------|-----------|
-| Exploit / broken build | Lyra (rule fix) | Thane (encounter counter), Vesper (cost) |
-| Rule ambiguity | Lyra | — |
-| AP cost wrong | Vesper | Lyra (text fix) |
-| Magic tree imbalance | Oryn | Vesper |
-| D&D gap | Aldric → Lyra | — |
-| WFRP gap | Morrigan → Lyra | — |
-| PF2e comparison | Sylvara → Vesper | — |
-| DC20 comparison | Vance → Vesper | — |
-| GM tooling gap | Thane | Holt session logs |
+| Exploit / broken build | Balance Patcher (rule fix) | Adversarial Balancer (encounter counter), Economy Balancer (cost) |
+| Rule ambiguity | Balance Patcher | — |
+| AP cost wrong | Economy Balancer | Balance Patcher (text fix) |
+| Magic tree imbalance | Magic System Designer | Economy Balancer |
+| D&D gap | D&D 5e System Expert → Balance Patcher | — |
+| WFRP gap | WFRP System Expert → Balance Patcher | — |
+| PF2e comparison | Pathfinder 2e System Expert → Economy Balancer | — |
+| DC20 comparison | DC20 System Expert → Economy Balancer | — |
+| GM tooling gap | Adversarial Balancer | GM (Casual) session logs |
 | Player feel issue | Direct to project owner | — |
-| VTT UX gap | Petra | Talia session reports |
-| Rules confusion (player) | Lyra | — |
+| VTT UX gap | VTT Specialist | Player (Newcomer) session reports |
+| Rules confusion (player) | Balance Patcher | — |
 
 ---
 
@@ -116,5 +116,5 @@ All exploit findings are tracked in your project's exploit log:
 
 ```
 [your-project]/ttrpg-team/exploits/
-  [YYYY-MM-DD]-[skar|cipher]-[exploit-name].md
+  [YYYY-MM-DD]-[offense|combo]-[exploit-name].md
 ```

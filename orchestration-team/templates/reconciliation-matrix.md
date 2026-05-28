@@ -7,7 +7,7 @@ version: 1
 **Date:** [YYYY-MM-DD]
 **Scope:** [what was implemented]
 **Audit reference:** [path to consolidated-report.md]
-**Signed off by:** Nadia
+**Signed off by:** Orchestrator
 
 ---
 
@@ -16,9 +16,9 @@ version: 1
 | Score | Source | Date |
 |-------|--------|------|
 | [X.X] | Board review (before implementation) | [audit date] |
-| [estimated delta] | Nadia's post-implementation assessment | [today] |
+| [estimated delta] | The Orchestrator's post-implementation assessment | [today] |
 
-*Note: Estimated delta is Nadia's projection. Next board review will produce an official updated score.*
+*Note: Estimated delta is the Orchestrator's projection. Next board review will produce an official updated score.*
 
 ---
 
@@ -28,8 +28,8 @@ version: 1
 
 | # | Audit Finding | Agent | Finding Priority | Implementation | File:Line | Verified By |
 |---|--------------|-------|-----------------|---------------|-----------|------------|
-| 1 | [finding text] | [agent] | P0/P1/P2 | [what was done] | [file:line] | [Atlas / Nadia] |
-| 2 | [finding text] | [agent] | P0/P1/P2 | [what was done] | [file:line] | [Atlas / Nadia] |
+| 1 | [finding text] | [agent] | P0/P1/P2 | [what was done] | [file:line] | [Code Reviewer / Orchestrator] |
+| 2 | [finding text] | [agent] | P0/P1/P2 | [what was done] | [file:line] | [Code Reviewer / Orchestrator] |
 
 ### Partially Implemented ⚠️
 
@@ -47,7 +47,7 @@ version: 1
 
 | # | Change Made | Justification | Reviewed By | Approved |
 |---|------------|--------------|-------------|---------|
-| 1 | [description] | [why it was necessary] | [Atlas / Nadia] | [yes/no] |
+| 1 | [description] | [why it was necessary] | [Code Reviewer / Orchestrator] | [yes/no] |
 
 *(Scope creep requires explicit justification. Any change not traceable to an audit finding must appear here.)*
 
@@ -100,8 +100,8 @@ Before approving this implementation, please verify:
 
 ---
 
-## Nadia's Sign-Off
+## The Orchestrator's Sign-Off
 
 **Implementation complete:** [yes / no — reason if no]
 **Quality assessment:** [summary — honest assessment of the implementation quality]
-**Recommended next sprint:** [what should be tackled in the next /dev-implement run, based on remaining deferred items and any new findings from this implementation]
+**Recommended next sprint:** [what should be tackled in the next /orchestrate run, based on remaining deferred items and any new findings from this implementation]

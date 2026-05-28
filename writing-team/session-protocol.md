@@ -18,12 +18,12 @@ Defines how the review board convenes, produces findings, and routes them.
 ### Phase 1 — Parallel Read (all agents, simultaneous)
 
 All 5 agents read the chapter and relevant context files independently.
-**Vael reads FIRST and ALONE** — her report must be uncontaminated by craft analysis.
+**The Reader Advocate reads FIRST and ALONE** — its report must be uncontaminated by craft analysis.
 The other 4 agents may cross-reference each other's domains but produce independent reports.
 
 Context files loaded per review (adapt to your project's file structure):
 - The chapter being reviewed (enhanced version preferred, draft if no enhance exists)
-- The draft version (if both exist — for Cael's overshoot detection)
+- The draft version (if both exist — for the Craft Editor's overshoot detection)
 - Your project's Story State document
 - Your project's Geography/Map document
 - Your project's Character Tracker
@@ -32,7 +32,7 @@ Context files loaded per review (adapt to your project's file structure):
 - Relevant character bibles for the POV character in this chapter
 - Your project's Writing Rules document
 - Previous chapter (for handoff validation)
-- Racial/faction description files (for Wren and Morrow)
+- Racial/faction description files (for the Canon Keeper and Voice Editor)
 
 ### Phase 2 — Report Generation (all agents, simultaneous)
 
@@ -54,19 +54,19 @@ The system produces a **Review Summary** that:
 
 | Finding Type | Primary Agent | Supporting |
 |-------------|---------------|------------|
-| Factual contradiction | Eris | Wren (if canon) |
-| Directional / geographic error | Eris | Wren |
-| Character knowledge bleed | Morrow | Eris (validates) |
-| Voice drift | Morrow | — |
-| Dialogue mismatch | Morrow | Wren (cultural ref) |
-| Pacing sag | Vael | Cael (craft diagnosis) |
-| Emotional miss | Vael | Morrow (voice cause?) |
-| Confusion point | Vael | Eris (continuity cause?) |
-| Checklist violation | Cael | — |
-| Enhance overshoot | Cael | Vael (did reader prefer draft?) |
-| Canon divergence | Wren | Eris (if also internal contradiction) |
-| New canon to record | Wren | — |
-| Seed/payoff tracking | Eris | Cael (confirms against Book Map) |
+| Factual contradiction | Continuity Editor | Canon Keeper (if canon) |
+| Directional / geographic error | Continuity Editor | Canon Keeper |
+| Character knowledge bleed | Voice Editor | Continuity Editor (validates) |
+| Voice drift | Voice Editor | — |
+| Dialogue mismatch | Voice Editor | Canon Keeper (cultural ref) |
+| Pacing sag | Reader Advocate | Craft Editor (craft diagnosis) |
+| Emotional miss | Reader Advocate | Voice Editor (voice cause?) |
+| Confusion point | Reader Advocate | Continuity Editor (continuity cause?) |
+| Checklist violation | Craft Editor | — |
+| Enhance overshoot | Craft Editor | Reader Advocate (did reader prefer draft?) |
+| Canon divergence | Canon Keeper | Continuity Editor (if also internal contradiction) |
+| New canon to record | Canon Keeper | — |
+| Seed/payoff tracking | Continuity Editor | Craft Editor (confirms against Book Map) |
 
 ---
 
@@ -97,6 +97,6 @@ Review outputs are stored alongside the chapter. Suggested structure:
 
 - **No agent rewrites prose.** They identify issues and suggest directions. The author (Claude in session or human) decides how to fix.
 - **No agent has veto power.** CRITICAL findings are strong recommendations, not blocks. The human is the final editor.
-- **Vael's read is sacred.** She reads cold, without craft vocabulary, without other agents' findings. Her engagement map is the ground truth of reader experience.
-- **Cael compares draft to enhanced.** If both versions exist, he must read both. The enhance pass can overcorrect — Cael is the safeguard.
-- **Wren does not decide canon priority.** She reports divergences. The human decides which source wins and updates accordingly.
+- **The Reader Advocate's read is sacred.** It reads cold, without craft vocabulary, without other agents' findings. Its engagement map is the ground truth of reader experience.
+- **The Craft Editor compares draft to enhanced.** If both versions exist, it must read both. The enhance pass can overcorrect — the Craft Editor is the safeguard.
+- **The Canon Keeper does not decide canon priority.** It reports divergences. The human decides which source wins and updates accordingly.

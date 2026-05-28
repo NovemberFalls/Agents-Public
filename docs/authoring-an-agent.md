@@ -12,7 +12,7 @@ Language models are good at adopting a consistent perspective when that perspect
 
 The second version gives the model something to inhabit. The agent now has a reason to be meticulous — not because the instructions say "be thorough" but because the character would be.
 
-Personality also makes agent behavior predictable. A user who knows Zara has been burned by JWT edge cases knows to expect her to probe token expiry logic even when the brief doesn't mention it. That predictability is useful. It means the orchestrator can reason about what each agent will and won't catch.
+Personality also makes agent behavior predictable. A user who knows the Security Engineer has been burned by JWT edge cases knows to expect them to probe token expiry logic even when the brief doesn't mention it. That predictability is useful. It means the orchestrator can reason about what each agent will and won't catch.
 
 ---
 
@@ -20,7 +20,7 @@ Personality also makes agent behavior predictable. A user who knows Zara has bee
 
 A blind spot is an honest acknowledgment of what the agent tends to miss. This is not a weakness — it is calibration information.
 
-Without documented blind spots, an orchestrator treating agents as black boxes is flying blind. With documented blind spots, the orchestrator can compensate: pair Finn (who skips performance analysis when focused on correctness) with a performance check in the next tier. Assign Sam to explicitly test the thing Ash tends to skip.
+Without documented blind spots, an orchestrator treating agents as black boxes is flying blind. With documented blind spots, the orchestrator can compensate: pair the Frontend Engineer (who skips performance analysis when focused on correctness) with a performance check in the next tier. Assign the Test Engineer to explicitly test the thing the Backend Engineer tends to skip.
 
 Blind spots also make agents more trustworthy. An agent that claims to miss nothing is implicitly claiming perfect coverage — which means its confidence signals are uncalibrated. An agent that says "I tend to over-engineer state management when a simpler approach would suffice" is one whose self-assessment you can trust.
 
@@ -39,7 +39,7 @@ Two to four paragraphs. Give the agent:
 - A strong opinion about something in their domain
 - A personality trait that shows up in how they work, not just what they know
 
-Avoid generic credentials. "Ten years of backend experience" is weaker than "spent three years maintaining a payment processing system where a single bug cost the company a day of transactions, which is why she never trusts optimistic error handling."
+Avoid generic credentials. "Ten years of backend experience" is weaker than "spent three years maintaining a payment processing system where a single bug cost the company a day of transactions, which is why they never trust optimistic error handling."
 
 The identity does not need to be long. It needs to be specific.
 
@@ -78,7 +78,7 @@ Required content:
 - What the agent's final message contains
 - Whether the report block is parsed by the orchestrator or returned for human reading
 
-If the agent is spawned by an orchestrator (like Nadia), the protocol should specify that the full task brief arrives inline and that the agent's final message is its complete report. Orchestrators parse the structured report block from the return message — there is no separate file to write.
+If the agent is spawned by an orchestrator (like the Orchestrator), the protocol should specify that the full task brief arrives inline and that the agent's final message is its complete report. Orchestrators parse the structured report block from the return message — there is no separate file to write.
 
 ### Report Format
 
@@ -106,14 +106,36 @@ The agent should be aware of their own blind spots and flag them when they notic
 
 ---
 
+## Frontmatter
+
+Every agent file begins with a YAML front-matter block. Claude Code reads only three fields; everything else is yours to document for human readers but is silently ignored by the loader.
+
+```yaml
+---
+name: security-engineer        # kebab-case slug: lowercase letters and hyphens only. This is the invocation slug (the subagent_type) — no capitals, no spaces.
+description: Use for auth, JWT, and threat-model review of changes touching the security boundary.   # REQUIRED. Tells Claude WHEN to delegate to this agent (drives auto-delegation). A file with no description does not load.
+model: opus                    # optional; alias only — sonnet | opus | haiku | inherit. Not a full model ID.
+---
+```
+
+Notes:
+
+- **`name`** is the slug Claude Code uses to invoke the agent. It must be lowercase letters and hyphens only — `security-engineer`, not `Security Engineer` or `SecurityEngineer`.
+- **`description`** is required. It is how Claude decides when to delegate to the agent, so write it as a one-sentence trigger ("Use for ..."). A subagent file with no `description` does not load at all.
+- **`model`** is optional and accepts an alias only — `sonnet`, `opus`, `haiku`, or `inherit`. It does not accept full model IDs.
+- **`tools:`** is optional (comma- or space-separated). Omit it to inherit all tools the parent has.
+- Any other keys (`role`, `tags`, and so on) are silently ignored by Claude Code — harmless, but they have no effect on loading or invocation.
+
+Project-level `.claude/agents/` and user-level `~/.claude/agents/` use this same schema.
+
 ## Model selection
 
-Specify the agent's default model and the conditions under which they escalate. This is a practical decision, not a philosophical one:
+Specify the agent's default model (via the `model` alias above) and the conditions under which they escalate. This is a practical decision, not a philosophical one:
 
-- Sonnet is appropriate for most specialist work: file-scoped changes, well-defined scope, standard domain patterns.
-- Opus is appropriate for: cross-file architectural decisions, novel security threat analysis, complex orchestration tasks, anything where the cost of a wrong answer is high and the answer space is large.
+- `sonnet` is appropriate for most specialist work: file-scoped changes, well-defined scope, standard domain patterns.
+- `opus` is appropriate for: cross-file architectural decisions, novel security threat analysis, complex orchestration tasks, anything where the cost of a wrong answer is high and the answer space is large.
 
-Be specific about what triggers escalation. "Complex tasks" is not a trigger. "Cross-file refactors touching the authentication model" is.
+Remember that `model` takes an alias (`sonnet`/`opus`/`haiku`/`inherit`), never a full model ID. Be specific about what triggers escalation. "Complex tasks" is not a trigger. "Cross-file refactors touching the authentication model" is.
 
 ---
 

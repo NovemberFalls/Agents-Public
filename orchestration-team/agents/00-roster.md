@@ -1,56 +1,56 @@
 ---
-tags: [roster, orchestration-team]
+tags: [orchestration-team, roster]
 ---
 
 # Orchestration Team Roster
 
 | Agent | Role | Model | Always Invoked | Notes |
 |-------|------|-------|---------------|-------|
-| **Vera** | Director & Cross-Team Orchestrator | Opus always | When multi-team coordination needed | Cross-team scope, board reviews, multi-project sessions |
-| **Nadia** | Principal Engineer / Orchestrator | Opus always | ✅ Yes | Builds CDG, assigns tiers, reviews all output, human handoff |
-| **Atlas** | Senior Code Reviewer | Opus always | When Opus specialist runs | Reviews all Opus output before Nadia; can iterate without Nadia |
-| **Ash** | Senior Backend Engineer | Sonnet default / Opus for arch | On demand | Python/FastAPI/Node; Opus for cross-file refactors, auth, async |
-| **Finn** | Frontend Engineer | Sonnet | On demand | React/TS/CSS; Tauri IPC; accessibility |
-| **Zara** | Security Engineer | Opus always | On demand (Viktor findings) | Closes attack chains; implements defensive code |
-| **Sam** | Test Engineer | Sonnet | Always after implementation | Tests every change; regression + negative cases |
-| **Dev** | DevOps/Infrastructure | Sonnet | On demand | CI/CD, build, deployment scripts |
-| **Sage** | Database Engineer | Sonnet default / Opus for migrations | On demand | Queries, schema, migrations |
-| **Quinn** | Python Systems & Infrastructure | Sonnet default / Opus for new daemons/APIs | On demand | New Python modules, background daemons, file watchers, event queues, utility libs |
-| **Reaper** | Code Hygiene Auditor | Sonnet | Mandatory after every tier | Dead code detection, unused imports/exports, orphaned files, removal manifests |
+| **[Swarm](00-swarm.md)** | Director & Cross-Team Orchestrator | Opus always | When multi-team coordination needed | Cross-team scope, board reviews, multi-project sessions |
+| **[Orchestrator](01-orchestrator.md)** | Principal Engineer / Orchestrator | Opus always | ✅ Yes | Builds CDG, assigns tiers, reviews all output, human handoff |
+| **[Code Reviewer](02-reviewer.md)** | Senior Code Reviewer | Opus always | When Opus specialist runs | Reviews all Opus output before the Orchestrator; can iterate without the Orchestrator |
+| **[Backend Engineer](03-backend-engineer.md)** | Senior Backend Engineer | Sonnet default / Opus for arch | On demand | Python/FastAPI/Node; Opus for cross-file refactors, auth, async |
+| **[Frontend Engineer](04-frontend-engineer.md)** | Frontend Engineer | Sonnet | On demand | React/TS/CSS; Tauri IPC; accessibility |
+| **[Security Engineer](05-security-engineer.md)** | Security Engineer | Opus always | On demand (CSO Advisor findings) | Closes attack chains; implements defensive code |
+| **[Test Engineer](06-test-engineer.md)** | Test Engineer | Sonnet | Always after implementation | Tests every change; regression + negative cases |
+| **[DevOps Engineer](07-devops-engineer.md)** | DevOps/Infrastructure | Sonnet | On demand | CI/CD, build, deployment scripts |
+| **[Database Engineer](08-database-engineer.md)** | Database Engineer | Sonnet default / Opus for migrations | On demand | Queries, schema, migrations |
+| **[Systems Engineer](09-systems-engineer.md)** | Python Systems & Infrastructure | Sonnet default / Opus for new daemons/APIs | On demand | New Python modules, background daemons, file watchers, event queues, utility libs |
+| **[Hygiene Auditor](10-hygiene-auditor.md)** | Code Hygiene Auditor | Sonnet | Mandatory after every tier | Dead code detection, unused imports/exports, orphaned files, removal manifests |
 
 ## Flow Diagram
 
 ```
-Vera (Director)
-└── Nadia (Principal Engineer / Orchestrator)
-    ├── Reads audit reports + codebase (or Reaper manifest for hygiene runs)
+Swarm (Director)
+└── Orchestrator (Principal Engineer / Orchestrator)
+    ├── Reads audit reports + codebase (or Hygiene Auditor manifest for hygiene runs)
     ├── Builds Change Dependency Graph
     ├── Plans execution tiers
     │
     ├── Tier 1 (parallel — independent files):
-    │   ├── [Specialist A] → Atlas (if Opus) → Nadia review
-    │   └── [Specialist B] → Atlas (if Opus) → Nadia review
-    │   ├── Keyword scan → auto-invoke Zara on auth/secrets/network triggers
-    │   ├── Phase 2.5 smoke gate (if infra/deploy/redundancy in scope) → Sam probes
-    │   └── Reaper hygiene sweep (MANDATORY — no exceptions)
+    │   ├── [Specialist A] → Code Reviewer (if Opus) → Orchestrator review
+    │   └── [Specialist B] → Code Reviewer (if Opus) → Orchestrator review
+    │   ├── Keyword scan → auto-invoke Security Engineer on auth/secrets/network triggers
+    │   ├── Phase 2.5 smoke gate (if infra/deploy/redundancy in scope) → Test Engineer probes
+    │   └── Hygiene Auditor sweep (MANDATORY — no exceptions)
     │
-    ├── Nadia: accept Tier 1, create integration snapshot
+    ├── Orchestrator: accept Tier 1, create integration snapshot
     │
     ├── Tier 2 (receives Tier 1 snapshot as context):
-    │   └── [Specialist C] → Atlas (if Opus) → Nadia → Phase 2.5 smoke → Reaper
+    │   └── [Specialist C] → Code Reviewer (if Opus) → Orchestrator → Phase 2.5 smoke → Hygiene Auditor
     │
     ├── [... repeat for all tiers ...]
     │
-    ├── Atlas: full integration sweep across all changes
-    ├── Reaper: final cross-tier hygiene sweep
-    ├── Nadia: final integration review
+    ├── Code Reviewer: full integration sweep across all changes
+    ├── Hygiene Auditor: final cross-tier hygiene sweep
+    ├── Orchestrator: final integration review
     │
     └── Human Review Package
         ├── Reconciliation matrix (audit → implementation)
         ├── Files changed
         ├── Tests written
         ├── Smoke / drill results (per tier)
-        ├── Reaper hygiene report
+        ├── Hygiene report
         ├── Open items
         └── Reviewer checklist
 ```
@@ -59,20 +59,20 @@ Vera (Director)
 
 ## Key Invariants
 
-1. **Nadia is always engaged.** No implementation runs without her.
+1. **The Orchestrator is always engaged.** No implementation runs without it.
 2. **No file is touched by two specialists in the same tier.**
 3. **Tier N specialists receive Tier N-1's finalized file contents as explicit input.**
-4. **All Opus output goes through Atlas before reaching Nadia.**
-5. **Reaper runs after every tier + final cross-tier sweep.** No exceptions, including lightweight tiers.
+4. **All Opus output goes through the Code Reviewer before reaching the Orchestrator.**
+5. **The Hygiene Auditor runs after every tier + final cross-tier sweep.** No exceptions, including lightweight tiers.
 6. **Phase 2.5 smoke gate is mandatory** for any tier touching a live surface (deploy, systemd, public endpoint, infra, DNS/tunnel, redundancy, schema migration).
-7. **Zara auto-invokes on keyword match** (auth, session, JWT, NSG, Key Vault, tunnel, credentials, public IP, etc.) — specialists do not self-gate into or out of security review.
-8. **Nothing reaches the human without Nadia's sign-off.**
+7. **The Security Engineer auto-invokes on keyword match** (auth, session, JWT, NSG, Key Vault, tunnel, credentials, public IP, etc.) — specialists do not self-gate into or out of security review.
+8. **Nothing reaches the human without the Orchestrator's sign-off.**
 9. **Max 3 iterations per specialist per task, then escalate to human.**
 
-## Deterministic Enforcement (settings.json hooks)
+## Deterministic Enforcement (optional)
 
-Beyond persona guidance, two hooks at `~/.claude/hooks/` enforce key gates at the harness level:
-- **SessionEnd advisory** — reminds to run Reaper if uncommitted changes exist in a project
-- **PreToolUse deploy gate** — blocks `bash ... deploy.sh` unless the command contains `# NADIA-APPROVED` or a `SMOKE-REPORT.md` artifact exists in CWD
+Beyond persona guidance, you can optionally wire deploy gates via your own Claude Code hooks (configured in your `settings.json`) to enforce key gates at the harness level. For example:
+- **SessionEnd advisory** — remind to run the Hygiene Auditor if uncommitted changes exist in a project
+- **PreToolUse deploy gate** — block a deploy command unless it carries an explicit approval marker or a smoke-test artifact exists
 
-See `~/.claude/settings.json` → `hooks.SessionEnd` and `hooks.PreToolUse`.
+These are optional and not shipped with this repo; configure them to match your own workflow.

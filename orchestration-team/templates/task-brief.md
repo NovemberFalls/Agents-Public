@@ -4,7 +4,7 @@ version: 1
 ---
 
 # Task Brief — [SPECIALIST] / Tier [N]
-**Issued by:** Nadia
+**Issued by:** Orchestrator
 **Date:** [YYYY-MM-DD]
 **Project:** [project]
 **Run:** [scope/run identifier]
@@ -32,7 +32,7 @@ version: 1
 **Finding source:** [agent name, review date, specific section]
 **Finding (quoted):** "[exact text from audit report]"
 
-This task directly addresses the above finding. Do not gold-plate beyond the scope of the finding without flagging it to Nadia.
+This task directly addresses the above finding. Do not gold-plate beyond the scope of the finding without flagging it to the Orchestrator.
 
 ---
 
@@ -72,7 +72,7 @@ You are authorized to modify these files only:
 | [path] | [what to change — specific, bounded] |
 
 **Blast radius — DO NOT TOUCH:**
-- [file or component]: [reason — e.g., "modified by Zara in Tier 1; touching this will create a merge conflict"]
+- [file or component]: [reason — e.g., "modified by the Security Engineer in Tier 1; touching this will create a merge conflict"]
 - [file or component]: [reason — e.g., "out of scope for this run; defer to next sprint"]
 
 ---
@@ -84,17 +84,17 @@ You are authorized to modify these files only:
 - [ ] Every function/method you add or modify has correct error handling
 - [ ] No hardcoded values that should be config
 - [ ] Follows existing code conventions (see CLAUDE.md for project conventions)
-- [ ] [Domain-specific quality requirements, e.g., "ARIA labels on all interactive elements" for Finn; "all DB queries parameterized" for Sage]
+- [ ] [Domain-specific quality requirements, e.g., "ARIA labels on all interactive elements" for the Frontend Engineer; "all DB queries parameterized" for the Database Engineer]
 
 ---
 
 ## Return Format
 
-When complete, return a Specialist Report (see template) to Nadia. Include:
+When complete, return a Specialist Report (see template) to the Orchestrator. Include:
 1. Files modified with line ranges
 2. Explicit integration context compliance statement
-3. What Sam should test (specific test cases, not vague "test the feature")
-4. Any open questions requiring Nadia's decision
+3. What the Test Engineer should test (specific test cases, not vague "test the feature")
+4. Any open questions requiring the Orchestrator's decision
 
 **If blocked:** Return a BLOCKED Specialist Report immediately — do not spin in place. Describe exactly what is blocking you and what you need to proceed.
 
@@ -104,7 +104,7 @@ When complete, return a Specialist Report (see template) to Nadia. Include:
 
 If this is revision round [N] after previous feedback:
 
-**Previous feedback from [Atlas | Nadia]:**
+**Previous feedback from [Code Reviewer | Orchestrator]:**
 [specific notes from previous round]
 
 **What changed since last attempt:**

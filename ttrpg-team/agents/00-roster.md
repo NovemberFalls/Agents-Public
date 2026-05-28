@@ -1,6 +1,4 @@
 ---
-name: TTRPG Team Roster
-type: reference
 tags: [ttrpg-team, roster]
 ---
 
@@ -18,50 +16,50 @@ They want the system to succeed. That means they do not soften findings.
 
 ## System Experts (1 per reference system)
 
-| Agent | File | Focus |
-|-------|------|-------|
-| Aldric | [01-aldric-dnd.md](agents/01-aldric-dnd.md) | D&D 3.5e / 4e / 5e — bounded accuracy, class balance, spell economy |
-| Morrigan | [02-morrigan-wfrp.md](agents/02-morrigan-wfrp.md) | WFRP 2e / 4e — gritty realism, career progression, consequence design |
-| Sylvara | [03-sylvara-pf2e.md](agents/03-sylvara-pf2e.md) | Pathfinder 2e — 3-action economy, proficiency scaling, monster math |
-| Vance | [04-vance-dc20.md](agents/04-vance-dc20.md) | DC20 — AP-adjacent systems, martial/caster parity, classless design |
+| Role | File | Focus |
+|------|------|-------|
+| D&D 5e System Expert | [01-dnd5e-expert.md](01-dnd5e-expert.md) | D&D 3.5e / 4e / 5e — bounded accuracy, class balance, spell economy |
+| WFRP System Expert | [02-wfrp-expert.md](02-wfrp-expert.md) | WFRP 2e / 4e — gritty realism, career progression, consequence design |
+| Pathfinder 2e System Expert | [03-pf2e-expert.md](03-pf2e-expert.md) | Pathfinder 2e — 3-action economy, proficiency scaling, monster math |
+| DC20 System Expert | [04-dc20-expert.md](04-dc20-expert.md) | DC20 — AP-adjacent systems, martial/caster parity, classless design |
 
 ## Min-Maxers (adversarial builders)
 
-| Agent | File | Focus |
-|-------|------|-------|
-| Skar | [05-skar-offense.md](agents/05-skar-offense.md) | Maximum reliable damage output per AP spent — DPR optimization |
-| Cipher | [06-cipher-loops.md](agents/06-cipher-loops.md) | Invulnerability, infinite loops, action denial, combo exploits |
+| Role | File | Focus |
+|------|------|-------|
+| Offense Min-Maxer | [05-offense-minmaxer.md](05-offense-minmaxer.md) | Maximum reliable damage output per AP spent — DPR optimization |
+| Combo/Loops Min-Maxer | [06-combo-minmaxer.md](06-combo-minmaxer.md) | Invulnerability, infinite loops, action denial, combo exploits |
 
 ## Balancers (design response team)
 
-| Agent | File | Focus |
-|-------|------|-------|
-| Lyra | [07-lyra-patcher.md](agents/07-lyra-patcher.md) | Rule text fixes — closes specific exploits with precise language |
-| Thane | [08-thane-adversarial.md](agents/08-thane-adversarial.md) | GM-side adversarial tools — what encounters already counter broken builds |
-| Vesper | [09-vesper-economy.md](agents/09-vesper-economy.md) | AP cost auditor — correct pricing of every action in the system |
-| Oryn | [10-oryn-magic.md](agents/10-oryn-magic.md) | Magic and expertise tree scaling — investment curves, tree parity |
+| Role | File | Focus |
+|------|------|-------|
+| Balance Patcher | [07-balance-patcher.md](07-balance-patcher.md) | Rule text fixes — closes specific exploits with precise language |
+| Adversarial Balancer | [08-adversarial-balancer.md](08-adversarial-balancer.md) | GM-side adversarial tools — what encounters already counter broken builds |
+| Economy Balancer | [09-economy-balancer.md](09-economy-balancer.md) | AP cost auditor — correct pricing of every action in the system |
+| Magic System Designer | [10-magic-designer.md](10-magic-designer.md) | Magic and expertise tree scaling — investment curves, tree parity |
 
 ## The Party (4 casuals — they play together)
 
-| Agent | File | Archetype |
-|-------|------|-----------|
-| Bram | [11-bram-warrior.md](agents/11-bram-warrior.md) | Story-first warrior — thematic builder, reads rules once |
-| Talia | [12-talia-newcomer.md](agents/12-talia-newcomer.md) | TTRPG newcomer — comes from video game RPGs, no tabletop history |
-| Roz | [13-roz-convert.md](agents/13-roz-convert.md) | D&D 5e veteran — 8 years of muscle memory, adapting to the system |
-| Dane | [14-dane-healer.md](agents/14-dane-healer.md) | Support/face player — healer, social skills, non-combat investment |
+| Role | File | Archetype |
+|------|------|-----------|
+| Player (Warrior) | [11-player-warrior.md](11-player-warrior.md) | Story-first warrior — thematic builder, reads rules once |
+| Player (Newcomer) | [12-player-newcomer.md](12-player-newcomer.md) | TTRPG newcomer — comes from video game RPGs, no tabletop history |
+| Player (System Convert) | [13-player-convert.md](13-player-convert.md) | D&D 5e veteran — 8 years of muscle memory, adapting to the system |
+| Player (Healer/Support) | [14-player-healer.md](14-player-healer.md) | Support/face player — healer, social skills, non-combat investment |
 
 ## Game Masters
 
-| Agent | File | Style |
-|-------|------|-------|
-| Holt | [15-holt-casual-gm.md](agents/15-holt-casual-gm.md) | Story-first GM — tests accessibility, rule clarity, narrative flow |
-| Vex | [16-vex-hardcore-gm.md](agents/16-vex-hardcore-gm.md) | Ultra-hardcore GM — encounter optimizer, TPK pressure, adversarial design |
+| Role | File | Style |
+|------|------|-------|
+| GM (Casual) | [15-gm-casual.md](15-gm-casual.md) | Story-first GM — tests accessibility, rule clarity, narrative flow |
+| GM (Hardcore) | [16-gm-hardcore.md](16-gm-hardcore.md) | Ultra-hardcore GM — encounter optimizer, TPK pressure, adversarial design |
 
 ## VTT Subject Matter Expert
 
-| Agent | File | Focus |
-|-------|------|-------|
-| Petra | [17-petra-vtt.md](agents/17-petra-vtt.md) | Foundry / Roll20 / Fantasy Grounds power user — UX gap analysis |
+| Role | File | Focus |
+|------|------|-------|
+| VTT Specialist | [17-vtt-specialist.md](17-vtt-specialist.md) | Foundry / Roll20 / Fantasy Grounds power user — UX gap analysis |
 
 ---
 
@@ -78,6 +76,6 @@ See [../combat-log-format.md](../combat-log-format.md) for the required combat l
 2. **Min-maxers** build against the rules as written. They produce broken builds with proof.
 3. **Balancers** respond to each broken build — rule fix, encounter response, or cost correction.
 4. **The party** runs sessions with the GMs. Sessions produce combat logs.
-5. **Petra** audits the VTT UX against Foundry/Roll20 feature parity.
+5. **The VTT Specialist** audits the VTT UX against Foundry/Roll20 feature parity.
 
 No finding is suppressed. Every broken build gets a logged response. Every rule gap gets tracked.

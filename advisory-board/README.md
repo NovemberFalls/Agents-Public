@@ -12,16 +12,16 @@ A standing board of 10 specialists that evaluates projects across technical, bus
 
 | Agent | Role | Model | Weight | Profile |
 |-------|------|-------|--------|---------|
-| **Alexandra** | CFO — Financial Viability | Opus | 15% | [01-alexandra-cfo.md](agents/01-alexandra-cfo.md) |
-| **Marcus** | CMO — Market & Positioning | Sonnet | 10% | [02-marcus-cmo.md](agents/02-marcus-cmo.md) |
-| **Priya** | CPO — Product Strategy | Opus | 10% | [03-priya-cpo.md](agents/03-priya-cpo.md) |
-| **Dr. Reyes** | CTO — Technical Architecture | Opus | 10% | [04-dr-reyes-cto.md](agents/04-dr-reyes-cto.md) |
-| **Sophie** | UI/UX — Design & Experience | Sonnet | 10% | [05-sophie-uiux.md](agents/05-sophie-uiux.md) |
-| **Chen** | Code Auditor — Quality & Debt | Sonnet | 10% | [06-chen-auditor.md](agents/06-chen-auditor.md) |
-| **Jordan** | Gap Analyst — Competitive Intel | Sonnet | 10% | [07-jordan-gaps.md](agents/07-jordan-gaps.md) |
-| **Kai** | DevOps/SRE — Reliability | Sonnet | 10% | [08-kai-devops.md](agents/08-kai-devops.md) |
-| **Viktor** | CSO — Security & Risk | Opus | 10% | [09-viktor-cso.md](agents/09-viktor-cso.md) |
-| **Evelyn** | Legal & Compliance | Opus | 5% | [10-evelyn-legal.md](agents/10-evelyn-legal.md) |
+| **CFO Advisor** | CFO — Financial Viability | Opus | 15% | [01-cfo-advisor.md](agents/01-cfo-advisor.md) |
+| **CMO Advisor** | CMO — Market & Positioning | Sonnet | 10% | [02-cmo-advisor.md](agents/02-cmo-advisor.md) |
+| **CPO Advisor** | CPO — Product Strategy | Opus | 10% | [03-cpo-advisor.md](agents/03-cpo-advisor.md) |
+| **CTO Advisor** | CTO — Technical Architecture | Opus | 10% | [04-cto-advisor.md](agents/04-cto-advisor.md) |
+| **UI/UX Lead** | UI/UX — Design & Experience | Sonnet | 10% | [05-uiux-lead.md](agents/05-uiux-lead.md) |
+| **Code Auditor** | Code Auditor — Quality & Debt | Sonnet | 10% | [06-code-auditor.md](agents/06-code-auditor.md) |
+| **Gap Analyst** | Gap Analyst — Competitive Intel | Sonnet | 10% | [07-gap-analyst.md](agents/07-gap-analyst.md) |
+| **DevOps/SRE Advisor** | DevOps/SRE — Reliability | Sonnet | 10% | [08-devops-sre.md](agents/08-devops-sre.md) |
+| **CSO Advisor** | CSO — Security & Risk | Opus | 10% | [09-cso-advisor.md](agents/09-cso-advisor.md) |
+| **Legal Advisor** | Legal & Compliance | Opus | 5% | [10-legal-advisor.md](agents/10-legal-advisor.md) |
 
 ---
 
@@ -54,7 +54,7 @@ A standing board of 10 specialists that evaluates projects across technical, bus
 4. All reviews are consolidated into a single weighted board report
 5. The consolidated report includes an Owner Responses section so the record is clear
 
-**Commands:** `/board-review-project [project]` · `/board-review [project] [agent]` · `/board-consolidate [project]`
+**Process:** invoke each board member, then consolidate per `docs/board-review.md`.
 
 ---
 

@@ -4,7 +4,7 @@ version: 1
 ---
 
 # Specialist Report — [SPECIALIST] / Tier [N]
-**Returning to:** [Atlas (if Opus) | Nadia (if Sonnet)]
+**Returning to:** [Code Reviewer (if Opus) | Orchestrator (if Sonnet)]
 **Date:** [YYYY-MM-DD]
 **Project:** [project]
 **Task brief reference:** [task identifier]
@@ -15,14 +15,14 @@ version: 1
 
 **Status:** COMPLETE | BLOCKED | PARTIAL
 
-*(If BLOCKED or PARTIAL: describe exactly what is blocking you and what you need. Do not speculate or try to work around — return immediately so Nadia can make the decision.)*
+*(If BLOCKED or PARTIAL: describe exactly what is blocking you and what you need. Do not speculate or try to work around — return immediately so the Orchestrator can make the decision.)*
 
 ---
 
 ## Model Used
 
 **Model:** [Opus | Sonnet]
-**Rationale:** [Why this model was used — confirm it matches what Nadia specified, or explain deviation]
+**Rationale:** [Why this model was used — confirm it matches what the Orchestrator specified, or explain deviation]
 
 ---
 
@@ -40,7 +40,7 @@ version: 1
 
 ## Integration Context Compliance
 
-**This section is mandatory — Nadia will reject reports that omit it.**
+**This section is mandatory — the Orchestrator will reject reports that omit it.**
 
 For each item in the Integration Context section of the task brief:
 
@@ -49,7 +49,7 @@ For each item in the Integration Context section of the task brief:
 | [change described in brief] | ✅ Compliant | [specific evidence — e.g., "line 87: uses `Depends(require_auth)` not `request.session.get('user')`"] |
 | [change described in brief] | ✅ Compliant | [specific evidence] |
 
-*(If any item is non-compliant: mark ❌ and explain why — this will result in REVISE from Atlas or Nadia)*
+*(If any item is non-compliant: mark ❌ and explain why — this will result in REVISE from the Code Reviewer or the Orchestrator)*
 
 ---
 
@@ -63,7 +63,7 @@ For each item in the Integration Context section of the task brief:
 
 ---
 
-## Adversarial Test (Security tasks only — Zara)
+## Adversarial Test (Security tasks only — Security Engineer)
 
 [Description of re-exploitation attempt with fix in place, and why it now fails]
 
@@ -71,7 +71,7 @@ For each item in the Integration Context section of the task brief:
 
 ## Potential Regression Points
 
-[What could this change break that was previously working? Be specific. Atlas will check these explicitly.]
+[What could this change break that was previously working? Be specific. The Code Reviewer will check these explicitly.]
 
 - [risk 1]: [how it's mitigated or why it's acceptable]
 - [risk 2]: [how it's mitigated]
@@ -80,9 +80,9 @@ For each item in the Integration Context section of the task brief:
 
 ---
 
-## What Sam Should Test
+## What the Test Engineer Should Test
 
-[Specific test cases Sam must write. These are requirements, not suggestions.]
+[Specific test cases the Test Engineer must write. These are requirements, not suggestions.]
 
 **Regression tests (must be RED before this change, GREEN after):**
 1. [specific scenario and assertion]
@@ -98,13 +98,13 @@ For each item in the Integration Context section of the task brief:
 
 ## Integration Notes for Other Specialists
 
-[Anything a downstream specialist (Tier N+1) needs to know about how this change affects their work. Nadia will include this in their task brief.]
+[Anything a downstream specialist (Tier N+1) needs to know about how this change affects their work. The Orchestrator will include this in their task brief.]
 
 ---
 
 ## Open Questions
 
-[Anything unresolved that requires Nadia's decision. Do not make assumptions — return with the question.]
+[Anything unresolved that requires the Orchestrator's decision. Do not make assumptions — return with the question.]
 
 1. [question]: [context, why it matters, options considered]
 
@@ -117,4 +117,4 @@ For each item in the Integration Context section of the task brief:
 **Confidence level:** HIGH | MEDIUM | LOW
 **Reason:** [Why this confidence level — be honest. Low confidence is not penalized; undisclosed low confidence that causes a later failure is.]
 
-**Would benefit from:** [Anything that would increase confidence — e.g., "Sam testing the WebSocket auth path since I can't run the full PTY stack in this context"]
+**Would benefit from:** [Anything that would increase confidence — e.g., "the Test Engineer testing the WebSocket auth path since I can't run the full PTY stack in this context"]

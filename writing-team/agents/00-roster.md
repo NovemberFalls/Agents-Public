@@ -1,6 +1,4 @@
 ---
-name: Writing Team Roster
-type: reference
 tags: [writing-team, roster]
 ---
 
@@ -21,11 +19,11 @@ They want the book to succeed. That means they do not soften findings.
 
 | Agent | File | Focus |
 |-------|------|-------|
-| Eris | [01-eris-continuity.md](agents/01-eris-continuity.md) | Continuity — story state, geography, character knowledge, seeds/payoffs |
-| Morrow | [02-morrow-voice.md](agents/02-morrow-voice.md) | POV voice — character-specific voice, dialogue, knowledge bleed |
-| Vael | [03-vael-reader.md](agents/03-vael-reader.md) | Reader surrogate — pacing, emotional landing, confusion, engagement |
-| Cael | [04-cael-craft.md](agents/04-cael-craft.md) | Craft audit — the 17-point checklist with taste, overshoot detection |
-| Wren | [05-wren-canon.md](agents/05-wren-canon.md) | Canon bridge — shared lore alignment between book and any companion material |
+| Continuity Editor | [01-continuity-editor.md](01-continuity-editor.md) | Continuity — story state, geography, character knowledge, seeds/payoffs |
+| Voice Editor | [02-voice-editor.md](02-voice-editor.md) | POV voice — character-specific voice, dialogue, knowledge bleed |
+| Reader Advocate | [03-reader-advocate.md](03-reader-advocate.md) | Reader surrogate — pacing, emotional landing, confusion, engagement |
+| Craft Editor | [04-craft-editor.md](04-craft-editor.md) | Craft audit — the 17-point checklist with taste, overshoot detection |
+| Canon Keeper | [05-canon-keeper.md](05-canon-keeper.md) | Canon bridge — shared lore alignment between book and any companion material |
 
 ---
 
@@ -53,13 +51,13 @@ No agent has veto power. They advise, they don't overrule. The human is the fina
 
 ## Canon Bridge
 
-**Wren** is the bridge between this team and any companion material (such as a TTRPG or
+The **Canon Keeper** is the bridge between this team and any companion material (such as a TTRPG or
 worldbuilding project). When the novel depicts magic, races, geography, or culture, it must
 align with canonical definitions established in the project's world files. When companion
-material defines new mechanics or lore details, Wren ensures the book's narrative treatment
+material defines new mechanics or lore details, the Canon Keeper ensures the book's narrative treatment
 matches.
 
-Shared lore sources will vary by project — point Wren at your world files, lore documents,
+Shared lore sources will vary by project — point the Canon Keeper at your world files, lore documents,
 and any relevant system definitions.
 
 ---

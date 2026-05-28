@@ -5,9 +5,9 @@ version: 1
 
 # Execution Plan — [PROJECT] / [SCOPE]
 **Date:** [YYYY-MM-DD]
-**Requested by:** [human | /dev-implement | /dev-fix]
+**Requested by:** [human | /orchestrate | /fix]
 **Audit reference:** [path to consolidated-report.md]
-**Nadia:** Reviewing and signing
+**Orchestrator:** Reviewing and signing
 
 ---
 
@@ -52,7 +52,7 @@ Dependencies identified:
 | [name] | [task] | [files] | [Opus/Sonnet] | [why this model] |
 | [name] | [task] | [files] | [Opus/Sonnet] | [why this model] |
 
-*Atlas reviews after: [list of Opus specialists in this tier]*
+*Code Reviewer reviews after: [list of Opus specialists in this tier]*
 
 ### Tier 2 — Sequential (requires Tier 1 complete)
 
@@ -62,7 +62,7 @@ Dependencies identified:
 |-----------|------|-------|-------|-----------|
 | [name] | [task] | [files] | [Opus/Sonnet] | [why this model] |
 
-*Atlas reviews after: [list of Opus specialists in this tier]*
+*Code Reviewer reviews after: [list of Opus specialists in this tier]*
 
 ### Tier [N] — [Parallel/Sequential]
 
@@ -72,7 +72,7 @@ Dependencies identified:
 
 | Specialist | Task | Coverage |
 |-----------|------|---------|
-| Sam | Write/update tests for all changes | [list what needs testing] |
+| Test Engineer | Write/update tests for all changes | [list what needs testing] |
 
 ---
 
@@ -93,7 +93,7 @@ Dependencies identified:
 
 | Risk | Likelihood | Mitigation |
 |------|-----------|-----------|
-| [risk] | [H/M/L] | [how Nadia is handling it] |
+| [risk] | [H/M/L] | [how the Orchestrator is handling it] |
 
 ---
 
@@ -101,9 +101,9 @@ Dependencies identified:
 
 Tiers: [N]
 Specialists: [list]
-Atlas reviews required: [N Opus tasks]
+Code Reviewer reviews required: [N Opus tasks]
 Approximate rounds if clean: [N]
-Early stop conditions: [what would cause Nadia to halt and escalate to human]
+Early stop conditions: [what would cause the Orchestrator to halt and escalate to human]
 
 ---
 
@@ -115,4 +115,4 @@ Early stop conditions: [what would cause Nadia to halt and escalate to human]
 - [ ] Any change to auth or security systems
 - [ ] Scope is ambiguous or audit reference is missing
 
-**Nadia's assessment:** [proceed | pause for human approval]
+**The Orchestrator's assessment:** [proceed | pause for human approval]

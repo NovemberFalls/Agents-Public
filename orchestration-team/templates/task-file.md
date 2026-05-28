@@ -11,11 +11,11 @@ requires_audit: false
 
 ## What Needs to Happen
 
-[Plain English description of what you want. Be as specific or as vague as you like — Nadia will ask for clarification if anything is ambiguous before writing code. You do not need to know which files are involved.]
+[Plain English description of what you want. Be as specific or as vague as you like — the Orchestrator will ask for clarification if anything is ambiguous before writing code. You do not need to know which files are involved.]
 
 ## Why
 
-[Context that helps Nadia make better decisions — the "why" behind the task. What problem does this solve? What does success look like for you?]
+[Context that helps the Orchestrator make better decisions — the "why" behind the task. What problem does this solve? What does success look like for you?]
 
 ## Acceptance Criteria
 
@@ -32,7 +32,7 @@ requires_audit: false
 
 ## Do NOT Touch
 
-[Optional — anything Nadia should explicitly leave alone.]
+[Optional — anything the Orchestrator should explicitly leave alone.]
 
 ## Notes / Constraints
 
@@ -42,10 +42,10 @@ requires_audit: false
 <!--
 HOW TO USE:
 1. Fill in the fields above (only the "What Needs to Happen" section is required)
-2. Save the file anywhere in your project — e.g., your/project/path/tasks/my-task.md
-3. Run: /dev-implement <project> task:<path-to-task-file>
-   Or:  /dev-fix <project> task:<path-to-task-file>
+2. Save the file anywhere in your project — e.g., tasks/my-task.md
+3. Run: /orchestrate <project> task:<path-to-task-file>
+   Or:  /fix <project> task:<path-to-task-file>
 
-Nadia will read this file, cross-reference with any existing audit findings,
+The Orchestrator will read this file, cross-reference with any existing audit findings,
 build the dependency graph, and proceed.
 -->

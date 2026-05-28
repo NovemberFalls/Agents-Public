@@ -12,18 +12,18 @@ This format is required for every combat encounter. No exceptions.
 COMBAT LOG — [Encounter Name]
 Date: [simulation date]
 Session: [Session reference ID]
-GM: [Holt (Casual) | Vex (Hardcore)]
+GM: [Casual | Hardcore]
 Party Level: [X]
 ═══════════════════════════════════════════════════════════════
 PARTY:
-  Bronn Ashvale (Bram)   — Human, [attribute spread]
-                            HP: [current]/[max]  AP: [max]/turn
-  Kira (Talia)           — [Race], [attribute spread]
-                            HP: [current]/[max]  AP: [max]/turn
-  Sel (Roz)              — [Race], [attribute spread]
-                            HP: [current]/[max]  AP: [max]/turn
-  Evander (Dane)         — [Race], [attribute spread]
-                            HP: [current]/[max]  AP: [max]/turn
+  Bronn Ashvale (Warrior)   — Human, [attribute spread]
+                               HP: [current]/[max]  AP: [max]/turn
+  Kira (Newcomer)           — [Race], [attribute spread]
+                               HP: [current]/[max]  AP: [max]/turn
+  Sel (System Convert)      — [Race], [attribute spread]
+                               HP: [current]/[max]  AP: [max]/turn
+  Evander (Healer/Support)  — [Race], [attribute spread]
+                               HP: [current]/[max]  AP: [max]/turn
 
 ENEMIES:
   [Name] (×[count])      — [Type], HP: [X], AC: [X], AP: [X]/turn
@@ -57,7 +57,7 @@ INITIATIVE ORDER (descending): [Name (total)] → [Name (total)] → ...
 ```
 ══════════════════════════════════════════════════════════════
 ROUND [N]
-State: Party HP [Bram: X/Y | Talia: X/Y | Roz: X/Y | Dane: X/Y]
+State: Party HP [Warrior: X/Y | Newcomer: X/Y | System Convert: X/Y | Healer/Support: X/Y]
        Enemy HP [Enemy1: X/Y | Enemy2: X/Y]
 Active conditions: [Character: condition(s) | none]
 ══════════════════════════════════════════════════════════════
@@ -108,7 +108,7 @@ Rounds taken: [N]
 ══════════════════════════════════════════════════════════════
 
 FINAL STATE:
-  Bram HP: [X/Y] | Talia HP: [X/Y] | Roz HP: [X/Y] | Dane HP: [X/Y]
+  Warrior HP: [X/Y] | Newcomer HP: [X/Y] | System Convert HP: [X/Y] | Healer/Support HP: [X/Y]
   Party members downed at any point: [list or none]
   Resources expended: [List all spell uses, expertise activations, short rest abilities used]
 
@@ -139,25 +139,25 @@ CRITICAL MOMENTS:
 POST-ENCOUNTER ANALYSIS
 ══════════════════════════════════════════════════════════════
 
-GM NOTES ([Holt/Vex]):
+GM NOTES ([Casual/Hardcore]):
   [What went as planned]
   [What surprised the GM]
   [Was the encounter difficulty appropriate for party level: YES | LOW | HIGH | BRUTAL]
   [Would a casual GM have the tools to design this encounter: YES | NEEDS GUIDANCE | NO]
 
 PLAYER NOTES (per character):
-  Bram: [Key observation from Bram's perspective — mechanical feel, frustration, high point]
-  Talia: [Same]
-  Roz: [Same]
-  Dane: [Same]
+  Warrior: [Key observation from the Warrior's perspective — mechanical feel, frustration, high point]
+  Newcomer: [Same]
+  System Convert: [Same]
+  Healer/Support: [Same]
 
 BALANCE FLAGS:
-  [Any action or ability that felt over/undertuned — flag to Vesper/Oryn]
-  [Any condition that felt un-fun vs. appropriately threatening — flag to Lyra]
-  [Any moment where the GM had no good options — flag to Thane]
+  [Any action or ability that felt over/undertuned — flag to Economy Balancer/Magic System Designer]
+  [Any condition that felt un-fun vs. appropriately threatening — flag to Balance Patcher]
+  [Any moment where the GM had no good options — flag to Adversarial Balancer]
 
 RULES AMBIGUITIES ENCOUNTERED:
-  [Rule that was unclear mid-encounter → How it was resolved → Flag to Lyra]
+  [Rule that was unclear mid-encounter → How it was resolved → Flag to Balance Patcher]
 ```
 
 ---
@@ -165,7 +165,7 @@ RULES AMBIGUITIES ENCOUNTERED:
 ## Notes on Simulation Standards
 
 - **Dice rolls:** Roll actual dice (or use explicit RNG) — do not assume average results except in analysis sections
-- **GM intelligence:** Vex plays to win tactically. Holt plays story-first but not stupidly.
+- **GM intelligence:** The Hardcore GM plays to win tactically. The Casual GM plays story-first but not stupidly.
 - **Resource tracking:** Track HP and AP exactly. No approximations in the log itself.
 - **Spell prepared list:** Include the full prepared spell list at session start for any caster
 - **Expertise abilities:** Note when tier abilities are activated — these are limited resources
