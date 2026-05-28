@@ -240,8 +240,9 @@ Agents-Public/
 │   │   └── context-ledger.md         # the token/context model — illustrative
 │   ├── real-run/                     # REAL metered run that built this repo
 │   │   └── README.md                 # harness-reported tokens from 16 subagents
-│   └── eval/                         # REAL 3-arm experiment: is the CDG load-bearing?
-│       └── README.md                 # monolith vs naive-parallel vs CDG, mypy-scored
+│   └── eval/                         # REAL experiments (measured, not asserted)
+│       ├── README.md                 # is the CDG load-bearing? monolith vs naive vs CDG
+│       └── persona-backstory.md      # does the persona backstory help detection? (no)
 │
 └── .github/
     └── workflows/

@@ -2,6 +2,8 @@
 
 > A real experiment on a real codebase. Not fictional, not a model — agents were run, an objective oracle scored them, and the numbers below are what happened.
 
+> **This folder holds two evals.** This file tests the *Change Dependency Graph*. [`persona-backstory.md`](persona-backstory.md) tests whether the persona *backstory* improves output (it found no measurable effect). Together they say: the coordination discipline earned its keep; the character sheets did not.
+
 The rest of this repo *asserts* that the orchestration loop prevents the most common multi-agent failure: a specialist building against a contract another specialist changed. This eval **tests** the single claim that actually matters — that **forwarding each tier's finalized state to the next tier** (the core of the [Change Dependency Graph](../../docs/architecture.md)) is what prevents that failure, rather than the personas, the gates, or the org chart.
 
 It isolates exactly one variable: **does the agent updating the consumers receive the finalized contract, or not?**

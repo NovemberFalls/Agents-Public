@@ -14,6 +14,8 @@ The second version gives the model something to inhabit. The agent now has a rea
 
 Personality also makes agent behavior predictable. A user who knows the Security Engineer has been burned by JWT edge cases knows to expect them to probe token expiry logic even when the brief doesn't mention it. That predictability is useful. It means the orchestrator can reason about what each agent will and won't catch.
 
+> **Measured caveat — read this before you believe the above.** The claim that a rich identity beats a thin "you are a security engineer" is exactly what [`examples/eval/persona-backstory.md`](../examples/eval/persona-backstory.md) tested — using *this very example*. On a 7-bug detection task, the full backstory, a checklist-only version, and a naked "you are a security reviewer" all scored identically (7/7). The honest reading: on recognizable work the backstory is **decoration** — the capability is already in the model. It might help on subtler tasks where a bare prompt fails, but that has not been demonstrated. Author personas because they make a roster legible and consistent to reason about — not on the unproven belief that the backstory itself measurably improves output.
+
 ---
 
 ## Why blind spots matter
