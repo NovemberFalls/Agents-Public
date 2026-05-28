@@ -15,16 +15,22 @@ The architecture in this repo attacks that directly with four mechanisms.
 When the orchestrator delegates to a specialist subagent, that specialist runs in its **own** context window. All of its expensive work — reading twenty files, running greps, trial and error — stays in the specialist's window. Only its final report (a few hundred tokens) returns to the orchestrator.
 
 ```
-Monolithic agent                     Orchestrator + subagents
-─────────────────                    ────────────────────────
-main context                         main context (orchestrator)
- ├─ read file A   ┐                   ├─ delegate ──► [Backend Engineer ctx]
- ├─ read file B   │ all of this        │                 ├─ read A,B,C,D…
- ├─ read file C   │ piles into          │                 └─ returns 1 report ──┐
- ├─ grep…         │ ONE window          │                                       │
- ├─ read file D   │ and is re-read     ├─ delegate ──► [Test Engineer ctx]      │
- └─ …             ┘ every turn          │                 └─ returns 1 report ──┤
-                                        └─ integrates the reports ◄─────────────┘
+MONOLITHIC AGENT — one window
+  Every file read piles into a single context and is
+  re-read on every turn. It only grows — until it hits
+  compaction and starts losing detail.
+
+    main ctx = A + B + C + greps + edits + …  (all kept)
+
+ORCHESTRATOR + SUBAGENTS — context is quarantined
+  Each specialist reads in its OWN window and returns
+  only a short report; the file reading never enters
+  the orchestrator's window.
+
+    orchestrator
+      ├─► [Backend Engineer]  reads A,B,C…  → 1 report
+      ├─► [Test Engineer]     reads files   → 1 report
+      └─ integrates only the returned reports
 ```
 
 The orchestrator's window holds the *plan and the summaries*, not the raw exploration. It stays lean, so it can coordinate a large task without hitting compaction or drowning in irrelevant detail. The token-heavy reading is quarantined where it is needed and discarded when it is done.
@@ -74,4 +80,7 @@ The orchestration model is a tool for managing context as a finite budget. Spend
 
 ## See it worked through
 
-[`examples/orchestrated-run/`](../examples/orchestrated-run/) applies this to a concrete task and ends in a [context ledger](../examples/orchestrated-run/context-ledger.md) — a transparent, line-by-line model of peak context per window vs. a monolith, plus the honest "when it loses" case and how to reproduce the comparison with metered numbers.
+Two examples:
+
+- [`examples/orchestrated-run/`](../examples/orchestrated-run/) — a fictional, illustrative walkthrough that ends in a [context ledger](../examples/orchestrated-run/context-ledger.md): a transparent, line-by-line model of peak context per window vs. a monolith, plus the honest "when it loses" case.
+- [`examples/real-run/`](../examples/real-run/) — **the real, metered version.** The harness-reported token usage from the actual orchestration run that produced this repository: 16 subagents, ~1.19M tokens of processing quarantined in isolated windows, coordinated from a single window that never compacted.

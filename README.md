@@ -231,13 +231,15 @@ Agents-Public/
 │   │   ├── cto-advisor-review.md
 │   │   ├── cfo-advisor-review.md
 │   │   └── consolidated-report.md
-│   └── orchestrated-run/             # full orchestration loop on fictional "Verdant"
-│       ├── README.md
-│       ├── task-brief.md
-│       ├── execution-plan.md         # CDG + tiers + file-ownership matrix
-│       ├── tier-reports.md           # specialist reports + Code Reviewer gate
-│       ├── reconciliation-matrix.md
-│       └── context-ledger.md         # the token/context model — the point of it
+│   ├── orchestrated-run/             # full loop on fictional "Verdant" (illustrative)
+│   │   ├── README.md
+│   │   ├── task-brief.md
+│   │   ├── execution-plan.md         # CDG + tiers + file-ownership matrix
+│   │   ├── tier-reports.md           # specialist reports + Code Reviewer gate
+│   │   ├── reconciliation-matrix.md
+│   │   └── context-ledger.md         # the token/context model — illustrative
+│   └── real-run/                     # REAL metered run that built this repo
+│       └── README.md                 # harness-reported tokens from 16 subagents
 │
 └── .github/
     └── workflows/

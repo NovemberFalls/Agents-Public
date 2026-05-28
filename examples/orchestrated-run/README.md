@@ -6,6 +6,8 @@
 
 This directory shows the full orchestration loop applied to one concrete task, end to end: a task brief in, a reviewed-and-reconciled change set out. It is the runnable companion to the conceptual walkthrough in [`docs/architecture.md`](../../docs/architecture.md), which uses the same task.
 
+> **This example is fictional by design** — it teaches the *mechanism* with a clean, simple task. For **real, harness-metered numbers** from an actual large run, see [`../real-run/`](../real-run/), which reports the token usage from the orchestration session that produced this repository.
+
 **Verdant** is an imaginary open-source task-management API (Python/FastAPI backend, a small React frontend). It has no affiliation with any real product. The task:
 
 > **Add user tagging to tasks.** Tags are stored in a new `task_tags` join table. The REST API gains two endpoints and the task-detail endpoint returns tags. The frontend task card displays them.
