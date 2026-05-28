@@ -19,10 +19,10 @@ Every row's **tokens / tool calls / duration** is reported by the Claude Code ha
 | 1 | Security Engineer | Leak/PII sweep (tree + git history) | 40,969 | 28 | 2m29s |
 | 2 | Hygiene Auditor | Initial hygiene sweep | 92,665 | 56 | 4m12s |
 | 3 | (research) | Verify Claude Code subagent frontmatter spec | 59,099 | 7 | 0m33s |
-| 4 | Editor — orchestration team | Genericize 11 agents + templates | 184,992 | 160 | 18m45s |
-| 5 | Editor — advisory board | Genericize 10 agents + templates | 123,868 | 133 | 8m03s |
-| 6 | Editor — writing team | Genericize 5 agents + fix roster links | 55,204 | 29 | 3m16s |
-| 7 | Editor — TTRPG team | Genericize 17 agents + fix links/count | 111,176 | 73 | 8m43s |
+| 4 | Editor — `orchestration-team/` | Rewrite 11 agent files + templates (rename, frontmatter) | 184,992 | 160 | 18m45s |
+| 5 | Editor — `advisory-board/` | Rewrite 10 agent files + templates | 123,868 | 133 | 8m03s |
+| 6 | Editor — `writing-team/` | Rewrite 5 agent files + fix roster links | 55,204 | 29 | 3m16s |
+| 7 | Editor — `ttrpg-team/` | Rewrite 21 files (17 agents + roster/README/protocol), fix 17 links + count | 111,176 | 73 | 8m43s |
 | 8 | Hygiene Auditor | Tier 1 hygiene gate | 63,245 | 38 | 3m17s |
 | 9 | Editor — docs | Genericize architecture/loop/board docs | 55,841 | 38 | 3m50s |
 | 10 | Editor — contributing | Fix CONTRIBUTING + authoring schema | 32,865 | 16 | 1m41s |
@@ -33,6 +33,8 @@ Every row's **tokens / tool calls / duration** is reported by the Claude Code ha
 | 15 | Editor — remediation | Fix the findings from the gates | 53,954 | 57 | 2m46s |
 | 16 | Hygiene Auditor | Hygiene gate on the Verdant example | 40,388 | 25 | 2m16s |
 | | **Totals** | **16 spawns** | **1,191,462** | **872** | **~71m cumulative** |
+
+*(The "Editor — `folder/`" rows are general-purpose editing subagents assigned to a folder **of this repository** — the agent personas inside those folders were the **text being edited** for publication, not agents being invoked. No advisory, writing, or TTRPG persona was "run"; e.g. row 7 is one editor rewriting the 21 files under `ttrpg-team/`.)*
 
 *(Tiers 1 — rows 4–7 — and Tier 2 — rows 9–11 — were issued in parallel, so wall-clock was far less than the ~71m cumulative agent runtime. Row 4 alone ran ~19 minutes.)*
 
