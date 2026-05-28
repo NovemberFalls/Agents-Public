@@ -1,0 +1,17 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Obsidian vault config — not part of this repo
+.obsidian/
+
+# Local env / secrets (defense in depth — none should ever be committed)
+.env
+.env.*
+*.local
+*.key
+*.pem
+
+# Node (in case examples grow tooling)
+node_modules/
