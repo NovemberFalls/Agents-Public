@@ -28,7 +28,7 @@ The naive fix — serialize everything — throws away the efficiency of paralle
 
 The headline benefit of role-scoped subagents is **context isolation**. When the orchestrator delegates to a specialist, that specialist reads files, greps, and explores in its *own* context window — and returns only a short report. The expensive, token-heavy work stays quarantined; the orchestrator's window holds the plan and the summaries, not the raw exploration, so it can coordinate a large task without bloating into compaction.
 
-Add right-sized models per role (pay Opus rates only where they buy something), skills that load a workflow on demand instead of carrying it in every prompt, and a shared project-brain that is read once instead of re-derived each run — and the architecture comes out ahead on tokens *for the tasks it is built for*. It is **not** free: coordination and review gates cost tokens, so for a one-line change the repo prescribes a lightweight single-specialist path instead. The full rationale, including the honest counter-argument, is in **[docs/token-efficiency.md](docs/token-efficiency.md)**.
+Add right-sized models per role (pay Opus rates only where they buy something), skills that load a workflow on demand instead of carrying it in every prompt, and a shared project-brain that is read once instead of re-derived each run. The robust win is **peak context**: any single window stays small, so a large task never bloats into compaction. Total token *spend* is a separate, workload-dependent question — coordination and review gates cost tokens, so for a one-line change the repo prescribes a lightweight single-specialist path instead. The full rationale, including the honest counter-argument, is in **[docs/token-efficiency.md](docs/token-efficiency.md)**, with a worked token ledger on a sample task in **[examples/orchestrated-run/](examples/orchestrated-run/)**.
 
 ---
 
@@ -226,11 +226,18 @@ Agents-Public/
 │   └── authoring-an-agent.md        # how to write a good persona file
 │
 ├── examples/
-│   └── sample-review/
-│       ├── README.md                # what this example illustrates
-│       ├── cto-advisor-review.md     # fictional CTO review of "Lumina"
-│       ├── cfo-advisor-review.md     # fictional CFO review of "Lumina"
-│       └── consolidated-report.md    # weighted Readiness Score
+│   ├── sample-review/                # advisory board review of fictional "Lumina"
+│   │   ├── README.md
+│   │   ├── cto-advisor-review.md
+│   │   ├── cfo-advisor-review.md
+│   │   └── consolidated-report.md
+│   └── orchestrated-run/             # full orchestration loop on fictional "Verdant"
+│       ├── README.md
+│       ├── task-brief.md
+│       ├── execution-plan.md         # CDG + tiers + file-ownership matrix
+│       ├── tier-reports.md           # specialist reports + Code Reviewer gate
+│       ├── reconciliation-matrix.md
+│       └── context-ledger.md         # the token/context model — the point of it
 │
 └── .github/
     └── workflows/

@@ -69,3 +69,9 @@ The point is not "always use many agents." It is "isolate context when context i
 | A workflow you run often | A skill, not a bigger system prompt | Load the procedure on demand, not always |
 
 The orchestration model is a tool for managing context as a finite budget. Spend it where it buys correctness or speed; conserve it everywhere else.
+
+---
+
+## See it worked through
+
+[`examples/orchestrated-run/`](../examples/orchestrated-run/) applies this to a concrete task and ends in a [context ledger](../examples/orchestrated-run/context-ledger.md) — a transparent, line-by-line model of peak context per window vs. a monolith, plus the honest "when it loses" case and how to reproduce the comparison with metered numbers.
