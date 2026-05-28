@@ -238,8 +238,10 @@ Agents-Public/
 │   │   ├── tier-reports.md           # specialist reports + Code Reviewer gate
 │   │   ├── reconciliation-matrix.md
 │   │   └── context-ledger.md         # the token/context model — illustrative
-│   └── real-run/                     # REAL metered run that built this repo
-│       └── README.md                 # harness-reported tokens from 16 subagents
+│   ├── real-run/                     # REAL metered run that built this repo
+│   │   └── README.md                 # harness-reported tokens from 16 subagents
+│   └── eval/                         # REAL 3-arm experiment: is the CDG load-bearing?
+│       └── README.md                 # monolith vs naive-parallel vs CDG, mypy-scored
 │
 └── .github/
     └── workflows/
