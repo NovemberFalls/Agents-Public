@@ -97,6 +97,6 @@ Review outputs are stored alongside the chapter. Suggested structure:
 
 - **No agent rewrites prose.** They identify issues and suggest directions. The author (Claude in session or human) decides how to fix.
 - **No agent has veto power.** CRITICAL findings are strong recommendations, not blocks. The human is the final editor.
-- **The Reader Advocate's read is sacred.** It reads cold, without craft vocabulary, without other agents' findings. Its engagement map is the ground truth of reader experience.
+- **The Reader Advocate's read must stay uncontaminated.** It reads cold, without craft vocabulary, without other agents' findings. Its engagement map is the ground truth of reader experience.
 - **The Craft Editor compares draft to enhanced.** If both versions exist, it must read both. The enhance pass can overcorrect — the Craft Editor is the safeguard.
 - **The Canon Keeper does not decide canon priority.** It reports divergences. The human decides which source wins and updates accordingly.

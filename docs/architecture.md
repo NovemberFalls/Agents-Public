@@ -1,6 +1,10 @@
 # Architecture
 
-This document explains the core coordination model used by the orchestration team: the Change Dependency Graph, execution tiers, mandatory gates, and the reconciliation matrix. The CDG is the part of this system that has been **validated in a controlled experiment** — dependency-ordered state-forwarding was the difference between 0/3 and 3/3 on integration correctness (see [../examples/eval/README.md](../examples/eval/README.md)).
+This document explains the coordination model used by the orchestration team: the Change Dependency Graph, execution tiers, the verification gate, and the reconciliation matrix.
+
+The **validated core** of this system is small: the CDG, context isolation via subagents, and exactly one deterministic verification check. The CDG was validated in a controlled experiment — dependency-ordered state-forwarding was the difference between 0/3 and 3/3 on integration correctness (see [../examples/eval/README.md](../examples/eval/README.md)). The deterministic check earns its place because in the persona eval an LLM "review" gate hallucinated a false positive while a deterministic oracle caught the real bug.
+
+The richer machinery — the additional gate battery and the director/cross-team layer — was never validated in a controlled test. It is presented below as **optional, unvalidated add-ons**, not as mandatory. See [../FINDINGS.md](../FINDINGS.md) for the full account of what was tested and what was not.
 
 ---
 
@@ -104,13 +108,25 @@ In this example, Tier 1 and Tier 2 are database-specialist work. Tier 3 splits a
 
 ---
 
-## Mandatory Gates
+## The Verification Gate (validated)
 
-Four gate types are mandatory regardless of tier size or perceived simplicity.
+There is exactly **one** gate in the recommended core, and it is deterministic.
 
-### 1. Keyword scan (auto-invocation)
+### Deterministic verification check
 
-Before any tier executes, the orchestrator scans the tier's planned changes against this table:
+Before an integrated result is handed to the human, gate it with something that has an exit code — a typecheck, a test suite, or a build. Not an LLM "review" pass. This is the guardrail with evidence behind it: in the persona eval, every LLM-reviewer arm emitted the *same* hallucinated false positive, while the deterministic `mypy` oracle is what actually caught the real integration break (see [../FINDINGS.md](../FINDINGS.md) and [../examples/eval/](../examples/eval/)). A reviewer persona produces an opinion; a typecheck/test/build produces a fact.
+
+Run the deterministic check on the integrated state after the tiers complete, and treat a non-zero exit as a hard block. That is the validated gate.
+
+---
+
+## Optional, unvalidated add-ons
+
+Everything in this section is **available but was never validated in a controlled test.** It is asserted, not evidenced. Treat these as optional knobs, not as mandatory gates — and read [../FINDINGS.md](../FINDINGS.md) before relying on any of them as if they were load-bearing. None of them is part of the recommended core; the lightweight default (one agent, plus the deterministic check when the task outgrows a single context window) is the recommendation.
+
+### Keyword scan (auto-invocation) — optional
+
+A pattern-triggered scan that adds gate agents before a tier executes:
 
 | Keyword / pattern | Auto-invoked agent | Reason |
 |---|---|---|
@@ -118,21 +134,19 @@ Before any tier executes, the orchestrator scans the tier's planned changes agai
 | migration, schema change, ALTER TABLE, DROP COLUMN, INDEX | Database Engineer + Test Engineer | Schema changes have irreversible failure modes |
 | deploy, publish, release, live endpoint, public surface | Test Engineer — smoke gate | Changes reaching a live surface need verification before full rollout |
 
-Specialists do not self-gate. The orchestrator is solely responsible for running the keyword scan and adding the appropriate agents. A specialist who touches auth logic does not decide for themselves whether the Security Engineer is needed.
+The intent is that specialists do not self-gate — the orchestrator runs the scan and adds agents. This is a reasonable-sounding policy, but note that the eval found LLM reviewers (including security review) unreliable relative to a deterministic check; an auto-invoked LLM security pass is not a substitute for the deterministic gate above.
 
-### 2. Code hygiene sweep (Hygiene Auditor)
+### Code hygiene sweep (Hygiene Auditor) — optional
 
-The Hygiene Auditor runs after every tier, including lightweight single-file tiers. No exceptions. The Hygiene Auditor identifies dead code, unused imports, orphaned files, and stale exports introduced or exposed by the tier's changes. Its hygiene report is included in the integration snapshot passed to the next tier.
+A sweep that identifies dead code, unused imports, orphaned files, and stale exports introduced or exposed by a tier's changes, with its report folded into the integration snapshot. The original design ran this after every tier including lightweight single-file tiers, plus a final cross-tier sweep. It was never validated as carrying its weight; run it if you find it useful, but it is not required.
 
-The final cross-tier hygiene sweep runs after all specialist tiers complete, before the reconciliation matrix is produced.
+### Code Reviewer (LLM review) pass — optional
 
-### 3. Code Reviewer gate
+An LLM review of specialist output (originally: all Opus-model output) before it reaches the Orchestrator, returning approve-or-revise. Useful as a sanity layer, but it is an LLM opinion, not a deterministic check — and is explicitly *not* the validated gate. Where they disagree, the deterministic check wins.
 
-The Code Reviewer reviews all output from Opus-model specialists before that output reaches the Orchestrator. The Code Reviewer can approve or return work for revision. A Code Reviewer-approved review does not block the Orchestrator's own review — the Orchestrator reviews all output — but the Code Reviewer catches structural and integration issues at the specialist level before they compound.
+### Smoke gate — optional
 
-### 4. Smoke / verification gate
-
-Any tier that touches a live surface (a deployed endpoint, a running service, a public interface) triggers a smoke gate: the Test Engineer probes the live surface to verify behavior before the tier is accepted. A failing smoke gate blocks the tier regardless of code-review outcome. The tier does not advance until the Test Engineer confirms the live surface behaves as expected.
+For tiers touching a live surface (a deployed endpoint, a running service, a public interface), the Test Engineer probes the surface before the tier is accepted. Sensible for live-surface work, but unvalidated as a mandatory step. If used, a failing smoke probe should block the tier.
 
 ---
 

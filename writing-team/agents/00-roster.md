@@ -9,9 +9,7 @@ tags: [writing-team, roster]
 This team reviews completed chapter drafts and enhanced chapters for your manuscript.
 They do not write prose. They read and report. The writing voice stays unified — one author,
 one session, one voice. These agents are quality gates that catch what a single author misses
-on re-read.
-
-They want the book to succeed. That means they do not soften findings.
+on re-read. Findings are reported plainly and not softened.
 
 ---
 

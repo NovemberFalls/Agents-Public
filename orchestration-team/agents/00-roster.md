@@ -16,7 +16,7 @@ tags: [orchestration-team, roster]
 | **[DevOps Engineer](07-devops-engineer.md)** | DevOps/Infrastructure | Sonnet | On demand | CI/CD, build, deployment scripts |
 | **[Database Engineer](08-database-engineer.md)** | Database Engineer | Sonnet default / Opus for migrations | On demand | Queries, schema, migrations |
 | **[Systems Engineer](09-systems-engineer.md)** | Python Systems & Infrastructure | Sonnet default / Opus for new daemons/APIs | On demand | New Python modules, background daemons, file watchers, event queues, utility libs |
-| **[Hygiene Auditor](10-hygiene-auditor.md)** | Code Hygiene Auditor | Sonnet | Mandatory after every tier | Dead code detection, unused imports/exports, orphaned files, removal manifests |
+| **[Hygiene Auditor](10-hygiene-auditor.md)** | Code Hygiene Auditor | Sonnet | Optional (unvalidated) | Dead code detection, unused imports/exports, orphaned files, removal manifests |
 
 ## Flow Diagram
 
@@ -32,7 +32,7 @@ Swarm (Director)
     │   └── [Specialist B] → Code Reviewer (if Opus) → Orchestrator review
     │   ├── Keyword scan → auto-invoke Security Engineer on auth/secrets/network triggers
     │   ├── Phase 2.5 smoke gate (if infra/deploy/redundancy in scope) → Test Engineer probes
-    │   └── Hygiene Auditor sweep (MANDATORY — no exceptions)
+    │   └── Hygiene Auditor sweep (optional)
     │
     ├── Orchestrator: accept Tier 1, create integration snapshot
     │
@@ -59,15 +59,23 @@ Swarm (Director)
 
 ## Key Invariants
 
-1. **The Orchestrator is always engaged.** No implementation runs without it.
+These are the validated rules — the small core that earned its keep (see [../../FINDINGS.md](../../FINDINGS.md)).
+
+1. **The Orchestrator is always engaged.** No implementation runs without it; it always coordinates.
 2. **No file is touched by two specialists in the same tier.**
 3. **Tier N specialists receive Tier N-1's finalized file contents as explicit input.**
-4. **All Opus output goes through the Code Reviewer before reaching the Orchestrator.**
-5. **The Hygiene Auditor runs after every tier + final cross-tier sweep.** No exceptions, including lightweight tiers.
-6. **Phase 2.5 smoke gate is mandatory** for any tier touching a live surface (deploy, systemd, public endpoint, infra, DNS/tunnel, redundancy, schema migration).
-7. **The Security Engineer auto-invokes on keyword match** (auth, session, JWT, NSG, Key Vault, tunnel, credentials, public IP, etc.) — specialists do not self-gate into or out of security review.
-8. **Nothing reaches the human without the Orchestrator's sign-off.**
-9. **Max 3 iterations per specialist per task, then escalate to human.**
+4. **One deterministic verification check (typecheck / test suite / build) runs before human review.** A non-zero exit blocks.
+5. **Max 3 iterations per specialist per task, then escalate to human.**
+6. **Nothing is committed without human approval.**
+
+## Optional, unproven add-ons
+
+The following are available knobs, but they are **unvalidated** — never tested in a controlled experiment, and not part of the recommended core (see [../../FINDINGS.md](../../FINDINGS.md)). The validated gate is the deterministic check above, not any of these:
+
+- **Hygiene Auditor sweep** — an optional dead-code/hygiene pass; not required after every tier, and there is no carve-out either way since it is optional.
+- **Phase 2.5 smoke gate** — an optional probe for tiers touching a live surface (deploy, systemd, public endpoint, infra, DNS/tunnel, redundancy, schema migration).
+- **Code Reviewer (LLM review) pass** — an optional review of Opus output before the Orchestrator.
+- **Keyword-triggered Security Engineer review** — an optional auto-invoke on auth/session/secrets/network keywords.
 
 ## Deterministic Enforcement (optional)
 

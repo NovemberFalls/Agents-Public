@@ -1,6 +1,8 @@
 # Orchestration Team
 
-The implementation counterpart to the Advisory Board. Where the board reviews and scores, this team builds. The Swarm coordinates across projects and board sessions; the Orchestrator leads every implementation run — it never writes code, it coordinates, sequences, and reviews.
+The implementation counterpart to the Advisory Board. Where the board reviews and scores, this team builds. The Orchestrator leads an implementation run — it never writes code, it coordinates, sequences, and gates the result with one deterministic check.
+
+> **What's validated vs. optional.** The recommended core is small: a Change Dependency Graph, context isolation via subagents, and **one deterministic verification check** (typecheck / test suite / build) — with a single agent as the default until a task outgrows one context window. The richer machinery here — the full roster of finely-differentiated specialists, the Swarm/Director cross-team layer, and the extra gate battery (per-tier hygiene sweep, keyword-triggered security review, smoke gate, LLM code-review pass) — was **never validated in a controlled test** and is offered as optional scaffolding, not as mandatory process. See [../FINDINGS.md](../FINDINGS.md).
 
 ---
 
@@ -26,53 +28,45 @@ All agents are spawned via Claude Code's native `Agent` tool using `subagent_typ
 
 ## Team Structure
 
-**The Swarm** is the cross-team director. It coordinates when multiple independent workstreams need to run in parallel (e.g., a web app, an API service, a CLI tool — each in its own Orchestrator team), or when an advisory board review feeds into an implementation cycle. For a single-project implementation, you can invoke the Orchestrator directly without the Swarm.
+**The Orchestrator** is the principal engineer orchestrator and the center of the validated core. It builds a Change Dependency Graph (CDG) before any specialist writes a line of code, groups changes into tiers, forwards each tier's finalized state to the next, and gates the integrated result with one deterministic check before the human review package.
 
-**The Orchestrator** is the principal engineer orchestrator. It is always the first agent engaged for any implementation run. It builds a Change Dependency Graph (CDG) before any specialist writes a line of code, groups changes into tiers, and coordinates all specialists through to the human review package.
+**The Swarm (optional, unvalidated)** is the cross-team director. As designed, it coordinates when multiple independent workstreams run in parallel (a web app, an API service, a CLI tool — each in its own Orchestrator team), or when a board review feeds into an implementation cycle. This cross-team layer was never validated in a controlled test; for a single-project implementation — and for most work — invoke the Orchestrator directly without the Swarm.
 
-**The 9 specialists** (Code Reviewer through Hygiene Auditor) are each invoked by the Orchestrator as their domain is needed. The Code Reviewer reviews Opus-model output before it reaches the Orchestrator. The Hygiene Auditor runs hygiene sweeps after every tier — mandatory, no exceptions.
+**The specialists** are each invoked by the Orchestrator as their domain is needed. Distinct roles are useful for *consistency and predictability* — you can reason about what each will focus on — but the finely-differentiated roster is scaffolding, not a validated source of value. The Code Reviewer (LLM review) and Hygiene Auditor passes are **optional add-ons**, not mandatory; they do not replace the deterministic check, which is the one validated gate.
 
 ---
 
 ## How It Works
 
-**The isolation problem solved:** When many changes are needed that could impact each other, the Orchestrator builds a Change Dependency Graph before any code is written. Changes are grouped into tiers — only truly independent changes run in parallel. Each tier's finalized output becomes the explicit input context for the next tier. No specialist ever works with stale information about what another specialist changed.
+**The isolation problem solved (validated):** When many changes are needed that could impact each other, the Orchestrator builds a Change Dependency Graph before any code is written. Changes are grouped into tiers — only truly independent changes run in parallel. Each tier's finalized output becomes the explicit input context for the next tier. No specialist ever works with stale information about what another specialist changed. This dependency-ordered finalized-state-forwarding is the mechanism that was validated (0/3 → 3/3 on integration correctness).
+
+The validated flow:
 
 ```
-Board Review (advisory board) → consolidated findings
+Orchestrator reads brief → explores codebase → builds CDG → plans tiers
        ↓
-Orchestrator reads findings → builds CDG → plans tiers
+Tier 1 (parallel): independent changes, each specialist in its own context window
+       ↓  (integration snapshot — Tier 1's FINALIZED state — passed down)
+Tier 2 (sequential): dependent changes receive Tier 1's finalized state directly
        ↓
-Tier 1 (parallel): independent changes → Code Reviewer review → Orchestrator review
-       ↓  (per-tier keyword scan: auto-invoke Security Engineer on auth/secrets/network changes)
-       ↓  (Phase 2.5 smoke gate: Test Engineer probes live surface if infra/deploy/redundancy in scope)
-       ↓  (Hygiene Auditor sweep — MANDATORY, no exceptions)
-       ↓  (integration snapshot passed down)
-Tier 2 (sequential): dependent changes → Code Reviewer → Orchestrator → Phase 2.5 smoke → Hygiene Auditor
-       ↓
-Test Engineer: tests for all changes
-       ↓
-Code Reviewer: full integration sweep
-       ↓
-Hygiene Auditor: final cross-tier hygiene sweep
+ONE deterministic verification check (typecheck / test suite / build — exit code is the gate)
        ↓
 Orchestrator: reconciliation matrix + human review package
        ↓
 Human approval → commit
 ```
 
-**Redundancy-class changes (HA, failover, DR, backup restore) require a live drill in Phase 2.5** — baseline → induce failure → verify failover → restore. A drill failure blocks the tier regardless of code-review outcome.
+**Optional add-on gates (unvalidated, off by default):** layered on top of the flow above if you find them useful — a per-tier keyword scan that auto-invokes the Security Engineer on auth/secrets changes, a Test Engineer smoke gate that probes a live surface before a tier is accepted, a per-tier Hygiene Auditor sweep, and an LLM Code Reviewer pass on specialist output. None of these was validated in a controlled test, and none substitutes for the deterministic check above (an LLM review is an opinion; the deterministic check is a fact). A live drill for redundancy-class changes (HA, failover, DR, backup restore — baseline → induce failure → verify failover → restore) is an optional smoke-gate variant in the same category.
 
-**Key invariants:**
-1. The Orchestrator is always engaged — no implementation without it
+**Key invariants (validated core):**
+1. The Orchestrator coordinates the run — it sequences and gates, it does not write code
 2. No file touched by two specialists in the same tier
-3. Tier N specialists receive Tier N-1's finalized state as explicit context
-4. All Opus output reviewed by the Code Reviewer before reaching the Orchestrator
-5. The Hygiene Auditor runs after every tier and a final cross-tier sweep — no exceptions, including lightweight tiers
-6. Phase 2.5 smoke gate runs on any tier with infra / deploy / public surface / redundancy in scope
-7. The Security Engineer is auto-invoked by keyword scan (auth, secrets, NSG, Key Vault, tunnel, etc.) — specialists do not self-gate
-8. Max 3 iterations per task — then escalate to human
-9. Nothing is committed without human approval
+3. Tier N specialists receive Tier N-1's finalized state as explicit context (not a guess)
+4. The integrated result passes **one deterministic check** (typecheck / test suite / build) before human review
+5. Max 3 iterations per task — then escalate to human
+6. Nothing is committed without human approval
+
+**Optional, unproven add-ons (not invariants):** the original design treated several extra gates as mandatory — a Hygiene Auditor sweep after *every* tier plus a final cross-tier sweep, a mandatory Phase 2.5 smoke gate on any infra/deploy/public-surface/redundancy tier, a Code Reviewer pass on all Opus-model output, and a keyword-scan that auto-invokes the Security Engineer. None of these was validated in a controlled test. Keep them as optional knobs, not requirements; the deterministic check (invariant 4) is the one validated guardrail. See [../FINDINGS.md](../FINDINGS.md).
 
 ---
 

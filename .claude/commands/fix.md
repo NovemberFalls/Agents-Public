@@ -15,7 +15,7 @@ Issue: $ARGUMENTS
 
 3. **Pick the one specialist** whose domain this falls in and spawn it with the `Agent` tool (`backend-engineer`, `frontend-engineer`, `security-engineer`, `database-engineer`, `systems-engineer`, `devops-engineer`, or `test-engineer`). If the change touches auth, secrets, or network exposure, use the `security-engineer`.
 
-4. **Run the two gates that still apply.** The `hygiene-auditor` sweeps the changed files — mandatory even here. If the change touches a live surface, smoke-check it.
+4. **Gate the change.** Run a deterministic check (typecheck / test suite / build) — a non-zero exit blocks. A `hygiene-auditor` sweep is an optional add-on. If the change touches a live surface, an optional smoke check is also available.
 
 5. **Report** what changed and why, and hand off for human approval. Commit nothing without it.
 

@@ -23,7 +23,7 @@ Run the loop end to end:
 
 6. **Execute each tier.** Spawn specialists with the `Agent` tool by their slug (`backend-engineer`, `frontend-engineer`, `security-engineer`, `test-engineer`, `devops-engineer`, `database-engineer`, `systems-engineer`). Issue parallel specialists in one message. Pass each the full brief inline, including the finalized state of prior tiers. Run the keyword scan and auto-invoke the `security-engineer` on any auth/secrets/network change.
 
-7. **Gate every tier.** Opus specialist output → `reviewer` (Code Reviewer). Then the `hygiene-auditor` runs a mandatory sweep — no exceptions, including single-file tiers. Any tier touching a live surface gets a smoke check before it advances.
+7. **Gate every tier.** Gate the integrated result with a **deterministic check** (typecheck / test suite / build) — a non-zero exit blocks. A `hygiene-auditor` sweep and an LLM code-review pass (`reviewer`) are optional add-ons, not required; a smoke check on tiers touching a live surface is likewise optional.
 
 8. **Reconcile.** After the final tier and a full-repo hygiene sweep, produce the reconciliation matrix: every requirement → IMPLEMENTED / PARTIAL / DEFERRED / SCOPE CREEP, with file references. Hand off for human approval. Commit nothing without it.
 

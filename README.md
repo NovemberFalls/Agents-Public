@@ -1,6 +1,8 @@
 # Agents-Public
 
-> A library of role-based AI-agent persona definitions and a coordination model for running them with Claude Code and the Claude Agent SDK.
+> A coordination model for multi-agent work with Claude Code and the Claude Agent SDK — and the agent personas that deliver it.
+
+> **📋 Start with [FINDINGS.md](FINDINGS.md)** — we tested this system's own assumptions. The validated core is small (a dependency graph + subagents + one deterministic check); much of the elaborate ceremony turned out to be unproven, and the persona backstories were measured and found to do nothing. This repo documents what held and what we were wrong about.
 
 ---
 
@@ -43,7 +45,7 @@ The honest synthesis: **keep the dependency graph and the context isolation; tre
 
 ## One pattern, four domains
 
-The coordination model is domain-agnostic. The same loop — independent specialists, a graph of dependencies, parallel-where-safe execution, structured reports, mandatory review and hygiene gates — drives code, project strategy, prose, and game design. The four teams are the same idea applied to four problem spaces:
+The coordination model is domain-agnostic. The same loop — independent specialists, a graph of dependencies, parallel-where-safe execution, structured reports, a deterministic verification check — drives code, project strategy, prose, and game design. The four teams are the same idea applied to four problem spaces:
 
 | Team | Domain | What it produces |
 |------|--------|------------------|
@@ -93,7 +95,7 @@ The coordination model is domain-agnostic. The same loop — independent special
                         ▼
    ┌─────────────────────────────────────┐
    │  Hygiene Auditor — hygiene sweep     │
-   │  (mandatory after every tier)        │
+   │  (optional)                          │
    └────────────────────┬────────────────┘
                         ▼
    ┌─────────────────────────────────────┐
@@ -104,6 +106,8 @@ The coordination model is domain-agnostic. The same loop — independent special
                         ▼
                  Human review + approval
 ```
+
+> Code Reviewer + Hygiene Auditor are optional add-ons; the validated gate is a deterministic check — see [FINDINGS.md](FINDINGS.md).
 
 ---
 
