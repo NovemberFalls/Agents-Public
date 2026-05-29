@@ -6,7 +6,6 @@ tags: [orchestration-team, roster]
 
 | Agent | Role | Model | Always Invoked | Notes |
 |-------|------|-------|---------------|-------|
-| **[Swarm](00-swarm.md)** | Director & Cross-Team Orchestrator | Opus always | When multi-team coordination needed | Cross-team scope, board reviews, multi-project sessions |
 | **[Orchestrator](01-orchestrator.md)** | Principal Engineer / Orchestrator | Opus always | ✅ Yes | Builds CDG, assigns tiers, reviews all output, human handoff |
 | **[Code Reviewer](02-reviewer.md)** | Senior Code Reviewer | Opus always | When Opus specialist runs | Reviews all Opus output before the Orchestrator; can iterate without the Orchestrator |
 | **[Backend Engineer](03-backend-engineer.md)** | Senior Backend Engineer | Sonnet default / Opus for arch | On demand | Python/FastAPI/Node; Opus for cross-file refactors, auth, async |
@@ -21,8 +20,7 @@ tags: [orchestration-team, roster]
 ## Flow Diagram
 
 ```
-Swarm (Director)
-└── Orchestrator (Principal Engineer / Orchestrator)
+Orchestrator (Principal Engineer / Orchestrator)   # top of the core flow; the optional Swarm/Director layer lives in extras/
     ├── Reads audit reports + codebase (or Hygiene Auditor manifest for hygiene runs)
     ├── Builds Change Dependency Graph
     ├── Plans execution tiers

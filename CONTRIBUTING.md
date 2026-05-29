@@ -66,14 +66,14 @@ Each persona file must contain all of the following sections in order:
 
 ## Proposing a new team
 
-New teams require a PR that includes:
+The repo root is kept focused on the validated `/orchestrate` core. A new team that applies the pattern to a **different domain** (not the coding loop) belongs under `extras/`, not the root. Such a PR includes:
 
-1. A new top-level folder: `team-name/`
-2. A `team-name/README.md` describing: what the team does, when to use it, the full roster with roles and model assignments, and the team's primary workflow.
-3. A `team-name/agents/00-roster.md` with the complete roster table.
+1. A new folder: `extras/team-name/`
+2. A `extras/team-name/README.md` describing: what the team does, when to use it, the full roster with roles and model assignments, and the team's primary workflow.
+3. A `extras/team-name/agents/00-roster.md` with the complete roster table.
 4. At least two agent files following the conventions above.
-5. A reference to the new team in the root `README.md` "The Teams" table (update `README.md` in the same PR).
-6. An entry in `docs/architecture.md` if the team introduces new orchestration patterns.
+5. A one-line entry in `extras/README.md` (the root `README.md` stays scoped to the `/orchestrate` core).
+6. An entry in `docs/architecture.md` only if the team introduces a genuinely new, validated orchestration pattern.
 
 ### Team design principles
 

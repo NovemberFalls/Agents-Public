@@ -31,7 +31,7 @@ Note: only two of the ten board members are shown here. A full review would incl
 
 ## About the Scoring
 
-The weighted Readiness Score formula from `docs/board-review.md`:
+The weighted Readiness Score formula from `../board-review.md`:
 
 ```
 Score = (CTO × 0.10) + (Auditor × 0.10) + (CMO × 0.10) + (Gaps × 0.10)

@@ -54,7 +54,7 @@ A standing board of 10 specialists that evaluates projects across technical, bus
 4. All reviews are consolidated into a single weighted board report
 5. The consolidated report includes an Owner Responses section so the record is clear
 
-**Process:** invoke each board member, then consolidate per `docs/board-review.md`.
+**Process:** invoke each board member, then consolidate per `../board-review.md`.
 
 ---
 
@@ -79,7 +79,7 @@ See [templates/owner-responses.md](templates/owner-responses.md) for the format.
 | [consolidated-report.md](templates/consolidated-report.md) | Board synthesis — weighted score, consensus, conflicts, top actions |
 | [owner-responses.md](templates/owner-responses.md) | Owner context and responses to prior findings |
 
-See [examples/sample-review/](../examples/sample-review/) for a worked example on a fictional project.
+See [sample-review/](../sample-review/) for a worked example on a fictional project.
 
 ---
 

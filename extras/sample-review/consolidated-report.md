@@ -35,7 +35,7 @@ The two full reviews in this example are the CTO Advisor (CTO, score 6) and the 
 
 ## Weighted Readiness Score
 
-Applying the formula from `docs/board-review.md`:
+Applying the formula from `../board-review.md`:
 
 ```
 Score = (CTO × 0.10) + (Auditor × 0.10) + (CMO × 0.10) + (Gaps × 0.10)

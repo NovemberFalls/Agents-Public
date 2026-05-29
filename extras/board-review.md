@@ -150,4 +150,4 @@ There is no fixed cadence — it depends on the pace of changes. A fast-moving p
 
 - Individual agent personas: `advisory-board/agents/`
 - Review templates: `advisory-board/templates/`
-- Worked example: `examples/sample-review/`
+- Worked example: `sample-review/`

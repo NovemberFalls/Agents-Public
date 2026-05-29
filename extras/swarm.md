@@ -6,7 +6,7 @@ model: opus
 
 # Swarm — Cross-Team Orchestration Director
 
-> **Optional, never validated.** The Director / cross-team-orchestration layer has never been tested in a controlled experiment (see [../../FINDINGS.md](../../FINDINGS.md)). For a single project, invoke the Orchestrator directly (`/orchestrate`, `/fix`) — it is faster, cheaper, and skips the Swarm's Opus layer. The Swarm is for cross-team work only: 3+ parallel workstreams, board reviews, or multi-project sessions.
+> **Optional, never validated.** The Director / cross-team-orchestration layer has never been tested in a controlled experiment (see [../FINDINGS.md](../FINDINGS.md)). For a single project, invoke the Orchestrator directly (`/orchestrate`, `/fix`) — it is faster, cheaper, and skips the Swarm's Opus layer. The Swarm is for cross-team work only: 3+ parallel workstreams, board reviews, or multi-project sessions.
 
 The Swarm does not write code or reviews. It routes work to the right agents, holds context within its session, synthesises outputs from multiple teams, and presents coherent summaries to the maintainer. Its operating rule is explicit ownership: who is doing what and why, at every step. It acts autonomously when the path is clear and escalates when it isn't.
 
@@ -310,23 +310,23 @@ It updates memory at the end of each session by asking the Orchestrator (via `Ag
 
 | Agent | Persona file |
 |-------|-------------|
-| Orchestrator | [01-orchestrator.md](01-orchestrator.md) |
-| Code Reviewer | [02-reviewer.md](02-reviewer.md) |
-| Backend Engineer | [03-backend-engineer.md](03-backend-engineer.md) |
-| Frontend Engineer | [04-frontend-engineer.md](04-frontend-engineer.md) |
-| Security Engineer | [05-security-engineer.md](05-security-engineer.md) |
-| Test Engineer | [06-test-engineer.md](06-test-engineer.md) |
-| DevOps Engineer | [07-devops-engineer.md](07-devops-engineer.md) |
-| Database Engineer | [08-database-engineer.md](08-database-engineer.md) |
-| Systems Engineer | [09-systems-engineer.md](09-systems-engineer.md) |
-| Hygiene Auditor | [10-hygiene-auditor.md](10-hygiene-auditor.md) |
-| CFO Advisor | [01-cfo-advisor.md](../../advisory-board/agents/01-cfo-advisor.md) |
-| CMO Advisor | [02-cmo-advisor.md](../../advisory-board/agents/02-cmo-advisor.md) |
-| CPO Advisor | [03-cpo-advisor.md](../../advisory-board/agents/03-cpo-advisor.md) |
-| CTO Advisor | [04-cto-advisor.md](../../advisory-board/agents/04-cto-advisor.md) |
-| UI/UX Lead | [05-uiux-lead.md](../../advisory-board/agents/05-uiux-lead.md) |
-| Code Auditor | [06-code-auditor.md](../../advisory-board/agents/06-code-auditor.md) |
-| Gap Analyst | [07-gap-analyst.md](../../advisory-board/agents/07-gap-analyst.md) |
-| DevOps/SRE Advisor | [08-devops-sre.md](../../advisory-board/agents/08-devops-sre.md) |
-| CSO Advisor | [09-cso-advisor.md](../../advisory-board/agents/09-cso-advisor.md) |
-| Legal Advisor | [10-legal-advisor.md](../../advisory-board/agents/10-legal-advisor.md) |
+| Orchestrator | [01-orchestrator.md](../orchestration-team/agents/01-orchestrator.md) |
+| Code Reviewer | [02-reviewer.md](../orchestration-team/agents/02-reviewer.md) |
+| Backend Engineer | [03-backend-engineer.md](../orchestration-team/agents/03-backend-engineer.md) |
+| Frontend Engineer | [04-frontend-engineer.md](../orchestration-team/agents/04-frontend-engineer.md) |
+| Security Engineer | [05-security-engineer.md](../orchestration-team/agents/05-security-engineer.md) |
+| Test Engineer | [06-test-engineer.md](../orchestration-team/agents/06-test-engineer.md) |
+| DevOps Engineer | [07-devops-engineer.md](../orchestration-team/agents/07-devops-engineer.md) |
+| Database Engineer | [08-database-engineer.md](../orchestration-team/agents/08-database-engineer.md) |
+| Systems Engineer | [09-systems-engineer.md](../orchestration-team/agents/09-systems-engineer.md) |
+| Hygiene Auditor | [10-hygiene-auditor.md](../orchestration-team/agents/10-hygiene-auditor.md) |
+| CFO Advisor | [01-cfo-advisor.md](advisory-board/agents/01-cfo-advisor.md) |
+| CMO Advisor | [02-cmo-advisor.md](advisory-board/agents/02-cmo-advisor.md) |
+| CPO Advisor | [03-cpo-advisor.md](advisory-board/agents/03-cpo-advisor.md) |
+| CTO Advisor | [04-cto-advisor.md](advisory-board/agents/04-cto-advisor.md) |
+| UI/UX Lead | [05-uiux-lead.md](advisory-board/agents/05-uiux-lead.md) |
+| Code Auditor | [06-code-auditor.md](advisory-board/agents/06-code-auditor.md) |
+| Gap Analyst | [07-gap-analyst.md](advisory-board/agents/07-gap-analyst.md) |
+| DevOps/SRE Advisor | [08-devops-sre.md](advisory-board/agents/08-devops-sre.md) |
+| CSO Advisor | [09-cso-advisor.md](advisory-board/agents/09-cso-advisor.md) |
+| Legal Advisor | [10-legal-advisor.md](advisory-board/agents/10-legal-advisor.md) |

@@ -1,6 +1,6 @@
 # Orchestration Team
 
-The implementation counterpart to the Advisory Board. Where the board reviews and scores, this team builds. The Orchestrator leads an implementation run — it never writes code, it coordinates, sequences, and gates the result with one deterministic check.
+The implementation fleet that `/orchestrate` spawns. The Orchestrator leads a run — it never writes code; it coordinates, sequences via the Change Dependency Graph, and gates the result with one deterministic check. The specialists do the building. (The advisory board this team once paired with now lives in [`extras/`](../extras/) — optional, not core.)
 
 > **What's validated vs. optional.** The recommended core is small: a Change Dependency Graph, context isolation via subagents, and **one deterministic verification check** (typecheck / test suite / build) — with a single agent as the default until a task outgrows one context window. The richer machinery here — the full roster of finely-differentiated specialists, the Swarm/Director cross-team layer, and the extra gate battery (per-tier hygiene sweep, keyword-triggered security review, smoke gate, LLM code-review pass) — was **never validated in a controlled test** and is offered as optional scaffolding, not as mandatory process. See [../FINDINGS.md](../FINDINGS.md).
 
@@ -10,7 +10,6 @@ The implementation counterpart to the Advisory Board. Where the board reviews an
 
 | Agent | Role | Model | Profile |
 |-------|------|-------|---------|
-| **Swarm** | Director & Cross-Team Orchestrator | Opus | [00-swarm.md](agents/00-swarm.md) |
 | **Orchestrator** | Principal Engineer / Orchestrator | Opus always | [01-orchestrator.md](agents/01-orchestrator.md) |
 | **Code Reviewer** | Senior Code Reviewer | Opus always | [02-reviewer.md](agents/02-reviewer.md) |
 | **Backend Engineer** | Backend Engineer (Python/FastAPI/Node) | Sonnet / Opus | [03-backend-engineer.md](agents/03-backend-engineer.md) |
@@ -30,7 +29,7 @@ All agents are spawned via Claude Code's native `Agent` tool using `subagent_typ
 
 **The Orchestrator** is the principal engineer orchestrator and the center of the validated core. It builds a Change Dependency Graph (CDG) before any specialist writes a line of code, groups changes into tiers, forwards each tier's finalized state to the next, and gates the integrated result with one deterministic check before the human review package.
 
-**The Swarm (optional, unvalidated)** is the cross-team director. As designed, it coordinates when multiple independent workstreams run in parallel (a web app, an API service, a CLI tool — each in its own Orchestrator team), or when a board review feeds into an implementation cycle. This cross-team layer was never validated in a controlled test; for a single-project implementation — and for most work — invoke the Orchestrator directly without the Swarm.
+**The Swarm (optional, unvalidated — moved to [`extras/`](../extras/swarm.md))** is the cross-team director. As designed, it coordinates when multiple independent workstreams run in parallel (a web app, an API service, a CLI tool — each in its own Orchestrator team), or when a board review feeds into an implementation cycle. This cross-team layer was never validated in a controlled test and is not part of the core team; for a single-project implementation — and for most work — invoke the Orchestrator directly without the Swarm.
 
 **The specialists** are each invoked by the Orchestrator as their domain is needed. Distinct roles are useful for *consistency and predictability* — you can reason about what each will focus on — but the finely-differentiated roster is scaffolding, not a validated source of value. The Code Reviewer (LLM review) and Hygiene Auditor passes are **optional add-ons**, not mandatory; they do not replace the deterministic check, which is the one validated gate.
 
@@ -93,8 +92,8 @@ Human approval → commit
 
 ---
 
-## Relationship to Advisory Board
+## Relationship to the Advisory Board (optional)
 
-The advisory board reviews and scores. This team implements. The handoff is explicit: the Orchestrator reads the board's consolidated report as its primary input. The reconciliation matrix maps every implementation back to a board finding. After implementation, the next board review cycle will re-score and verify the delta.
+The advisory board is an optional, unvalidated layer that now lives in [`extras/advisory-board/`](../extras/advisory-board/README.md) — it is not part of the core team. Where it is used, the board reviews and scores while this team implements: the Orchestrator reads the board's consolidated report as input, the reconciliation matrix maps every implementation back to a board finding, and the next board review cycle re-scores and verifies the delta.
 
 **Advisory board → findings → orchestration team → implementation → board re-review → score delta**

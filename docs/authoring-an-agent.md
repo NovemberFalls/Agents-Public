@@ -157,6 +157,6 @@ Remember that `model` takes an alias (`sonnet`/`opus`/`haiku`/`inherit`), never 
 
 ## See Also
 
-- Existing agent files: `orchestration-team/agents/` and `advisory-board/agents/`
+- Existing agent files: `orchestration-team/agents/` (and `extras/advisory-board/agents/` for the non-core teams)
 - Contributing guidelines: `CONTRIBUTING.md`
-- Worked example: `examples/sample-review/`
+- Worked example: `examples/orchestrated-run/` (CDG run) and `extras/sample-review/` (advisory)

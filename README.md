@@ -1,278 +1,87 @@
 # Agents-Public
 
-> A coordination model for multi-agent work with Claude Code and the Claude Agent SDK — and the agent personas that deliver it.
+> A small, validated orchestration model for multi-agent coding work with Claude Code and the Claude Agent SDK — the **`/orchestrate`** loop.
 
-> **📋 Start with [FINDINGS.md](FINDINGS.md)** — we tested this system's own assumptions. The validated core is small (a dependency graph + subagents + one deterministic check); much of the elaborate ceremony turned out to be unproven, and the persona backstories were measured and found to do nothing. This repo documents what held and what we were wrong about.
-
----
-
-## What is this?
-
-This repository is a **coordination model for multi-agent work**, delivered as a library of role-based agent personas. Two ideas carry the weight: a **Change Dependency Graph** that sequences parallel work so no agent ever builds on another's stale output, and **context isolation** — each specialist explores in its own window and returns only a short report, so the coordinator stays lean enough to run a large task without compaction. There is no application code here — only prompts, patterns, and process.
-
-Every persona file is a valid **Claude Code subagent definition**: drop one into `~/.claude/agents/` and it becomes an agent you can invoke, or load its body as an Agent SDK system prompt. Unusually for a repo like this, **it tests its own claims** — in [examples/eval/](examples/eval/), the coordination discipline is validated in a controlled experiment, while the agent *backstories* are shown, with a placebo control, to make no measurable difference to output. So read it accordingly: **trust the loop, enjoy the personas.**
-
-Four teams are included, all built on the same pattern: an implementation fleet, a strategic advisory board, a creative-writing review board, and a tabletop-RPG pressure-test team.
+> **📋 Read [FINDINGS.md](FINDINGS.md) first.** This repo started as an elaborate multi-agent fleet — rich personas, a battery of mandatory gates, a director hierarchy, four teams. We tested our own assumptions. **Most of the elaboration didn't help, and the ceremony bled tokens the whole time.** The one thing that earned its keep was the **Change Dependency Graph**. So the repo has been cut down to what the evidence supports. The rest is preserved, honestly labeled, in [`extras/`](extras/).
 
 ---
 
-## Why
+## What this is
 
-Two problems motivate everything here: **coordination** and **context cost**.
+The **`/orchestrate`** loop: a way to run multi-agent coding work that is **measured, not asserted.** Three ideas carry it, and only these:
 
-### Context debt compounds faster than technical debt
+1. **The Change Dependency Graph (CDG)** — the rockstar. Sequence parallel work, finalize an upstream change before the downstream agent starts, and hand the downstream agent the *real* finalized state instead of letting it guess. In a controlled test this was the entire difference between **0/3 and 3/3** on integration correctness.
+2. **Context isolation via subagents** — each specialist explores in its own window and returns a short report, so the coordinator stays lean enough to run a large task without compaction.
+3. **One deterministic check** — gate the integrated result with a typecheck / test suite / build (something with an exit code). **Not** an LLM "review" gate. See [docs/the-deterministic-check.md](docs/the-deterministic-check.md).
 
-When multiple agents work the same codebase at once with no coordination, they produce changes that are each correct in isolation and broken in combination. An agent writing an API endpoint cannot see that the frontend agent changed the contract five minutes ago. An agent adding a database column cannot see that the migration already ran.
+Plus one rule: **use a single agent until the task outgrows one context window.** Below that line, coordination is pure overhead.
 
-The naive fix — serialize everything — throws away the efficiency of parallel specialization. The fix here is different: **build the dependency graph before writing any code.** The Change Dependency Graph (CDG) maps every file to be modified and every system boundary it touches. From the graph, the orchestrator derives execution tiers — groups of changes with no mutual dependencies that run safely in parallel. Tier N starts only when Tier N-1 is finalized and reviewed. No specialist ever works from a stale snapshot of another's output.
-
-### Specialists are a token strategy, not just an org chart
-
-The headline benefit of role-scoped subagents is **context isolation**. When the orchestrator delegates to a specialist, that specialist reads files, greps, and explores in its *own* context window — and returns only a short report. The expensive, token-heavy work stays quarantined; the orchestrator's window holds the plan and the summaries, not the raw exploration, so it can coordinate a large task without bloating into compaction.
-
-Add right-sized models per role (pay Opus rates only where they buy something), skills that load a workflow on demand instead of carrying it in every prompt, and a shared project-brain that is read once instead of re-derived each run. The robust win is **peak context**: any single window stays small, so a large task never bloats into compaction. Total token *spend* is a separate, workload-dependent question — coordination and review gates cost tokens, so for a one-line change the repo prescribes a lightweight single-specialist path instead. The full rationale, including the honest counter-argument, is in **[docs/token-efficiency.md](docs/token-efficiency.md)**, with a worked token ledger on a sample task in **[examples/orchestrated-run/](examples/orchestrated-run/)**.
-
-### What's load-bearing, and what's flavor — measured, not asserted
-
-This repo refuses to take its own design on faith. Both central claims were put to controlled experiments ([examples/eval/](examples/eval/)):
-
-- **The Change Dependency Graph earns its keep.** A 3-arm test (monolith vs. blind-parallel vs. dependency-ordered) on a real codebase: dependency-ordered state-forwarding was the entire difference between **0/3 and 3/3** on integration correctness. The coordination discipline is the load-bearing idea.
-- **The persona backstories do not.** A placebo-controlled ablation found a security reviewer's elaborate red-team backstory caught **no more bugs** than a bare "you are a security reviewer" — and a *performance-engineer* backstory did just as well on security bugs. The rich identities make the roster legible and pleasant to reason about; they are **flavor, not function**.
-
-The honest synthesis: **keep the dependency graph and the context isolation; treat the character sheets as flavor.** Use one agent unless a task genuinely outgrows a single context window — that's where this machinery starts to pay, and the repo prescribes a lightweight path below that line.
+Everything is Markdown — persona files and process. No application code.
 
 ---
 
-## One pattern, four domains
+## What we were wrong about
 
-The coordination model is domain-agnostic. The same loop — independent specialists, a graph of dependencies, parallel-where-safe execution, structured reports, a deterministic verification check — drives code, project strategy, prose, and game design. The four teams are the same idea applied to four problem spaces:
+The honest version, in full in [FINDINGS.md](FINDINGS.md):
 
-| Team | Domain | What it produces |
-|------|--------|------------------|
-| **Orchestration** | Code | A task brief turned into reviewed, integrated changes |
-| **Advisory Board** | Project strategy | A weighted Readiness Score across seven domains |
-| **Writing** | Manuscripts | Structured critique for continuity, voice, craft, canon |
-| **TTRPG** | Homebrew game rules | Exploits, balance gaps, and playability findings |
+- **Persona backstories did nothing.** A placebo-controlled ablation: a security reviewer's elaborate red-team backstory caught no more bugs than a bare "you are a security reviewer," and a *performance-engineer* backstory did just as well on security bugs. Identities are kept as **flavor** — useful for a legible roster, not because they improve output.
+- **The mandatory-gate battery and the director hierarchy were never validated** — and the extra review passes, re-passed state, and parallel ceremony **cost tokens** without earning them. They're demoted to optional, and the heavier pieces moved to [`extras/`](extras/).
+- **More agents isn't better on small tasks.** A plain monolith was cheapest *and* correct; coordination only pays once a task is too big for one window.
 
----
-
-## Architecture
-
-```
-                       ┌──────────────────────────────────────────┐
-                       │           ADVISORY BOARD (parallel)        │
-                       │   CFO · CMO · CPO · CTO · UI/UX · Code     │
-                       │   Auditor · Gap Analyst · DevOps/SRE ·     │
-                       │   CSO · Legal                              │
-                       │          Weighted Readiness Score          │
-                       └────────────────┬───────────────────────────┘
-                                        │ consolidated findings
-                                        ▼
-                   ┌────────────────────────────────────────┐
-                   │            Swarm (Director)             │
-                   │     cross-team routing & coordination   │
-                   └────────────────────┬────────────────────┘
-                                        ▼
-                   ┌────────────────────────────────────────┐
-                   │              Orchestrator               │
-                   │   explore → CDG → tier plan → review    │
-                   └──────────────┬─────────────────────────┘
-                                  │
-          ┌───────────────────────┼────────────────────────┐
-          ▼                       ▼                        ▼
-   Tier 1 (parallel)       Tier 2 (sequential)        Tier N ...
-   ┌──────────────────┐    ┌──────────────────┐
-   │ Backend │Frontend│    │ Database Engineer │
-   │ Security│Systems │    │ (receives Tier 1  │
-   │ Test    │DevOps  │    │ finalized state)  │
-   └─────────┴────────┘    └──────────────────┘
-          │                        │
-          ▼                        ▼
-   ┌─────────────────────────────────────┐
-   │  Code Reviewer — review gate         │
-   │  (all Opus output before Orchestr.)  │
-   └────────────────────┬────────────────┘
-                        ▼
-   ┌─────────────────────────────────────┐
-   │  Hygiene Auditor — hygiene sweep     │
-   │  (optional)                          │
-   └────────────────────┬────────────────┘
-                        ▼
-   ┌─────────────────────────────────────┐
-   │  Orchestrator — reconciliation       │
-   │  matrix: every requirement →         │
-   │  IMPLEMENTED / PARTIAL / DEFERRED    │
-   └────────────────────┬────────────────┘
-                        ▼
-                 Human review + approval
-```
-
-> Code Reviewer + Hygiene Auditor are optional add-ons; the validated gate is a deterministic check — see [FINDINGS.md](FINDINGS.md).
+The takeaway: **keep the CDG, keep context isolation, gate with a deterministic check, and don't over-build.** That's the whole product.
 
 ---
 
-## The Teams
+## Quick start
 
-| Team | Description | Agents | Folder |
-|------|-------------|--------|--------|
-| **Orchestration Team** | Implementation fleet. Turns a task brief into reviewed, integrated code changes. The Swarm routes, the Orchestrator plans and sequences, nine specialists execute. | 11 | [orchestration-team/](orchestration-team/) |
-| **Advisory Board** | Standing review board. Evaluates a project across seven domains and produces a weighted Readiness Score (1–10). Each agent reviews independently. | 10 | [advisory-board/](advisory-board/) |
-| **Writing Team** | Creative-writing review board. Reviews manuscripts for continuity, voice, reader experience, craft, and canon. Does not write prose. | 5 | [writing-team/](writing-team/) |
-| **TTRPG Team** | Tabletop-RPG pressure-test team. Stress-tests homebrew rules for balance, exploits, and playability across system experts, min-maxers, players, and live GMs. | 17 | [ttrpg-team/](ttrpg-team/) |
+### The command
 
----
+`/orchestrate <task>` — one self-scaling entry point. It runs lightweight (one specialist + a deterministic check) for a small change, and builds the CDG + tiers for a large one. The skill is [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md) (with [`fix.md`](.claude/commands/fix.md) for the explicit lightweight path). Copy them into `~/.claude/commands/`.
 
-## Quick Start
+### The agents
 
-### With Claude Code subagents
+The specialists `/orchestrate` spawns live in [`orchestration-team/agents/`](orchestration-team/agents/) — each a valid Claude Code subagent (`name` + `description` + `model`). Copy the ones you want into `~/.claude/agents/`, or load a file's body as an Agent SDK system prompt.
 
-Claude Code loads subagents from Markdown files in `~/.claude/agents/` (user-level) or `.claude/agents/` (project-level). Each file's frontmatter must follow Claude Code's subagent schema:
+### The gate
 
-```yaml
----
-name: backend-engineer        # required — lowercase letters + hyphens only; this is the invocation slug
-description: Use for backend route changes, API logic, and server internals.   # required — drives auto-delegation
-model: sonnet                 # optional — alias only (sonnet | opus | haiku | inherit)
----
-```
-
-`name` and `description` are required: a file with no `description` does not load. `tools` is optional (omit to inherit all). Unknown keys are ignored.
-
-1. Copy the persona files you want into `~/.claude/agents/` (or a project's `.claude/agents/`).
-2. In a Claude Code session, the orchestrator spawns specialists with the `Agent` tool, passing the full task brief inline; or invoke an agent directly by its role.
-3. The specialist's final message is its completion report — the orchestrator parses that block and continues.
-
-### With skills (slash commands)
-
-The two workflows in this repo are packaged as skills under [`.claude/commands/`](.claude/commands/) so the procedure loads on demand instead of living in your system prompt:
-
-| Command | When to use |
-|---------|-------------|
-| [`/orchestrate`](.claude/commands/orchestrate.md) | Multiple findings or coordinated changes across files — runs the full CDG → tiers → review loop |
-| [`/fix`](.claude/commands/fix.md) | A single issue in ≤3 files with no downstream dependencies — the lightweight path |
-
-Copy them into `~/.claude/commands/` (or a project's `.claude/commands/`) and invoke by name.
-
-### With the Claude Agent SDK
-
-Load a persona file's body as the system prompt when instantiating an agent:
-
-```python
-# Conceptual — adapt to your SDK version.
-system_prompt = open("orchestration-team/agents/01-orchestrator.md").read()
-agent = ClaudeAgent(system_prompt=system_prompt, model="claude-opus-4-7")  # use the current Opus model ID
-report = agent.run(task_brief)
-```
-
-Each persona declares its preferred model and the conditions under which it escalates.
+Wire a deterministic check (typecheck/test/build) as the one required gate — the pattern and the exact mypy setup that worked in our eval are in [docs/the-deterministic-check.md](docs/the-deterministic-check.md).
 
 ---
 
-## Repo Layout
+## Repo layout
 
 ```
 Agents-Public/
-├── README.md                        # this file
-├── LICENSE                          # MIT
-├── CONTRIBUTING.md                  # how to add agents and teams
-│
+├── README.md
+├── FINDINGS.md                     # what we tested, what held, what we were wrong about
 ├── orchestration-team/
-│   ├── README.md                    # team overview, flow diagram, invariants
-│   ├── agents/
-│   │   ├── 00-roster.md
-│   │   ├── 00-swarm.md
-│   │   ├── 01-orchestrator.md
-│   │   ├── 02-reviewer.md
-│   │   ├── 03-backend-engineer.md
-│   │   ├── 04-frontend-engineer.md
-│   │   ├── 05-security-engineer.md
-│   │   ├── 06-test-engineer.md
-│   │   ├── 07-devops-engineer.md
-│   │   ├── 08-database-engineer.md
-│   │   ├── 09-systems-engineer.md
-│   │   ├── 10-hygiene-auditor.md
-│   │   └── project-brain-template.md
-│   └── templates/
-│       ├── execution-plan.md
-│       ├── task-brief.md
-│       ├── specialist-report.md
-│       ├── code-review.md
-│       ├── reconciliation-matrix.md
-│       └── task-file.md
-│
-├── advisory-board/
-│   ├── README.md                    # board overview, scoring formula
-│   ├── agents/
-│   │   ├── 00-roster.md
-│   │   ├── 01-cfo-advisor.md
-│   │   ├── 02-cmo-advisor.md
-│   │   ├── 03-cpo-advisor.md
-│   │   ├── 04-cto-advisor.md
-│   │   ├── 05-uiux-lead.md
-│   │   ├── 06-code-auditor.md
-│   │   ├── 07-gap-analyst.md
-│   │   ├── 08-devops-sre.md
-│   │   ├── 09-cso-advisor.md
-│   │   └── 10-legal-advisor.md
-│   └── templates/
-│       ├── agent-review.md
-│       ├── agent-memory.md
-│       ├── consolidated-report.md
-│       └── owner-responses.md
-│
-├── writing-team/
 │   ├── README.md
-│   ├── agents/                      # continuity, voice, reader, craft, canon
-│   └── session-protocol.md
-│
-├── ttrpg-team/
-│   ├── README.md
-│   ├── agents/                      # 17: system experts, min-maxers, players, GMs, VTT
-│   ├── session-protocol.md
-│   └── combat-log-format.md
-│
+│   ├── agents/                     # Orchestrator + 7 role specialists (+ optional reviewer, hygiene-auditor)
+│   └── templates/
 ├── docs/
-│   ├── architecture.md              # CDG, tiers, gates, reconciliation matrix
-│   ├── orchestration-loop.md        # the orchestrator's loop end-to-end
-│   ├── board-review.md              # advisory board scoring and process
-│   ├── token-efficiency.md          # where the tokens go, and why this comes out ahead
-│   └── authoring-an-agent.md        # how to write a good persona file
-│
+│   ├── architecture.md             # the CDG, tiers, the verification gate
+│   ├── the-deterministic-check.md  # the one validated gate — how to wire it
+│   ├── token-efficiency.md         # where the tokens go (and where the ceremony bled them)
+│   └── authoring-an-agent.md
+├── .claude/commands/
+│   ├── orchestrate.md              # the loop
+│   └── fix.md                      # the lightweight path
 ├── examples/
-│   ├── sample-review/                # advisory board review of fictional "Lumina"
-│   │   ├── README.md
-│   │   ├── cto-advisor-review.md
-│   │   ├── cfo-advisor-review.md
-│   │   └── consolidated-report.md
-│   ├── orchestrated-run/             # full loop on fictional "Verdant" (illustrative)
-│   │   ├── README.md
-│   │   ├── task-brief.md
-│   │   ├── execution-plan.md         # CDG + tiers + file-ownership matrix
-│   │   ├── tier-reports.md           # specialist reports + Code Reviewer gate
-│   │   ├── reconciliation-matrix.md
-│   │   └── context-ledger.md         # the token/context model — illustrative
-│   ├── real-run/                     # REAL metered run that built this repo
-│   │   └── README.md                 # harness-reported tokens from 16 subagents
-│   └── eval/                         # REAL experiments (measured, not asserted)
-│       ├── README.md                 # is the CDG load-bearing? monolith vs naive vs CDG
-│       └── persona-backstory.md      # does the persona backstory help detection? (no)
-│
-└── .github/
-    └── workflows/
-        └── secret-scan.yml          # gitleaks gate on push and PR
+│   ├── eval/                       # the controlled experiments (CDG validated; backstory not)
+│   ├── real-run/                   # metered tokens from the run that built this repo
+│   └── orchestrated-run/           # a worked CDG example + context ledger
+└── extras/                         # NOT the validated core — kept for reference
+    ├── README.md
+    ├── advisory-board/ · writing-team/ · ttrpg-team/   # the pattern applied to other domains (untested)
+    ├── swarm.md · orchestration-loop.md                # the director layer + the old gated loop
+    └── board-review.md · sample-review/                # advisory scoring + example
 ```
-
----
-
-## Authoring your own
-
-See [docs/authoring-an-agent.md](docs/authoring-an-agent.md) for how to write a persona that a model can inhabit consistently, and [CONTRIBUTING.md](CONTRIBUTING.md) for filename conventions, the required frontmatter, and the secret-hygiene gate.
 
 ---
 
 ## Built by
 
-Built and maintained by **November Falls**.
+**November Falls.**
 
 ## License
 
