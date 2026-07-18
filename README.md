@@ -50,9 +50,9 @@ The specialists `/orchestrate` spawns live in [`orchestration-team/agents/`](orc
 
 Wire a deterministic check (typecheck/test/build) as the one required gate — the pattern and the exact mypy setup that worked in our eval are in [docs/the-deterministic-check.md](docs/the-deterministic-check.md).
 
-### The dials (measured, Round 3)
+### The dials (measured, Round 3 — full ladders)
 
-Run the **orchestrator at high reasoning effort, not max** — same correctness, −44% cost on the planning-heavy fixture. Worker lanes hold far below their labels when briefs carry the exact rules and traps; where demotion is legal, prefer big-model/low-effort over small-model/max-effort. Optional [`hooks/`](hooks/) turn the routing rules into denied tool calls.
+Run the **orchestrator at high reasoning effort, not max** — same correctness, −44% cost on the planning-heavy fixture. The complete ladder adds nuance: the *bottom* rung matched or beat it on cost (tie-breaks pending) while the *middle* rung is where correctness cracked — if you deviate from high, go down, never halfway. A top-tier model in the orchestrator seat is the measured **speed** configuration (all-time wall records, a two-turn swarm at minimum effort) at roughly double the seat cost. Worker lanes hold far below their labels when briefs carry the exact rules and traps. Optional [`hooks/`](hooks/) turn the routing rules into denied tool calls.
 
 ---
 
