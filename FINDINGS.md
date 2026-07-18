@@ -77,3 +77,27 @@ We're documenting it this way on purpose. An agent framework that asserts its ow
 ## Honest limits
 
 The evals are pilots, not a paper: small N, a single model tier (Sonnet), single fixtures, and a ceiling effect on the persona ablation (the naked baseline was so capable we could not build a security-review task hard enough to separate the arms — which is itself evidence the backstory has no room to help). The CDG result is the most robust; the "deterministic check beats LLM gate" point is evidence-informed design, not a separately-run A/B. Read [`examples/eval/`](examples/eval/) for the full methodology, the caveats, and the things that went sideways along the way.
+
+---
+
+# Round 2 — the skill arena (2026-07)
+
+Round 1 validated the core on tasks that fit one window. The open questions were about scale: does the loop ever *actually* route work to a swarm, and does routing ever pay? We built a benchmark to find out — three purpose-built mixed-difficulty fixtures (a 22-node service build, an 18-node static site, a 68-site migration sweep laced with anti-regex traps), each with a held-out graded oracle, and ran six generations of the skill head-to-head with spawn accounting taken from the event stream, not from self-report. Full tables, charts, and every generation's text: **[boord-its.com/skills](https://boord-its.com/skills)**.
+
+### ✅ Validated — now in the live skill
+
+- **The crossover is real, and computable.** Below it, a single strong session beats every orchestration scheme (routing there cost +86–104% for zero correctness gain). Above it — the 68-site sweep — the single session *dies on the mundane work* 2 runs in 3, and a routed swarm posts the cheapest passing runs on record. v4.1 gates on **counted sites/files/read-volume**, and the same skill correctly chose solo on one fixture (beating the monolith at its own game) and swarm on another.
+- **Turn economy is the wall-regime prize.** At the wall the routed orchestrator finishes in ~33 of its own turns where the unrouted generation ground through 112–167. Turns — not context — were the budget that actually killed sessions.
+- **Lanes with a demotion rule.** Mechanical work rides the cheapest model *when its card carries the byte-exact rules and traps*; spec-pinned critical nodes may drop one lane; auth/money/concurrency never do. Measured haiku-lane runs came back clean where earlier free-form routing had quietly upgraded everything to the mid tier.
+- **Telemetry over intentions.** v4.0's own streams caught it dispatching all ten workers serially (strict use→result→use) despite a parallel-dispatch rule, erasing its cheap lane by grouping across lanes, and flipping solo/swarm on a 9-vs-10 count at 2.8× cost. All three became v4.1 fixes, re-measured. The habit of instrumenting your own skill is worth more than any single rule in it.
+
+### ❌ Invalidated — measured, and it failed
+
+- **Skill text alone produces routing.** Across 28 unforced benchmark runs, the earlier generations produced *textbook routing plans when asked to plan* — then did all the work themselves in real runs, every time (the **knowing-doing gap**). Two things closed it: making the route/no-route decision a computed gate with a printed verdict, and writing the plan as a data file the reconciliation is checked against. (A hard prose mandate also closed it — at the cost of routing where routing loses.)
+- **Per-requirement spawning.** One worker per graded requirement drowned the savings in briefing overhead. Workers own cohesive file-clusters, grouped *within* a lane.
+- **Node-count gating.** The fixture with *fewer* nodes was the one at the wall (16 nodes, 68 edit sites). Gate on the work, not the outline.
+- **Heavyweight apparatus, again.** A rebuilt suite with worktree isolation, intake scripts, and manifests benchmarked no better than the lean loop — its machinery never activated in a real run. Same lesson as Round 1's gate battery, at larger scale.
+
+### Honest limits, Round 2
+
+Small k (1–3 per cell); one stack (Claude Code, headless, one orchestrator model at one effort setting); costs are API-equivalent dollars; the supervised interactive path (human approves the plan mid-run) was exercised anecdotally, not benchmarked. The prior generations live in [`archive/`](archive/) with their retirement reasons — the failures are the transferable part.

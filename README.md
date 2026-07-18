@@ -3,6 +3,8 @@
 > A small, validated orchestration model for multi-agent coding work with Claude Code and the Claude Agent SDK — the **`/orchestrate`** loop.
 
 > **📋 Read [FINDINGS.md](FINDINGS.md) first.** This repo started as an elaborate multi-agent fleet — rich personas, a battery of mandatory gates, a director hierarchy, four teams. We tested our own assumptions. **Most of the elaboration didn't help, and the ceremony bled tokens the whole time.** The one thing that earned its keep was the **Change Dependency Graph**. So the repo has been cut down to what the evidence supports. The rest is preserved, honestly labeled, in [`extras/`](extras/).
+>
+> **Round 2 (2026-07):** we then benchmarked six generations of the skill itself on purpose-built fixtures with held-out oracles — and found the *knowing-doing gap* (skills that plan routing, then defect), the real scale crossover, and three defects in our own redesign, caught by its own telemetry. The live skill is now **v4.1** (computed SOLO/SWARM gate, plan-as-data, model lanes); every retired generation sits in [`archive/`](archive/) with its retirement reason. Numbers and charts: **[boord-its.com/skills](https://boord-its.com/skills)**.
 
 ---
 
@@ -36,7 +38,7 @@ The takeaway: **keep the CDG, keep context isolation, gate with a deterministic 
 
 ### The command
 
-`/orchestrate <task>` — one self-scaling entry point. It runs lightweight (one specialist + a deterministic check) for a small change, and builds the CDG + tiers for a large one. The skill is [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md) (with [`fix.md`](.claude/commands/fix.md) for the explicit lightweight path). Copy them into `~/.claude/commands/`.
+`/orchestrate <task>` — one self-scaling entry point, now at **v4.1**: it *counts* the work (sites, files, read volume), prints a `GATE: SOLO|SWARM` verdict, and obeys it — solo with checklist discipline below the measured crossover, a lane-routed worker swarm (haiku/sonnet/opus) with a plan file and deterministic gates above it. The skill is [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md) (with [`fix.md`](.claude/commands/fix.md) for the explicit single-issue path). Copy them into `~/.claude/commands/`.
 
 ### The agents
 
@@ -64,8 +66,9 @@ Agents-Public/
 │   ├── token-efficiency.md         # where the tokens go (and where the ceremony bled them)
 │   └── authoring-an-agent.md
 ├── .claude/commands/
-│   ├── orchestrate.md              # the loop
+│   ├── orchestrate.md              # the loop (v4.1 — computed gate, plan-as-data, lanes)
 │   └── fix.md                      # the lightweight path
+├── archive/                        # retired generations + why each died (the ledger)
 ├── examples/
 │   ├── eval/                       # the controlled experiments (CDG validated; backstory not)
 │   ├── real-run/                   # metered tokens from the run that built this repo
