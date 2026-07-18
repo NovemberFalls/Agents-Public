@@ -5,6 +5,8 @@
 > **📋 Read [FINDINGS.md](FINDINGS.md) first.** This repo started as an elaborate multi-agent fleet — rich personas, a battery of mandatory gates, a director hierarchy, four teams. We tested our own assumptions. **Most of the elaboration didn't help, and the ceremony bled tokens the whole time.** The one thing that earned its keep was the **Change Dependency Graph**. So the repo has been cut down to what the evidence supports. The rest is preserved, honestly labeled, in [`extras/`](extras/).
 >
 > **Round 2 (2026-07):** we then benchmarked six generations of the skill itself on purpose-built fixtures with held-out oracles — and found the *knowing-doing gap* (skills that plan routing, then defect), the real scale crossover, and three defects in our own redesign, caught by its own telemetry. The live skill is now **v4.1** (computed SOLO/SWARM gate, plan-as-data, model lanes); every retired generation sits in [`archive/`](archive/) with its retirement reason. Numbers and charts: **[boord-its.com/skills](https://boord-its.com/skills)**.
+>
+> **Round 3 (2026-07):** then we measured *effort*. The orchestrator holds full correctness one reasoning notch below max (−44% on the planning-heavy fixture, new record at the scale wall), and real worker briefs replayed at every lane × effort passed **18/18** — a good enough brief makes the worker tier a speed dial, not a correctness dial. The enforcement hooks that keep routing honest in both directions now ship in [`hooks/`](hooks/).
 
 ---
 
@@ -48,6 +50,10 @@ The specialists `/orchestrate` spawns live in [`orchestration-team/agents/`](orc
 
 Wire a deterministic check (typecheck/test/build) as the one required gate — the pattern and the exact mypy setup that worked in our eval are in [docs/the-deterministic-check.md](docs/the-deterministic-check.md).
 
+### The dials (measured, Round 3)
+
+Run the **orchestrator at high reasoning effort, not max** — same correctness, −44% cost on the planning-heavy fixture. Worker lanes hold far below their labels when briefs carry the exact rules and traps; where demotion is legal, prefer big-model/low-effort over small-model/max-effort. Optional [`hooks/`](hooks/) turn the routing rules into denied tool calls.
+
 ---
 
 ## Repo layout
@@ -68,6 +74,7 @@ Agents-Public/
 ├── .claude/commands/
 │   ├── orchestrate.md              # the loop (v4.1 — computed gate, plan-as-data, lanes)
 │   └── fix.md                      # the lightweight path
+├── hooks/                          # optional enforcement: mandate + lane floor/ceiling as denied tool calls
 ├── archive/                        # retired generations + why each died (the ledger)
 ├── examples/
 │   ├── eval/                       # the controlled experiments (CDG validated; backstory not)

@@ -14,6 +14,13 @@ You are the ORCHESTRATOR: top-tier judgment at the top, the cheapest model that
 clears the gate underneath. Your spend follows your typing. Objective order when
 they conflict: correctness -> premium-token displacement -> wall-clock -> raw dollars.
 
+**Orchestrator effort (measured, Round 3):** on the SWARM path run the orchestrator
+at HIGH reasoning effort, not maximum -- same correctness, -44% cost on the
+planning-heavy fixture, and the cheapest passing run on record at the turn-budget
+wall. Reserve maximum effort for solo judgment-heavy work. Worker lanes hold far
+below their labels when cards carry the exact rules and traps (18/18 floor cells);
+the optional hooks/ layer keeps that honest in both directions.
+
 Task: $ARGUMENTS
 
 ## 1 / Inventory (mandatory, before choosing anything)

@@ -101,3 +101,24 @@ Round 1 validated the core on tasks that fit one window. The open questions were
 ### Honest limits, Round 2
 
 Small k (1–3 per cell); one stack (Claude Code, headless, one orchestrator model at one effort setting); costs are API-equivalent dollars; the supervised interactive path (human approves the plan mid-run) was exercised anecdotally, not benchmarked. The prior generations live in [`archive/`](archive/) with their retirement reasons — the failures are the transferable part.
+
+---
+
+# Round 3 — orchestrator effort & the worker floor (2026-07)
+
+Round 2 fixed *when to route* and *what lane gets the work*. Round 3 asked the two questions that were left: how hard does the **orchestrator** actually need to think, and how weak can a **worker** be before a good brief stops carrying it? Same method — held-out oracles, spawn accounting from the event stream — plus a new instrument: real worker briefs lifted verbatim from validated swarm runs and replayed standalone at chosen model × effort cells, graded on exactly the sites and traps each brief owns. 26/26 runs in the round passed. Numbers and charts: **[boord-its.com/skills](https://boord-its.com/skills)**.
+
+### ✅ Validated — now in the live guidance
+
+- **The orchestrator doesn't need max effort.** The identical skill text with the orchestrator's reasoning effort one notch down passed every run, cut the planning-heavy fixture **44%**, and set a new cheapest-passing record on the 68-site sweep. Once the route decision is computed and the gate is a script, maximum thinking depth was paying for decisions the skill had already made deterministic. The live skill now says so: run the orchestrator at high, not max.
+- **The worker floor is lower than the lane table assumes.** All 18 standalone cells passed — including the cheapest model at *minimum* effort through a fully-specified mechanical sweep, and the cheapest model through a trap-dense cluster at **a third of the mid-tier price** with every must-not-change trap intact. With a brief that names the rules and the traps, worker tier became a speed dial, not a correctness dial. The brief *is* the orchestrator's judgment, exported — which is why the top of the system is the part worth paying for.
+- **A bigger model at low effort beats a smaller one at max.** On a spec-pinned critical brief, the top-tier worker at minimum effort tied the mid-tier at maximum effort on correctness — and beat it on wall-clock (roughly half) and cost, because it needs fewer passes. Where the demotion rule allows a choice, prefer big-model/low-effort over small-model/max-effort.
+- **A ceiling, not just a floor.** At lower orchestrator effort, routing drifted upward run-to-run (mundane work quietly landing on the mid tier). The deterministic gate kept every run correct — that is what it is for — and a new enforcement hook makes the drift deny-by-default: a worker's first spawn above its planned lane is refused unless the plan names the trap that justifies the promotion. The hooks (mandate + floor + ceiling, 18 tests) are now in [`hooks/`](hooks/).
+
+### 🅿️ Parked — mechanically proven, not yet economical
+
+- **Dispatch-as-code.** Writing each batch as one workflow script — so serial dispatch is structurally impossible and every worker gets an explicit effort — worked exactly as designed: 4/4 correct, zero scope violations, orchestrator turns collapsed. But at max orchestrator effort it roughly doubled wall-clock (batch barriers serialize) and cost more than the effort-diet config everywhere. Parked pending its decisive cell (scripted dispatch at high effort), not abandoned: structural parallelism is the right shape; it hasn't yet paid for itself.
+
+### Honest limits, Round 3
+
+k=2 everywhere; one brief per task shape; and a deliberate ceiling effect on the floor probe — nothing failed, so we know the floor sits *below* everything tested, not where it is. Locating it needs deliberately degraded briefs, which is the next controlled test worth running: it would cleanly separate brief quality from model strength, the two things this round showed are usually conflated.
