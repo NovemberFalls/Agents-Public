@@ -2,11 +2,16 @@
 
 > A small, validated orchestration model for multi-agent coding work with Claude Code and the Claude Agent SDK — the **`/orchestrate`** loop.
 
-> **📋 Read [FINDINGS.md](FINDINGS.md) first.** This repo started as an elaborate multi-agent fleet — rich personas, a battery of mandatory gates, a director hierarchy, four teams. We tested our own assumptions. **Most of the elaboration didn't help, and the ceremony bled tokens the whole time.** The one thing that earned its keep was the **Change Dependency Graph**. So the repo has been cut down to what the evidence supports. The rest is preserved, honestly labeled, in [`extras/`](extras/).
->
-> **Round 2 (2026-07):** we then benchmarked six generations of the skill itself on purpose-built fixtures with held-out oracles — and found the *knowing-doing gap* (skills that plan routing, then defect), the real scale crossover, and three defects in our own redesign, caught by its own telemetry. The live skill is now **v4.1** (computed SOLO/SWARM gate, plan-as-data, model lanes); every retired generation sits in [`archive/`](archive/) with its retirement reason. Numbers and charts: **[boord-its.com/skills](https://boord-its.com/skills)**.
->
-> **Round 3 (2026-07):** then we measured *effort*. The orchestrator holds full correctness one reasoning notch below max (−44% on the planning-heavy fixture, new record at the scale wall), and real worker briefs replayed at every lane × effort passed **18/18** — a good enough brief makes the worker tier a speed dial, not a correctness dial. The enforcement hooks that keep routing honest in both directions now ship in [`hooks/`](hooks/).
+> **📄 This repo is a white paper with the code attached.** Start with
+> **[FINDINGS.md](FINDINGS.md)** — *One Skill to Run a Swarm* — ~94 graded runs and
+> ~$480 of real spend across three rounds, benchmarking eight generations of one
+> orchestration skill on **Speed · Correctness · Turns · Cost · Context · Swarm
+> Control**. Most of what we believed at the start was wrong, and the paper says so:
+> persona backstories did nothing, prose rules quietly defect, max thinking effort
+> is mostly a tax, and a good enough brief makes the worker model a speed dial, not
+> a correctness dial. Interactive charts with every losing run shown:
+> **[boord-its.com/skills](https://boord-its.com/skills)**. The living skill, the
+> enforcement hooks, and the museum of retired generations are all here.
 
 ---
 
