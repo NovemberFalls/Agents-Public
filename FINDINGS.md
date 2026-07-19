@@ -118,6 +118,16 @@ We then benchmarked the skill itself, six generations head-to-head.
 
 ### 4.3 Round 3 — effort, the worker floor, and four challengers that lost
 
+- **Even the SEAT is nearly fungible — our predictions failed in the best way.**
+  We put the mid-tier and cheapest models in the *orchestrator* seat, predicting
+  the first would crack at scale and the second would fail outright. Both passed
+  everything. The cheapest seat landed within noise of the champion's cost — and
+  its telemetry shows how: it *hired seven top-tier workers* for the risky parts.
+  A weak seat that knows its limits buys judgment downstream; a strong seat keeps
+  judgment and buys cheap hands. Both clear the gate, because the skill supplies
+  the decisions either way. (Small samples; the mid-tier seat also lost on price —
+  too expensive to be free, too weak to hold critical work itself. On both the
+  effort ladder and the seat ladder, the middle is the worst place to stand.)
 - **The worker floor was never found.** We replayed real worker briefs from
   validated runs at every model × effort combination: 20/20 passed, including the
   cheapest model at *minimum* effort through a trap-dense cluster at a third of
