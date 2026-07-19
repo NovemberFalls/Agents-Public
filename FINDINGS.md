@@ -174,9 +174,14 @@ don't know exists), the full 45-cell worker grid, and the 400K-token deep audit.
   thinking on both the top-tier and strong seats (the top seat's build-project
   ladder runs 5.73 → 8.92 → 9.91 → 12.39 → 13.15). Effort is a tax on decisions
   the skill already made.
-- **A dark horse:** the mid-tier seat at *minimum* effort became the first swarm
-  ever to beat the no-skill baseline on the small project (USD 2.31 vs 3.73),
-  passing everything. Small sample; tie-break scheduled.
+- **A dark horse, then a lesson in sample size:** the mid-tier seat at *minimum*
+  effort posted a USD 2.31 run — the first swarm ever to beat the no-skill
+  baseline on the small project. The k=4 tie-break then revealed that run as an
+  outlier (its siblings: 4.31–5.92); ranges overlap the champion's and the crown
+  stayed put. What survives is bigger than a crown: **two different models in the
+  orchestrator seat now produce statistically indistinguishable swarms across 16
+  graded runs each.** The skill is the orchestrator; the seat is a rental — and
+  the tie-break policy caught its own headline before we shipped it.
 - **The middle curse, third sighting:** the cheap seat's effort ladder failed at
   exactly the middle rung (and, newly, at max — the study's first over-thinking
   *breakage* rather than mere tax). Top or bottom. Never the middle.
