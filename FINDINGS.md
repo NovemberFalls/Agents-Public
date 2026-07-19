@@ -123,12 +123,17 @@ We then benchmarked the skill itself, six generations head-to-head.
   cheapest model at *minimum* effort through a trap-dense cluster at a third of
   the mid-tier price. With a good enough brief, worker choice is a **speed dial,
   not a correctness dial**. The brief *is* the orchestrator's judgment, exported.
-- **The effort ladders kept correcting us.** Max effort over-thinks (+44% on the
-  planning-heavy project for nothing). One rung down held everything. Two rungs
-  down cracked once — we declared the optimum "bracketed," then ran the bottom
-  rung for completeness and it went 4/4 with the all-time cost records. At small
-  sample sizes, "bracketed" was a story we told one run too early; tie-breaks are
-  pending, and the shipped config stays the largest-sample winner. Meanwhile the
+- **The effort ladders kept correcting us — all the way to the bottom.** Max
+  effort over-thinks (+44% on the planning-heavy project for nothing). One rung
+  down held everything, and we declared the optimum "bracketed" when the rung
+  below it cracked once. Then the bottom rung went perfect with the all-time cost
+  records, and the k=4 tie-break settled it: **minimum effort is the champion** —
+  8/8 passing, cheaper AND faster than high everywhere, with non-overlapping cost
+  ranges on the scale-wall project (low's worst run beat high's best). Once the
+  route decision is computed and the gate is a script, the orchestrator's job is
+  to execute the plan — paying for deliberation the skill already did is pure
+  tax. The middle rung keeps the only correctness blemish in the study (5/6):
+  if you deviate at all, go to the bottom, never halfway. Meanwhile the
   *top-tier* model in the orchestrator seat got cheaper AND faster at every step
   down, finishing an entire swarm in **two orchestrator turns** at minimum effort
   — all-time speed records, at roughly double the seat price.
