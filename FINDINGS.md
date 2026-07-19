@@ -64,6 +64,13 @@ pinned per configuration. Failed runs, losing designs, and our own reversed
 conclusions are all published; sample sizes are small (1–3 runs per cell) and we
 say so.
 
+**Pinned model generation.** Every number describes one recorded generation of
+models (currently Haiku 4.5 / Sonnet 5 / Opus 4.8, with the top-tier seat
+experiments on Fable 5); each run logs the exact model IDs, and the harness trips
+an alarm if a provider release re-points a tier mid-study. New releases are
+re-qualified against the champion's cells before any published number changes —
+a release is treated as a fresh optimization opportunity, never a silent upgrade.
+
 ## 4 · Results
 
 ### 4.1 Round 1 — the ceremony didn't help
