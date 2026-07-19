@@ -161,16 +161,31 @@ We then benchmarked the skill itself, six generations head-to-head.
   challengers. The text is at a measured plateau; the remaining headroom is in
   dials and unmeasured regimes, not prose.
 
-### 4.4 The boards (state of the art, this benchmark)
+### 4.4 The complete matrix (four seats × five efforts, the full worker grid, and scale)
 
-| Axis | Current #1 | Note |
-|---|---|---|
-| Fastest | top-tier seat / minimum effort | all-time records; ~2× seat cost |
-| Fewest turns | scripted dispatch | its one genuine win |
-| Cheapest | champion text / low effort | tie-break vs high pending |
-| Most correct | multiple at 100% | correctness ceilings; ties broken by sample size |
-| Swarm control | champion text / high effort | ~50% of spend on cheaper workers |
-| Leanest context | the single-session baseline | swarms buy scale, not token thrift |
+The final campaign tested everything evenly — every orchestrator seat (top-tier,
+strong, mid, cheap) at every effort rung (low → max, a fifth rung most people
+don't know exists), the full 45-cell worker grid, and the 400K-token deep audit.
+
+- **The worker floor: 45/45 cells green, 90 graded runs, zero failures** — the
+  cheapest model wrote the security-critical shared module correctly at every
+  effort level. On brief-carried work, the floor simply does not exist.
+- **Both max-effort ladders are monotone**: cost rises with every rung of extra
+  thinking on both the top-tier and strong seats (the top seat's build-project
+  ladder runs 5.73 → 8.92 → 9.91 → 12.39 → 13.15). Effort is a tax on decisions
+  the skill already made.
+- **A dark horse:** the mid-tier seat at *minimum* effort became the first swarm
+  ever to beat the no-skill baseline on the small project (USD 2.31 vs 3.73),
+  passing everything. Small sample; tie-break scheduled.
+- **The middle curse, third sighting:** the cheap seat's effort ladder failed at
+  exactly the middle rung (and, newly, at max — the study's first over-thinking
+  *breakage* rather than mere tax). Top or bottom. Never the middle.
+- **At scale, the swarm finally separates on correctness — and wins on price.**
+  On the 400K-token audit the crowned config passed every run at a **median USD
+  15.39 vs the single session's USD 36.60** (which also passed, at 9× its usual
+  prices) — and the runner-up config dropped a run there, independently
+  validating the tie-break. Delegation's promise, graded: **42% of the
+  monolith's price in the regime delegation was invented for.**
 
 Live, sortable, with every losing run shown: [boord-its.com/skills](https://boord-its.com/skills).
 
