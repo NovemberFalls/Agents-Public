@@ -4,14 +4,18 @@
 
 > **Abstract.** We wanted to know one thing: what is the single best *skill* — the
 > instruction file given to an AI orchestrator — for spawning a swarm of AI workers
-> and finishing complex coding tasks? Over three rounds and ~94 graded runs (~$480
-> of real API spend), we benchmarked eight generations of one skill on purpose-built
-> test projects with hidden answer keys, measuring **Speed, Correctness, Turns,
-> Cost, Context, and Swarm Control**. Most of what we believed at the start was
-> wrong, and the failures taught more than the wins. The living result: a lean
-> skill whose three drift-prone decisions are *computed instead of judged*, run by a
-> strong orchestrator at moderate thinking effort, delegating to the cheapest
-> workers that clear a deterministic gate. Charts and full tables:
+> and finishing complex coding tasks? Over three rounds plus a local-hardware
+> chapter — ~200 graded runs, ~$750 of real API spend on the study ledger — we
+> benchmarked eight generations of one skill on purpose-built test projects with
+> hidden answer keys, measuring **Speed, Correctness, Turns, Cost, Context, and
+> Swarm Control**. Most of what we believed at the start was wrong, and the
+> failures taught more than the wins. The living result: a lean skill whose three
+> drift-prone decisions are *computed instead of judged*, run by a strong
+> orchestrator at low thinking effort, delegating to the cheapest workers that
+> clear a deterministic gate. Taxonomy, for skill-library builders: this is a
+> **software-engineering** skill whose function is **multi-agent orchestration**
+> — it runs the team rather than writing the code, and every claim here was
+> earned on coding fixtures only. Charts and full tables:
 > **[boord-its.com/skills](https://boord-its.com/skills)**.
 
 ---
@@ -192,9 +196,55 @@ don't know exists), the full 45-cell worker grid, and the 400K-token deep audit.
   validating the tie-break. Delegation's promise, graded: **42% of the
   monolith's price in the regime delegation was invented for.**
 
+### 4.5 The local lane — worker fungibility leaves the API
+
+The worker floor said the card is the quality mechanism and the model only buys
+wall-clock. We tested whether that law survives leaving the API: open-weights
+models on one RTX 3090 (24 GB, LM Studio serving an Anthropic-compatible
+endpoint), replaying the same graded worker briefs through the same harness.
+
+- **The parity result, honestly scoped:** a quantized 35B MoE (Qwen3.6-35B,
+  ~3B active) went **6/6 official on the hardened bench cards — the same
+  perfect floor Sonnet 5 holds as a worker** — at 3–9× the wall and $0
+  marginal cost. This is *worker-role parity on curated briefs*, not general
+  parity: on public SWE-bench the open ladder trails (51.6–70.6% vs Sonnet
+  5's 82.1%), and on live-written briefs the gap reappears (below). We never
+  benched Sonnet 4; the study pins one generation and compares inside it.
+- **The ladder's optimum is interior, again:** 30B (84 tok/s) coin-flips the
+  critical card; 35B (30 tok/s) is perfect — fewer, surer turns pay for the
+  slower decode; 80B (13 tok/s at depth) collapses **no** further turns, so
+  its halved decode is pure loss: 5/6, one 99-turn spin, walls 2×. The same
+  bend-back curve we measured on the effort dial and the seat ladder, now on
+  parameter count.
+- **One card is a queue, not a swarm:** 2- and 4-way parallel slots made every
+  batch *slower* than sequential (+10–18%) — decode shares one
+  memory-bandwidth pool. A 30B running entirely from system RAM beside the
+  GPU resident held correctness under co-load but netted ~0 extra throughput
+  (an overflow valve). Hardware corollary: a second identical card is the
+  only purchase that adds a worker; a bigger die is still one pool.
+- **The orchestrated-local variant failed graduation — instructively.** Five
+  arena runs produced four *novel* defection modes, each caught verbatim in
+  retained streams and pre-refuted in the next text iteration: a **fourth
+  excuse** ("I hold the full call-site map in context now; I'll execute
+  directly rather than re-fragmenting the trap knowledge across workers" —
+  the inventory step itself breeds it); a discovery coin-flip whose fallback
+  dissolved into solo; fire-and-forget dispatch that graded half-done work
+  while orphaned workers were still generating; and a tool-timeout ceiling
+  that amputated the local legs of an otherwise-correct run. Run 5, fully
+  mechanized: both local lanes carried real work, displaced API spend
+  collapsed — and correctness broke at 59/68 on briefs written live
+  (curated briefs: 6/6, same model), while 45 turns of seat babysitting
+  priced the run at parity with the all-API champion.
+- **Economics, measured:** a Sonnet-class worker job is $0.25–0.56 on the
+  API; local it is $0 at 2.3–8.5 min. One saturated overnight ≈ 145 jobs ≈
+  $52 displaced against ~$0.34 of electricity; a used ~$1,300 card
+  breaks even in ~25 saturated nights — *if* dispatch is direct. The fully
+  orchestrated mode doesn't save until the seat cost is dieted or the work is
+  batched; that iteration is staged, not graduated.
+
 Live, sortable, with every losing run shown: [boord-its.com/skills](https://boord-its.com/skills).
 
-## 5 · Discussion — three laws we keep re-measuring
+## 5 · Discussion — the laws we keep re-measuring
 
 1. **Judgment concentrates at the top.** Quality lives in the plan and the briefs;
    worker strength only buys wall-clock. Spend on the orchestrator's *artifacts*,
@@ -207,19 +257,33 @@ Live, sortable, with every losing run shown: [boord-its.com/skills](https://boor
    mostly a tax; the correctness risk we observed lives in the *middle* of the
    ladder, not the bottom.
 
+The local-lane chapter re-measured all three from new angles — law 1 from the
+failing side (the same 35B: curated briefs 6/6, live-written briefs 59/68 —
+the brief, not the brain, carried the quality), law 3 on a new axis (parameter
+count bends back exactly like effort did), and it added a fourth we now treat
+as standing:
+
+4. **One bandwidth pool is one worker.** Parallelism only comes from genuinely
+   separate pools (a second card, system RAM, the API) — splitting a shared
+   pool into lanes made every batch slower than single-file, at every width we
+   tried. Scale out, never up.
+
 And the standing guardrail behind all three: **reports are claims; exit codes are
 evidence.** LLM review never gates anything here.
 
 ## 6 · Limitations
 
 Small samples (1–3 runs per cell). One stack (Claude Code, headless), one family
-of models, API-equivalent pricing. Three test projects — broad in shape but not in
-domain. Correctness ceilings on several boards (many configs at 100%, separated
-only by cost/speed). Two cells remain unrun: the top-tier seat at minimum effort
-on the migration project (blocked by a usage cap mid-campaign) and the
-very-large-context regime the delegation gate was partly designed for. The
-supervised interactive path (human approves the plan mid-run) is exercised daily
-but not benchmarked.
+of API models, API-equivalent pricing. Three test projects — broad in shape but
+not in domain. Correctness ceilings on several boards (many configs at 100%,
+separated only by cost/speed). Two cells remain unrun: the top-tier seat at
+minimum effort on the migration project (blocked by a usage cap mid-campaign)
+and the very-large-context regime the delegation gate was partly designed for.
+The supervised interactive path (human approves the plan mid-run) is exercised
+daily but not benchmarked. The local-lane chapter is one GPU, one quantization
+family, k=1–2 per cell; its parity claim is card-scoped by construction, and
+the orchestrated-local variant is published as a failed graduation, not a
+recommendation.
 
 ## 7 · Use it / reproduce it
 
