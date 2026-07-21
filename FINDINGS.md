@@ -5,7 +5,7 @@
 > **Abstract.** We wanted to know one thing: what is the single best *skill* — the
 > instruction file given to an AI orchestrator — for spawning a swarm of AI workers
 > and finishing complex coding tasks? Over three rounds plus a local-hardware
-> chapter — ~200 graded runs, ~$750 of real API spend on the study ledger — we
+> chapter — 256 graded runs, ~$790 of real API spend on the study ledger — we
 > benchmarked eight generations of one skill on purpose-built test projects with
 > hidden answer keys, measuring **Speed, Correctness, Turns, Cost, Context, and
 > Swarm Control**. Most of what we believed at the start was wrong, and the
@@ -240,7 +240,38 @@ endpoint), replaying the same graded worker briefs through the same harness.
   $52 displaced against ~$0.34 of electricity; a used ~$1,300 card
   breaks even in ~25 saturated nights — *if* dispatch is direct. The fully
   orchestrated mode doesn't save until the seat cost is dieted or the work is
-  batched; that iteration is staged, not graduated.
+  batched; six graduation runs in, it reaches 68/68 edit sites with zero API
+  worker spend and fails on one unexecuted import — the gap is now a gate
+  stanza, not a discipline.
+
+### 4.6 The challengers round — re-sweep the field, then re-crown it
+
+Asked whether we had tested the *best* local models, the honest answer was no:
+the shortlist was six months stale. One fresh web sweep picked five
+challengers (three dense — the all-MoE ladder's missing archetype — plus two
+fast MoE; two required direct downloads the catalogs didn't carry), and one
+scripted overnight gauntlet graded them all on the same briefs: a ≥8 tok/s
+decode bar, then the three worker cards, 3-for-3 earning a second pass.
+
+- **The crown changed hands.** Qwen3.6-27B went 6/6 at k=2 and beat the
+  sitting 35B resident's wall in *every* cell — the long card in less than
+  half the time (181–217s vs 427–506s) at 38 tok/s. It now holds the GPU
+  seat, and its smaller footprint returns ~3 GB of VRAM.
+- **The round's wildest number:** gpt-oss-20b ran the trap-dense brief — all
+  11 must-not-change traps held — in **21 seconds: the API floor's own
+  wall-clock, from a $0 local card** (130 tok/s). It loses the long march
+  (5/13 on the sweep card), so it serves as a burst tool for short briefs
+  only; on the RAM pool it converges to the same ~8 tok/s as everything else
+  and loses its magic entirely.
+- **Correctness ceilings everywhere; walls decide seats.** Gemma 4 31B also
+  went 6/6 — at 12 tok/s and 3–25× the winner's walls: perfect and
+  unseatable. The agent-tuned dense contender (Devstral Small 2) burned turn
+  caps exploring; one newcomer couldn't drive the harness at all (0/3,
+  spin-to-cap).
+- **Method finding, possibly the transferable one:** model knowledge decays
+  in months, and the only reason re-ranking the entire local field cost $0
+  API and one night is that the harness already existed. Keep the gauntlet
+  cheaper than your staleness.
 
 Live, sortable, with every losing run shown: [boord-its.com/skills](https://boord-its.com/skills).
 
@@ -266,7 +297,15 @@ as standing:
 4. **One bandwidth pool is one worker.** Parallelism only comes from genuinely
    separate pools (a second card, system RAM, the API) — splitting a shared
    pool into lanes made every batch slower than single-file, at every width we
-   tried. Scale out, never up.
+   tried. Fifth confirmation: every model we ran CPU-side, however fast on
+   GPU, converged to the same ~8 tok/s — the pool's ceiling, not the model's.
+   Scale out, never up.
+
+5. **Re-sweep before you buy, build, or crown.** Our local-model shortlist
+   went stale in six months; one fresh sweep and one $0 overnight re-ranked
+   the whole field and dethroned our certified resident. Standing rule: any
+   claim of "best available model" carries a date, and the harness must stay
+   cheap enough to re-run when that date ages.
 
 And the standing guardrail behind all three: **reports are claims; exit codes are
 evidence.** LLM review never gates anything here.
