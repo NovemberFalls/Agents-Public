@@ -324,7 +324,60 @@ family, k=1–2 per cell; its parity claim is card-scoped by construction, and
 the orchestrated-local variant is published as a failed graduation, not a
 recommendation.
 
-## 7 · Use it / reproduce it
+## 7 · Threats to validity — answered where we can, conceded where we can't
+
+We wrote our critics' best arguments down before they did. Where we have an
+answer, it's here; where we don't, that's here too.
+
+- **"The fixtures and answer keys are private — unfalsifiable."** They stay
+  private for the same reason every serious benchmark's do: a grader that can
+  leak into training data is a dead grader, and half our fixtures wrap real
+  private code. Private test sets are the norm (chat arenas don't pre-publish
+  prompts; abstract-reasoning benchmarks keep held-out sets) — what keeps a
+  private bench honest is not disclosure but **third-party entries through the
+  same pipe**. Hence §8: the arena is open. Send a skill; we run it blind and
+  publish the row, win or lose, next to our own losers.
+- **"n=1–4 per cell is not statistics."** Correct, and the paper says
+  "directional" wherever it applies. Three mitigations are real: the crowning
+  cells ran k=4 under a pre-published range-overlap policy; that same policy
+  killed our own most quotable number (a $2.31 run exposed as an outlier); and
+  the harness makes scaling n a budget line, not a research program — a
+  pre-registered k=25 confirmation on the decisive cells is priced and queued,
+  pending only spend approval. Until it runs, treat medians as estimates.
+- **"You graded your own exam."** The exams are deterministic: planted bugs,
+  counted edit-points, executable checks, exit codes. When a test is "did the
+  planted trap survive? did the suite pass?", self-grading is just *grading* —
+  the same way a proctored multiple-choice exam doesn't care who feeds the
+  scantron. We can argue all day about whose website is prettier; we cannot
+  argue about whether the website was built. Open-ended *quality* judging is
+  phase two of that argument and would need juries or votes; this paper is
+  phase one, on purpose.
+- **"You only beat your own variants."** True, and the fix is structural, not
+  rhetorical: the open challenge (§8) exists so the comparison set stops being
+  ours. Until entries arrive, the strongest external anchors are the monolith
+  control (the no-skill baseline any framework must beat) and the local-model
+  challengers round, where five outside models ran the same gauntlet and
+  re-ranked our own residents.
+- **"A 27B is not better than Sonnet."** Agreed — we never claim it. The
+  claim's exact shape: in the *worker role*, on *these graded briefs*, the 27B
+  delivered the same correctness at 2–4× the wall-clock for $0 marginal cost
+  on owned hardware. Same exam, same grade, different bill. General-capability
+  gaps (SWE-bench et al.) are stated alongside every parity claim.
+- **Conceded without contest:** one stack (Claude Code), one API model family,
+  code fixtures only, small n until the k=25 pass runs, and an inference-engine
+  version that moved mid-study for the challenger rows (recorded per row).
+
+## 8 · The open challenge
+
+Think your skill does better? Send one skill file (a Claude Code command — a
+single .md) via an issue on this repo. We read it, run it through the same
+frozen projects, hidden answer keys, and pinned models as every arm in this
+paper, and publish the result — win or lose, attributed or anonymous, your
+call. One entry per person per round; obviously-hostile files don't run
+(submissions execute with tools in isolated copies, after human review).
+Deterministic checks decide. Taste is a different tournament.
+
+## 9 · Use it / reproduce it
 
 - **The skill:** [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md)
   — copy into `~/.claude/commands/`, run the orchestrator at high effort.
