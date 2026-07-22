@@ -337,13 +337,22 @@ answer, it's here; where we don't, that's here too.
   private bench honest is not disclosure but **third-party entries through the
   same pipe**. Hence §8: the arena is open. Send a skill; we run it blind and
   publish the row, win or lose, next to our own losers.
-- **"n=1–4 per cell is not statistics."** Correct, and the paper says
-  "directional" wherever it applies. Three mitigations are real: the crowning
-  cells ran k=4 under a pre-published range-overlap policy; that same policy
-  killed our own most quotable number (a $2.31 run exposed as an outlier); and
-  the harness makes scaling n a budget line, not a research program — a
-  pre-registered k=25 confirmation on the decisive cells is priced and queued,
-  pending only spend approval. Until it runs, treat medians as estimates.
+- **"n=1–4 per cell is not statistics."** It wasn't — so we ran the
+  confirmation. The pre-registered n-scaling pass (protocol committed before
+  spend: cells, k, bootstrap CIs, Mann–Whitney, success criteria,
+  publish-regardless) took the champion to k=25 and the runner-up and monolith
+  controls to k=15 — 101 clean graded rows, ~$451. The honest headline: the
+  champion's small-n 8/8 did NOT survive scale (80% on the hard refactor;
+  runner-up 87%; monolith 53%), landing the pre-registered verdict in its
+  middle band rather than "crown holds." What did survive, decisively, is the
+  cost claim: champion cost CIs sit fully below the runner-up's on both
+  fixtures (p<0.0001, rank-biserial 0.87–0.98 — the largest effects in the
+  study), and under retry-until-green economics (pre-registered before
+  analysis) the champion stays cheapest AND fastest to a green gate in every
+  cell: $5.81/8.3min on the refactor vs $7.50/12.6min (runner-up) and
+  $14.87/28min (monolith). Small-n perfection died in public, exactly as the
+  protocol promised it would if it was going to; the medians are no longer
+  estimates.
 - **"You graded your own exam."** The exams are deterministic: planted bugs,
   counted edit-points, executable checks, exit codes. When a test is "did the
   planted trap survive? did the suite pass?", self-grading is just *grading* —
