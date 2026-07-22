@@ -340,17 +340,20 @@ answer, it's here; where we don't, that's here too.
 - **"n=1–4 per cell is not statistics."** It wasn't — so we ran the
   confirmation. The pre-registered n-scaling pass (protocol committed before
   spend: cells, k, bootstrap CIs, Mann–Whitney, success criteria,
-  publish-regardless) took the champion to k=25 and the runner-up and monolith
-  controls to k=15 — 101 clean graded rows, ~$451. The honest headline: the
-  champion's small-n 8/8 did NOT survive scale (80% on the hard refactor;
-  runner-up 87%; monolith 53%), landing the pre-registered verdict in its
-  middle band rather than "crown holds." What did survive, decisively, is the
-  cost claim: champion cost CIs sit fully below the runner-up's on both
-  fixtures (p<0.0001, rank-biserial 0.87–0.98 — the largest effects in the
-  study), and under retry-until-green economics (pre-registered before
-  analysis) the champion stays cheapest AND fastest to a green gate in every
-  cell: $5.81/8.3min on the refactor vs $7.50/12.6min (runner-up) and
-  $14.87/28min (monolith). Small-n perfection died in public, exactly as the
+  publish-regardless) took every decisive cell to k=25 — ~150 clean graded
+  rows, ~$710 across two tiers. The honest headline: the champion's small-n
+  8/8 did NOT survive scale (80% on the hard refactor at k=25; runner-up 88%;
+  monolith 64%), and at equal n the gap FIRED the protocol's pre-registered
+  dethronement trigger — the study's own published rule removed the study's
+  own champion, and the correctness crown moved to the high-effort
+  configuration. What survived, equally decisively, is the cost claim: the
+  low-effort cost CIs sit fully below high's on both fixtures (p<0.0001,
+  rank-biserial 0.85–0.98 — the largest effects in the study), and under
+  retry-until-green economics (pre-registered before analysis) it stays
+  cheapest AND fastest to a green gate in every cell: $5.81/8.3min on the
+  refactor vs $7.62/13.3min (high) and $11.94/23.1min (monolith). The end
+  state is two crowns — high effort when one pass must land, low effort under
+  a retry loop and a gate. Small-n perfection died in public, exactly as the
   protocol promised it would if it was going to; the medians are no longer
   estimates.
 - **"You graded your own exam."** The exams are deterministic: planted bugs,
