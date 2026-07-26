@@ -198,6 +198,12 @@ don't know exists), the full 45-cell worker grid, and the 400K-token deep audit.
 
 ### 4.5 The local lane — worker fungibility leaves the API
 
+> **Current local GPU resident:** vLLM serving Qwen3-Coder-30B-A3B (AWQ),
+> crowned on a k=20 head-to-head at correctness parity + ~2× the speed of the
+> prior 27B (see the last note in §4.6). This line is the single source of
+> truth for the reigning lane; the sections below are the dated lineage that
+> led here.
+
 The worker floor said the card is the quality mechanism and the model only buys
 wall-clock. We tested whether that law survives leaving the API: open-weights
 models on one RTX 3090 (24 GB, LM Studio serving an Anthropic-compatible
