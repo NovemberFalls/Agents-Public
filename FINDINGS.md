@@ -291,6 +291,64 @@ decode bar, then the three worker cards, 3-for-3 earning a second pass.
 
 Live, sortable, with every losing run shown: [boord-its.com/skills](https://boord-its.com/skills).
 
+### 4.7 · v5.0 — when the orchestrator owns the diff (the apply-tier)
+
+Every result above routes *fan-out* work to a worker that must **interpret** a spec
+and apply it. v5.0 asks the inverse: if the orchestrator (Opus) already understands the
+exact change, why delegate the *understanding*? It computes the change and emits it as
+**verbatim SEARCH/REPLACE blocks**; a stdlib applier lands them deterministically — no
+worker model in the mechanical path.
+
+**Mechanism, isolated (arena_refactor's 68-site fan-out, core pre-done for both arms,
+opus/low, k=25):**
+
+| | v5.0 (emit → deterministic apply) | v4.1 (Opus edits in-place) |
+|---|---|---|
+| raw 16/16 | 22/25 (88%) | 24/25 (96%) |
+| wall p50 | **102s** | 173s |
+| cost / run | **$0.46** | $1.19 |
+| output tokens (min/p50/max) | **9.2 / 10.1 / 12.6k** (tight) | 5.2 / 17.6 / 26k (wide) |
+
+~1.7× faster, ~2.6× cheaper, output collapsed to a ±15% band (in-place burns output
+re-emitting file content through 60+ edit calls; a patch is emitted once).
+
+**Whole skill, end-to-end (full fixture, nothing pre-done, the orchestrator self-routes,
+k=3):** v5.0 **3/3 16/16 at $1.91 / 336s** vs v4.1 **3/3 16/16 at $3.85 / 624s** — **1.9×
+faster, 2.0× cheaper, correctness-equal.** The win does *not* wash out when the same
+context also does the non-diffable core; v4.1 grinds the fan-out through 45–130 Edit-turns
+(one run hit 130) where v5.0 emits once and applies.
+
+**The load-bearing lesson is *format*, not model.** A hand-written unified diff drifts and
+`git apply` rejects it (13/16 fuzzy). A lossy edit-list is **worse than no diff** — a
+worker handed flawed "exact" instructions scored *below* the same worker reading the spec
+(8/16 vs 10/20). Only **verbatim** SEARCH — copied byte-for-byte from the file — removes
+drift (532/532 blocks clean across the mechanism runs).
+
+**Correctness is 88% raw, ~100% via the gate — and both numbers are measured.** v5.0's
+misses are *detected and typed*, never silent: (a) *fidelity* misses — a non-verbatim
+SEARCH the applier **refuses** rather than force-fits (re-emitted by Sonnet, ~$0.07/13s);
+(b) *rule* misses — a matching-but-wrong REPLACE (re-reasoned by Opus with the gate
+failure as evidence, $0.18/19s). Both recover to 16/16; amortized ~$0.01/run and ~+2s/run.
+The escalation loop is **load-bearing, not optional** — the 88%→100% close is the crown's
+foundation, and v4.1 also misses at scale (96% raw), so *both* generations lean on the
+same deterministic gate.
+
+**Second-order win: the local lane.** Because the apply step is deterministic, the local
+GPU lane's job shrinks from "interpret trap-dense migrations" (which the 30B failed, §4.5)
+to "apply residue" (small, bounded). That let us re-measure concurrency: vLLM continuous
+batching on the 30B-A3B does **K=2 = 1.65×, K=4 = 2.97×** aggregate throughput — the old
+"parallel-within-a-lane loses" law was an LM-Studio artifact, dead on vLLM. One lane at
+`--max-num-seqs 3` now, no second lane needed.
+
+**Scope, stated honestly.** One fixture family, one task class — edits expressible as
+localized swaps. v5.0 changes *nothing* on generative work (new files, structural
+rewrites); there it *is* v4.1. The whole-skill economic win **scales with the diffable
+fraction** of the job. The v4.1 comparison ran its SOLO path (same toolset for fairness);
+its canonical **swarm** path (parallel Agent workers) is untested here and would likely
+narrow the wall gap at higher token cost. v5.0 is the crowned champion of the **DIFFABLE
+tier**, graduated on both mechanism (k=25) and whole-skill (k=3) — not a universal
+replacement for v4.1.
+
 ## 5 · Discussion — the laws we keep re-measuring
 
 1. **Judgment concentrates at the top.** Quality lives in the plan and the briefs;
@@ -407,8 +465,13 @@ Deterministic checks decide. Taste is a different tournament.
 
 ## 9 · Use it / reproduce it
 
-- **The skill:** [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md)
+- **The skill (v4.1, live champion):** [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md)
   — copy into `~/.claude/commands/`, run the orchestrator at high effort.
+- **The skill (v5.0, apply-tier — DIFFABLE-tier champion, §4.7):**
+  [`.claude/commands/orch-anth-5.0.md`](.claude/commands/orch-anth-5.0.md) — v4.1 plus the
+  deterministic apply-tier: the orchestrator emits verbatim SEARCH/REPLACE for mechanical
+  fan-out, a stdlib applier lands it, and a typed escalation loop closes the residue. Use
+  for migrations, renames, and other localized-swap work; falls back to v4.1 on generative work.
 - **Enforcement hooks:** [`hooks/`](hooks/) — the mandate, lane floor, and lane
   ceiling as denied tool calls, with an 18-case test suite.
 - **The roster:** [`orchestration-team/`](orchestration-team/) — worker personas
