@@ -257,6 +257,16 @@ decode bar, then the three worker cards, 3-for-3 earning a second pass.
   sitting 35B resident's wall in *every* cell — the long card in less than
   half the time (181–217s vs 427–506s) at 38 tok/s. It now holds the GPU
   seat, and its smaller footprint returns ~3 GB of VRAM.
+- **The seat changed hands once more — engine swap, then parity-plus-speed
+  (update).** Moving the GPU lane's server off the broker-fronted runtime to
+  vLLM, serving an Anthropic-compatible endpoint directly, unlocked a faster
+  MoE: Qwen3-Coder-30B-A3B (AWQ) at ~110 tok/s single-stream against the 27B's
+  ~38. Head-to-head at k=20 per cell on the two lane-eligible cards, correctness
+  was a dead heat — both 40/40 (100%) — and the 30B won wall-clock ~1.8–2.1× on
+  the workhorse card (median 33s vs 69s). So the resident changed again, this
+  time on speed at correctness parity; the 27B is kept only as a rollback. The
+  lesson repeats one level down: an engine change is a fresh min-max opportunity,
+  never a silent upgrade — re-measure before you re-crown.
 - **The round's wildest number:** gpt-oss-20b ran the trap-dense brief — all
   11 must-not-change traps held — in **21 seconds: the API floor's own
   wall-clock, from a $0 local card** (130 tok/s). It loses the long march
