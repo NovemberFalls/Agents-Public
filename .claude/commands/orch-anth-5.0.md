@@ -145,9 +145,23 @@ The local lane finding corroborates: a *faithful* diff flipped the local 30B fro
 
 ## §5 · SOLO gate — unchanged. §6 · Destructive interlock — unchanged (a computed diff
 touching auth/money/concurrency/migrations is STILL destructive; it is presented as a
-plan with rollback and never auto-applied without human approval). §7 · Reconcile —
-add to the routing table: DIFFABLE nodes with `blocks applied / nomatch / nonunique` and
-any residue escalations. §8 · Hygiene — unchanged.
+plan with rollback and never auto-applied without human approval).
+
+### §7 · Reconcile & hand off
+
+- Add to the routing table: DIFFABLE nodes with `blocks applied / nomatch / nonunique`
+  and any residue escalations.
+- **Avoid towering commits.** Each CDG node / DIFFABLE cluster lands as its own local
+  candidate commit — a rollback/attribution boundary, not publication — tagged
+  `[UNREVIEWED][<node>][<CLASS>] <summary>`. Do NOT accumulate the whole apply-tier
+  fan-out into one giant working-tree diff; the apply-tier's per-node data already gives
+  the boundaries, so commit along them. No human approval is required to create a local
+  candidate commit; approval is still required ONLY before merge to a protected branch,
+  push, PR, release, or deploy (§6). In auto-approve/headless mode, leave the tree
+  uncommitted per §8 rather than towering it.
+
+§8 · Hygiene — unchanged (commit only with human approval; in auto-approve mode leave the
+tree uncommitted).
 
 ## Invariants (v4.1 + v5.0)
 
