@@ -5,7 +5,8 @@
 > **Abstract.** We wanted to know one thing: what is the single best *skill* — the
 > instruction file given to an AI orchestrator — for spawning a swarm of AI workers
 > and finishing complex coding tasks? Over three rounds plus a local-hardware
-> chapter — 256 graded runs, ~$790 of real API spend on the study ledger — we
+> chapter — ~400 graded runs (257 API-lane + 141 local-hardware), decisive cells
+> confirmed at **k=25** under a pre-registered protocol — we
 > benchmarked eight generations of one skill on purpose-built test projects with
 > hidden answer keys, measuring **Speed, Correctness, Turns, Cost, Context, and
 > Swarm Control**. Most of what we believed at the start was wrong, and the
@@ -63,10 +64,10 @@ configuration drops, not just pass/fail.
 
 **Honest accounting.** Worker spawns are counted from the raw event stream — not
 from the model's self-report (models claim delegation they didn't do). Costs are
-API-equivalent dollars from real runs. The orchestrator's model and effort are
-pinned per configuration. Failed runs, losing designs, and our own reversed
-conclusions are all published; sample sizes are small (1–3 runs per cell) and we
-say so.
+cache-aware API-equivalent dollars from real runs. The orchestrator's model and
+effort are pinned per configuration. Failed runs, losing designs, and our own
+reversed conclusions are all published; decisive cells are powered at k=25 while
+exploratory cells stay n=1–3, and we mark which is which.
 
 **Pinned model generation.** Every number describes one recorded generation of
 models (currently Haiku 4.5 / Sonnet 5 / Opus 4.8, with the top-tier seat
@@ -386,8 +387,14 @@ evidence.** LLM review never gates anything here.
 
 ## 6 · Limitations
 
-Small samples (1–3 runs per cell). One stack (Claude Code, headless), one family
-of API models, API-equivalent pricing. Three test projects — broad in shape but
+Mixed sample sizes: decisive cells are powered at k=25 (~150 runs, pre-registered
+CIs and significance tests); exploratory and secondary cells are n=1–3 and are
+marked as such. **Cost figures are cache-aware API-equivalent estimates** — these
+runs lean heavily on prompt caching (~101M cache-read tokens vs ~3.4M real input),
+so cache reads are priced at 0.1× input as billed; an earlier draft that priced
+cached reads at full rate overstated total spend ~3×, and that has been corrected.
+One stack (Claude Code, headless), one family
+of API models. Three test projects — broad in shape but
 not in domain. Correctness ceilings on several boards (many configs at 100%,
 separated only by cost/speed). Two cells remain unrun: the top-tier seat at
 minimum effort on the migration project (blocked by a usage cap mid-campaign)
@@ -415,7 +422,7 @@ answer, it's here; where we don't, that's here too.
   confirmation. The pre-registered n-scaling pass (protocol committed before
   spend: cells, k, bootstrap CIs, Mann–Whitney, success criteria,
   publish-regardless) took every decisive cell to k=25 — ~150 clean graded
-  rows, ~$710 across two tiers. The honest headline: the champion's small-n
+  rows across two tiers. The honest headline: the champion's small-n
   8/8 did NOT survive scale (80% on the hard refactor at k=25; runner-up 88%;
   monolith 64%), and at equal n the gap FIRED the protocol's pre-registered
   dethronement trigger — the study's own published rule removed the study's
@@ -468,7 +475,7 @@ Deterministic checks decide. Taste is a different tournament.
 - **The skill (v4.1, live champion):** [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md)
   — copy into `~/.claude/commands/`, run the orchestrator at high effort.
 - **The skill (v5.0, apply-tier — DIFFABLE-tier champion, §4.7):**
-  [`.claude/commands/orch-anth-5.0.md`](.claude/commands/orch-anth-5.0.md) — v4.1 plus the
+  [`.claude/commands/orch-code-anth.md`](.claude/commands/orch-code-anth.md) — v4.1 plus the
   deterministic apply-tier: the orchestrator emits verbatim SEARCH/REPLACE for mechanical
   fan-out, a stdlib applier lands it, and a typed escalation loop closes the residue. Use
   for migrations, renames, and other localized-swap work; falls back to v4.1 on generative work.

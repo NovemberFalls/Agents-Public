@@ -1,17 +1,23 @@
-# Agents-Public
+# swarmsmith
 
-> A small, validated orchestration model for multi-agent coding work with Claude Code and the Claude Agent SDK — the **`/orchestrate`** loop.
+> A small, validated orchestration model for multi-agent coding work with Claude Code
+> and the Claude Agent SDK — the **`/orchestrate`** loop. This is **the instrument**,
+> not the paper.
 
-> **📄 This repo is a white paper with the code attached.** Start with
-> **[FINDINGS.md](FINDINGS.md)** — *One Skill to Run a Swarm* — ~94 graded runs and
-> ~$480 of real spend across three rounds, benchmarking eight generations of one
-> orchestration skill on **Speed · Correctness · Turns · Cost · Context · Swarm
-> Control**. Most of what we believed at the start was wrong, and the paper says so:
-> persona backstories did nothing, prose rules quietly defect, max thinking effort
-> is mostly a tax, and a good enough brief makes the worker model a speed dial, not
-> a correctness dial. Interactive charts with every losing run shown:
-> **[boord-its.com/skills](https://boord-its.com/skills)**. The living skill, the
-> enforcement hooks, and the museum of retired generations are all here.
+> **🔬 This repo is the apparatus behind a research program.** swarmsmith is the
+> orchestration harness that the **[deterministic-evals](https://github.com/NovemberFalls/deterministic-evals)**
+> studies measure — the skills, agents, and deterministic gate that lower a task to
+> application so cheap hands can execute it. The **findings** live in the program, each
+> scored only where a deterministic oracle exists:
+>
+> - **[gate-on-the-fact](https://github.com/NovemberFalls/gate-on-the-fact)** — a persona is theater; gate on a fact. *(confirmed)*
+> - **[capability-isnt-free](https://github.com/NovemberFalls/capability-isnt-free)** — over-capable models are worse at mechanical work; route by verified accounting. *(under test)*
+> - **[cheapest-hands](https://github.com/NovemberFalls/cheapest-hands)** — cheap/local hands clear the gate once the spec lowers the task. *(partial)*
+>
+> The raw data quarry is **[FINDINGS.md](FINDINGS.md)** — *One Skill to Run a Swarm* —
+> which the studies cite at a pinned commit. Interactive charts, every losing run
+> shown: **[boord-its.com/skills](https://boord-its.com/skills)**. The living skill,
+> the enforcement hooks, and the museum of retired generations are all here.
 
 ---
 
@@ -64,9 +70,9 @@ Run the **orchestrator at high reasoning effort, not max** — same correctness,
 ## Repo layout
 
 ```
-Agents-Public/
+swarmsmith/
 ├── README.md
-├── FINDINGS.md                     # what we tested, what held, what we were wrong about
+├── FINDINGS.md                     # the raw data quarry the studies cite (pinned)
 ├── orchestration-team/
 │   ├── README.md
 │   ├── agents/                     # Orchestrator + 7 role specialists (+ optional reviewer, hygiene-auditor)
