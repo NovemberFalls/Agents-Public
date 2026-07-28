@@ -11,8 +11,8 @@
 > scored only where a deterministic oracle exists:
 >
 > - **[gate-on-the-fact](https://github.com/NovemberFalls/gate-on-the-fact)** — a persona is theater; gate on a fact. *(confirmed)*
-> - **[capability-isnt-free](https://github.com/NovemberFalls/capability-isnt-free)** — capability above the task is wasted spend; route to the cheapest tier that clears the gate. *(confirmed, 1 fixture)*
-> - **[cheapest-hands](https://github.com/NovemberFalls/cheapest-hands)** — cheap/local hands clear the gate once the spec lowers the task. *(partial)*
+> - **[capability-isnt-free](https://github.com/NovemberFalls/capability-isnt-free)** — capability above the task is wasted spend; route to the cheapest tier that clears the gate. *(confirmed, 2 fixtures)*
+> - **[cheapest-hands](https://github.com/NovemberFalls/cheapest-hands)** — cheap/local hands clear the gate once the spec lowers the task. *(partial — local 30B confirmed)*
 >
 > The raw data quarry is **[FINDINGS.md](FINDINGS.md)** — *One Skill to Run a Swarm* —
 > which the studies cite at a pinned commit. Interactive charts, every losing run
