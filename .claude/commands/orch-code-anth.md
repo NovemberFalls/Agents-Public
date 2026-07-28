@@ -1,12 +1,16 @@
-# /orch-anth-5.0 — v5.0 apply-tier (computed-diff · deterministic apply · lane discipline)
+# /orch-code-anth — v5.0 apply-tier (computed-diff · deterministic apply · lane discipline)
 
-STATUS: **DIFFABLE-tier champion — graduated 2026-07-26** (mechanism k=25 + whole-skill
-k=3, FINDINGS.md §4.7). v4.1 remains the live default for GENERATIVE work; v5.0 is the
-measured winner wherever the change is expressible as localized swaps (migrations,
-renames, mechanical fan-out). It is NOT a universal replacement — the two coexist.
-v5.0 = v4.1 + one addition: a **deterministic apply-tier** for mechanical fan-out,
-driven by the orchestrator computing the exact change and emitting it as verbatim
-SEARCH/REPLACE blocks. Everything else in v4.1 is preserved verbatim.
+STATUS: **LIVE — the coding skill (graduated 2026-07-26).** v5.0 = v4.1 + a
+**deterministic apply-tier** for mechanical fan-out (orchestrator computes the exact
+change, emits verbatim SEARCH/REPLACE, a stdlib applier lands it). It is a strict
+**superset** of v4.1: on GENERATIVE work the apply-tier never fires and behavior is
+identical (confirmed 3/3, 22/22 on arena_feature); on DIFFABLE work it wins decisively.
+So v5.0 **replaces** v4.1 as the single coding skill — never worse, up to ~2× faster
+and cheaper. v4.1 is retired locally, preserved in the Agents-Public repo + backups as
+rollback. It is a **tier-split crown, not an absolute one**: v5.0 *beats* v4.1 on
+diffable work and *equals* it on generative. Graduated on the mechanism (k=25) and the
+whole skill (k=3) — the multi-fixture arena at full k remains the standing bar for any
+future challenger.
 
 ## The v5.0 thesis (owner-originated 2026-07-26)
 
@@ -15,17 +19,26 @@ push that change out as data — not delegate the *understanding* to a worker mo
 worker's job on mechanical/rule-dense edits is APPLICATION, and application of a verbatim
 diff is deterministic — it does not need a model at all.
 
-### Evidence (arena_refactor, 68-site logEvent migration, single dispatch)
+### Evidence (arena_refactor migration + arena_feature generative)
 
-| pipeline | correctness | wall | cost | apply fidelity |
-|---|---|---|---|---|
-| v4.1 — Opus edits in-place | 16/16 | 313s | $1.91 | — |
-| v4.1 — Sonnet interprets spec | ~10/20 trials pass | 335s | $2.13 | — |
-| **v5.0 — Opus → SEARCH/REPLACE → deterministic apply** | **16/16** | **~110s** | **~$0.46** | **532/532 blocks, 0 drift (n=7)** |
+**Mechanism, isolated (68-site fan-out, core pre-done, opus/low, k=25):** v5.0 raw
+22/25, wall p50 102s, $0.46/run — vs v4.1 in-place 24/25, 173s, $1.19. ~1.7× faster,
+~2.6× cheaper; output band ±15% vs 5×. (Both close to 100% via the mandatory gate +
+the §4.9 escalation loop.)
 
-**~3× faster, ~4× cheaper, correctness matched, plan reusable at fleet scale.** The apply
-half is a string match (not model-dependent); the correctness half is Opus's planning,
-which lands 16/16 on its scope. Evidence: FINDINGS.md §4.7 (k=25 mechanism + whole-skill k=3 head-to-head + recovery taxonomy).
+**Whole skill, end-to-end (full fixture, nothing pre-done, self-routed, k=3):** v5.0
+3/3 16/16 at $1.91/336s — vs v4.1 3/3 16/16 at $3.85/624s. **1.9× faster, 2.0× cheaper,
+correctness-equal** (v4.1 grinds 45–130 Edit-turns; v5.0 emits once + applies).
+
+**Generative regression (arena_feature, generative-heavy, k=3):** v5.0 3/3, 22/22 —
+clean superset, no regression where the apply-tier never fires.
+
+Apply fidelity: 532/532 blocks clean across the mechanism runs; the 3 v5.0 misses were
+detected + typed (2 fidelity, 1 rule), recovered to 16/16 at ~$0.01/run amortized.
+
+The apply half is a string match (not model-dependent); the correctness half is Opus's
+planning, which lands 16/16 on its scope. Evidence: Agents-Public `FINDINGS.md` §4.7 +
+this session's raw runs (`bench/results/` h2h_api_* and the v5 gauntlet/whole-skill rows).
 
 ### Why FORMAT is load-bearing (the failures that shaped this)
 
