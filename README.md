@@ -39,7 +39,7 @@ Everything is Markdown — persona files and process. No application code.
 
 The honest version, in full in [FINDINGS.md](FINDINGS.md):
 
-- **Persona backstories did nothing.** A placebo-controlled ablation: a security reviewer's elaborate red-team backstory caught no more bugs than a bare "you are a security reviewer," and a *performance-engineer* backstory did just as well on security bugs. Identities are kept as **flavor** — useful for a legible roster, not because they improve output.
+- **Persona backstories did nothing *for detection*.** A placebo-controlled ablation: a security reviewer's elaborate red-team backstory caught no more bugs than a bare "you are a security reviewer," and a *performance-engineer* backstory did just as well on security bugs. Identities are kept as **flavor** — useful for a legible roster (and plausibly for shaping *response format*, which we didn't test), not because they improve what a reviewer *finds*.
 - **The mandatory-gate battery and the director hierarchy were never validated** — and the extra review passes, re-passed state, and parallel ceremony **cost tokens** without earning them. They're demoted to optional, and the heavier pieces moved to [`extras/`](extras/).
 - **More agents isn't better on small tasks.** A plain monolith was cheapest *and* correct; coordination only pays once a task is too big for one window.
 
