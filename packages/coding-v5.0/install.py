@@ -52,11 +52,21 @@ MIN_PYTHON = (3, 8)
 
 
 def sha256(path: str) -> str:
-    h = hashlib.sha256()
+    """Checksum with line endings normalized to LF.
+
+    Git rewrites line endings on checkout (this repo pins `text=auto eol=lf`),
+    so the same committed file is CRLF on one clone and LF on another. Hashing
+    raw bytes would make the manifest platform-dependent: a manifest built on
+    Windows fails verification on every Linux clone, and the installer refuses
+    to install -- dead on arrival for everyone but the author.
+
+    Normalizing preserves what this checksum is actually for -- detecting
+    tampering and drift -- while surviving the checkout that git guarantees.
+    Every shipped file is text; EOL is not a property worth failing over.
+    """
     with open(path, "rb") as fh:
-        for chunk in iter(lambda: fh.read(65536), b""):
-            h.update(chunk)
-    return h.hexdigest()
+        data = fh.read()
+    return hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
 
 
 def source_files() -> dict[str, str]:

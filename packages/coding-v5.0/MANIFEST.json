@@ -1,8 +1,8 @@
 {
   "files": {
     "commands/fix.md": "383c4793ba477076cfa7df95e99c8429db054e3fcb672eef5d4a008433fc80c0",
-    "commands/orch-anth-5.0.md": "55219e06e31fb2381ba1f11c880cab352aa85879fe6c362671b8a4fd4cd09c2b",
-    "tools/apply_blocks.py": "40fcf724b796a0dd679adc134abb19a164cd8f15060e2cf11a1fe17a0de14a24"
+    "commands/orch-anth-5.0.md": "5bb0164361da43008cc2e058a780d9488222e3be49caf160ae3ea8e230938892",
+    "tools/apply_blocks.py": "83ebeebc1618a9fdadd4503e51e84f61084b497677a547d81fbcab30b4dd837a"
   },
   "package": "coding-v5.0",
   "version": "5.0.0"
