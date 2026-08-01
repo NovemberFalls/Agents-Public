@@ -461,8 +461,14 @@ published turn count from an affected run is understated. Fixed by summing turns
 result events; verified against both a multi-segment stream (now 80, was 1) and a
 single-segment one (22, unchanged).
 
-Rows: `team/bench/results/v5_live_k25.jsonl` and `bigctx_contexthog.jsonl`; method and
-harness changes: `V5_LIVE_FINDINGS.md`. Ladder continues to k=10, then k=25.
+**Rows, pinned.** All 46 are in the `team` repo at commit **`26494b9`**:
+`bench/results/v5_live_k25.jsonl` (small fixtures, k=5), `bigctx_contexthog.jsonl`
+(400K-token, k=3), `cleanup_s9.jsonl` (hygiene, k=3), plus `v5_graduation_rerun.jsonl` and
+`v5live_probe.jsonl`. Arms carry the ids used throughout this section — `v5-anth` (v5.0),
+`v5-live` (v5.1), `v41-clean`, `v41-loweff` — which is the single surviving vocabulary as
+of that commit. Method, harness changes, and the reconciliation record:
+`bench/results/V5_LIVE_FINDINGS.md` and `NOTE_FOR_ARENA_TEAM.md`. Ladder continues to
+k=10, then k=25.
 
 ## 5 · Discussion — the laws we keep re-measuring
 
