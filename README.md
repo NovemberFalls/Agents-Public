@@ -51,7 +51,30 @@ The takeaway: **keep the CDG, keep context isolation, gate with a deterministic 
 
 ### The command
 
-`/orchestrate <task>` — one self-scaling entry point, now at **v4.1**: it *counts* the work (sites, files, read volume), prints a `GATE: SOLO|SWARM` verdict, and obeys it — solo with checklist discipline below the measured crossover, a lane-routed worker swarm (haiku/sonnet/opus) with a plan file and deterministic gates above it. The skill is [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md) (with [`fix.md`](.claude/commands/fix.md) for the explicit single-issue path). Copy them into `~/.claude/commands/`.
+One self-scaling entry point: it *counts* the work (sites, files, read volume), prints a `GATE: SOLO|SWARM` verdict, and obeys it — solo with checklist discipline below the measured crossover, a lane-routed worker swarm (haiku/sonnet/opus) with a plan file and deterministic gates above it.
+
+**Current champion — [`.claude/commands/orch-anth-5.0.md`](.claude/commands/orch-anth-5.0.md) (v5.0).** v4.1 plus a **deterministic apply-tier**: on mechanical fan-out the orchestrator computes the exact change and emits verbatim SEARCH/REPLACE blocks that a stdlib applier lands — no worker model in the edit path.
+
+**The crown is scoped, and the scope is the finding.** Measured against v4.1's canonical *swarm* path (opus/low, identical toolset, 46 harness-recorded runs, 2026-07-31):
+
+| where | v5.0 | v4.1 | crown |
+|---|---|---|---|
+| Small/medium (~28K tok), k=5 | **10/10**, $1.91 / $5.47 per result | 7/10, $4.03 / $8.65 | **v5.0** — 1.6–2.1× cheaper per result |
+| Large (400K tok), k=3 | 3/3, $10.10, 871s | 3/3, $11.00, 1118s | **tie on correctness** |
+| Hygiene, k=3 | 3/3 (v5.1, $0.60) | 3/3, **$0.53** | **v4.1** — cheapest at equal correctness |
+
+Read the denominator: per *attempt* v4.1 is marginally faster on the refactor fixture and the two are within 6%. The entire economic win is conversion rate — v5.0 converts every attempt, v4.1 converts 7 of 10. Earlier "1.9× faster / 2.0× cheaper" figures compared against a **solo-restricted** v4.1; corrected in [FINDINGS.md §4.7a](FINDINGS.md), along with a null result for the mandatory clean phase (+30% cost, no correctness gain) and a harness bug that understated turn counts in 35% of retained streams.
+
+**Install v5.0 with [`packages/coding-v5.0/`](packages/coding-v5.0/) — don't just copy the markdown.**
+
+```bash
+python packages/coding-v5.0/install.py          # skill + applier, pinned together
+python packages/coding-v5.0/install.py --check  # verify; exit 1 on drift
+```
+
+v5.0's apply-tier calls a **deterministic applier**, and the skill and that tool are one contract: the skill emits SEARCH/REPLACE in exactly one format, the applier applies a block *iff* its SEARCH matches exactly once. Copying the skill file alone leaves you with a skill describing a tool you don't have — and substituting an approximate one is measurably **worse than not installing it at all** (a model handed a flawed "exact" patch scored 8/16, *below* the same model working from the spec at 10/20; see [FINDINGS.md](FINDINGS.md) §4.7). The installer checksums everything, touches no hooks, and edits no settings. Python 3.8+, stdlib only.
+
+Also here: [`orchestrate.md`](.claude/commands/orchestrate.md) — the **v4.1** predecessor, kept as rollback and as the readable baseline v5.0 is measured against; [`orch-anth-5.0-mega.md`](.claude/commands/orch-anth-5.0-mega.md) — a **PROPOSED, unbenched** director tier that spawns one sub-orchestrator per partition (mechanism proved, payoff not yet measured); and [`fix.md`](.claude/commands/fix.md) — the explicit single-issue path (also installed by the package). Those you can copy into `~/.claude/commands/` directly, as they have no tool dependency.
 
 ### The agents
 
@@ -82,7 +105,15 @@ swarmsmith/
 │   ├── the-deterministic-check.md  # the one validated gate — how to wire it
 │   ├── token-efficiency.md         # where the tokens go (and where the ceremony bled them)
 │   └── authoring-an-agent.md
+├── packages/
+│   └── coding-v5.0/                # INSTALL THIS — v5.0 skill + its applier, pinned + checksummed
+│       ├── install.py              #   --check / --uninstall; no hooks, no settings edits
+│       ├── commands/               #   orch-anth-5.0.md, fix.md
+│       ├── tools/apply_blocks.py   #   the deterministic applier §4.9 depends on
+│       └── tests/                  #   27 tests pinning the apply contract
 ├── .claude/commands/
+│   ├── orch-anth-5.0.md            # the champion (v5.0 — v4.1 + deterministic apply-tier)
+│   ├── orch-anth-5.0-mega.md       # PROPOSED director tier (recursive sub-orchestration)
 │   ├── orchestrate.md              # the loop (v4.1 — computed gate, plan-as-data, lanes)
 │   └── fix.md                      # the lightweight path
 ├── hooks/                          # optional enforcement: mandate + lane floor/ceiling as denied tool calls

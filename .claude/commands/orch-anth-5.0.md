@@ -1,12 +1,28 @@
 # /orch-anth-5.0 — v5.0 apply-tier (computed-diff · deterministic apply · lane discipline)
 
-STATUS: **DIFFABLE-tier champion — graduated 2026-07-26** (mechanism k=25 + whole-skill
-k=3, FINDINGS.md §4.7). v4.1 remains the live default for GENERATIVE work; v5.0 is the
-measured winner wherever the change is expressible as localized swaps (migrations,
-renames, mechanical fan-out). It is NOT a universal replacement — the two coexist.
-v5.0 = v4.1 + one addition: a **deterministic apply-tier** for mechanical fan-out,
-driven by the orchestrator computing the exact change and emitting it as verbatim
-SEARCH/REPLACE blocks. Everything else in v4.1 is preserved verbatim.
+STATUS: **LIVE — the current champion coding skill (graduated 2026-07-26; economics
+re-measured 2026-07-31).** v5.0 = v4.1 + a **deterministic apply-tier** for mechanical
+fan-out (the orchestrator computes the exact change, emits verbatim SEARCH/REPLACE, a
+stdlib applier lands it).
+
+**What the crown is:** correctness, and cost per *result*, **on work that fits one
+context**. Measured against v4.1's canonical **swarm** path (opus/low, identical toolset,
+k=5 complete): v5.0 is **10/10 correct vs v4.1's 7/10** at **1.6–2.1× lower cost per
+successful run**.
+
+**What the crown is not:**
+
+- **A wall-clock win.** Per *attempt* v4.1 is marginally faster on the refactor fixture.
+  The entire economic advantage is conversion rate — v5.0 converts every attempt, v4.1
+  converts 7 of 10. Earlier claims of "1.9× faster, 2.0× cheaper" compared v5.0 against a
+  **solo-restricted** v4.1; see the correction under Evidence.
+- **A win at scale.** On a 400K-token fixture (k=3) the two **tie at 3/3**, with v5.0 only
+  1.28× faster and 1.09× cheaper. The advantage is a small-and-medium-work advantage.
+
+v4.1 is retired as the default and preserved in this repo
+([`orchestrate.md`](orchestrate.md)) as rollback. Everything else in v4.1 is preserved
+verbatim. Small fixtures at k=5 (30 cells), large at k=3 (6 cells); ladder continues to
+k=10, then 25.
 
 ## The v5.0 thesis (owner-originated 2026-07-26)
 
@@ -15,17 +31,80 @@ push that change out as data — not delegate the *understanding* to a worker mo
 worker's job on mechanical/rule-dense edits is APPLICATION, and application of a verbatim
 diff is deterministic — it does not need a model at all.
 
-### Evidence (arena_refactor, 68-site logEvent migration, single dispatch)
+### Evidence (arena_refactor migration + arena_feature generative)
 
-| pipeline | correctness | wall | cost | apply fidelity |
+All figures come from the deterministic-evals arena: frozen test projects, hidden answer
+keys copied in only after the run, pinned models, worker spawns counted from the raw
+event stream. Method and per-run data: FINDINGS.md §4.7.
+
+**Mechanism, isolated** (68-site logEvent migration, shared core pre-done, opus/low,
+k=25): v5.0 raw 22/25, wall p50 102s, $0.46/run — vs v4.1 in-place 24/25, 173s, $1.19.
+~1.7× faster, ~2.6× cheaper; output band ±15% vs 5×. Both reach ~100% via the mandatory
+gate plus the §4.9 escalation loop.
+
+**Whole skill, end-to-end** (2026-07-31 campaign; nothing pre-done, self-routed, opus/low,
+identical toolset per arm so the skill text is the only variable; k=5 complete, 30/30
+cells). **Read the denominator:** cost per attempt and cost per *successful run* rank
+these skills differently, and only the second is decidable in advance — you cannot keep
+the good attempts and discard the bad ones.
+
+| arm | fixture | correct | $/attempt | **$/success** | wall p50 | spawns |
+|---|---|---|---|---|---|---|
+| v5.0 | arena_feature | **5/5** | $1.91 | **$1.91** | 248s | 0 |
+| v5.0 | arena_refactor | **5/5** | $5.47 | **$5.47** | 571s | 0 |
+| v4.1 | arena_feature | 4/5 | $3.22 | $4.03 | 397s | 0, 6–9 |
+| v4.1 | arena_refactor | 3/5 | $5.19 | $8.65 | 533s | 7–9 |
+
+**Small fixtures, k=5 complete (30 cells): v5.0 10/10 correct against v4.1's 7/10, at
+2.1× and 1.6× lower cost per result.** On refactor the per-attempt costs are within 6%
+and v4.1 is marginally faster per attempt — the whole win is conversion rate. Every v4.1
+failure is the same site, `SITE FAIL [N14] src/gateway/server.cjs`.
+
+**Large fixture — where the gap closes.** `bigctx_real`: ~400K tokens of real
+hand-written code, 22 bugs planted by mutation testing, built so a sharded audit can give
+each slice a lean context. k=3, complete:
+
+| arm | correct | **$/success** | wall p50 | spawns |
 |---|---|---|---|---|
-| v4.1 — Opus edits in-place | 16/16 | 313s | $1.91 | — |
-| v4.1 — Sonnet interprets spec | ~10/20 trials pass | 335s | $2.13 | — |
-| **v5.0 — Opus → SEARCH/REPLACE → deterministic apply** | **16/16** | **~110s** | **~$0.46** | **532/532 blocks, 0 drift (n=7)** |
+| v5.0 | **3/3** | **$10.10** | 871s | 11, 13, 0 |
+| v4.1 | **3/3** | $11.00 | 1118s | 18, 9, 0 |
 
-**~3× faster, ~4× cheaper, correctness matched, plan reusable at fleet scale.** The apply
-half is a string match (not model-dependent); the correctness half is Opus's planning,
-which lands 16/16 on its scope. Evidence: FINDINGS.md §4.7 (k=25 mechanism + whole-skill k=3 head-to-head + recovery taxonomy).
+**Correctness ties at scale.** v5.0 keeps a modest edge (1.28× faster, 1.09× cheaper),
+nothing like the 2× it holds on small work. Both arms swarm when the surface is large and
+both went solo on one run apiece — routing is task-adaptive for *both* skills, not a v5.0
+signature. A "v5.0 is a context hog that collapses like a monolith" hypothesis was tested
+here directly and **falsified**.
+
+**Correction to the pre-2026-07-31 figures.** The earlier "1.9× faster, 2.0× cheaper,
+v4.1 grinds 45–130 edit turns" comparison ran v4.1 **solo-restricted** (no `Agent`
+tool) — a limitation pre-registered in FINDINGS.md §4.7 and now confirmed by measurement.
+Given its canonical swarm path, v4.1 delegates the grinding into worker contexts, and two
+of those claims fail:
+
+- **Wall:** the gap closes and inverts — v4.1 533s vs v5.0 571s per attempt on refactor.
+- **Turns:** the profile inverts, but the *opposite way* from the published claim.
+  Recomputed from retained transcripts (n=41): **v4.1 12–63, p50 24; v5.0 34–101, p50
+  55.** v5.0 runs roughly **2× more** parent turns than v4.1 — v4.1's grinding happens
+  inside workers where the parent never counts it. The published "v5.0 emits once and
+  applies" describes the apply step, not the session.
+
+The cost-per-result claim survives; the wall claim does not, and the turn claim survives
+only with its sign reversed.
+
+**Generative regression** (arena_feature, k=5): v5.0 5/5 at 22/22 — no regression where
+the apply-tier never fires. **Behavior is not identical to v4.1**, as previously claimed,
+but the difference is routing selectivity rather than capability: v5.0 stays solo on the
+~28K-token fixtures where v4.1 spawns 6–9, and swarms 11–13 on the 400K-token one. Below
+the crossover, coordination is pure overhead — v5.0 is the more selective router.
+
+**Apply fidelity:** 532/532 blocks clean across the mechanism runs. The 3 v5.0 misses
+were detected and typed (2 fidelity, 1 rule) and recovered to 16/16 at ~$0.01/run
+amortized.
+
+The apply half is a string match (not model-dependent); the correctness half is Opus's
+planning, which lands 16/16 on its scope. Evidence: FINDINGS.md §4.7 (k=25 mechanism +
+recovery taxonomy) and the 2026-07-31 campaign rows (`v5_live_k25.jsonl`, retained
+transcripts) for the corrected economics.
 
 ### Why FORMAT is load-bearing (the failures that shaped this)
 
@@ -171,14 +250,38 @@ tree uncommitted).
 - Deterministic apply never force-applies a non-unique/no-match block; residue escalates.
 - The gate, not the apply counts, is the evidence. A clean apply of a wrong REPLACE is
   still a failure the gate must catch.
-- PROPOSED until the arena clears it at k=25. Do not route production traffic here yet.
+- The orchestrator does not hand-implement GENERATIVE work to save effort (THE MANDATE).
+- Nothing is pushed, merged, or deployed without human approval.
 
-## Open questions for the arena (pre-registered)
+## Known limits — read before trusting a number
 
-1. Correctness at k=25 across fixtures (does 16/16 hold, and on GENERATIVE-heavy work
-   where the apply-tier does NOT apply — is v5.0 ever WORSE than v4.1?).
-2. Does the DIFFABLE/GENERATIVE call itself become a new defect surface (mis-labeling a
-   generative node as diffable → bad blocks)?
-3. Opus effort for the emit step (low held 16/16 on scope here; high did not improve it).
-4. Fleet-reuse correctness: does one computed diff stay correct across drifted targets,
-   or does target drift reintroduce the nomatch residue at scale?
+- The whole-skill campaign is at **k=5** and climbing (→10 →25); only the isolated
+  mechanism ran k=25. Treat the multipliers as directional. Two fixtures only, both
+  `task_class: MIXED`; the large and hygiene fixtures ran at k=3. No pure-generative
+  fixture yet.
+- **Routing tracks context size, as designed.** v5.0 spawns 0 workers on the ~28K-token
+  fixtures — correctly solo, since below the crossover coordination is pure overhead —
+  and **11–13 workers** on the 400K-token `bigctx_real`. Both skills went solo on one
+  large-fixture run apiece, so task-adaptive routing is not a v5.0 signature. An earlier reading of those 0-spawn counts as a MANDATE violation was **wrong**;
+  it generalized from two fixtures that both sit below the swarm threshold. The narrower
+  true claim: "behavior identical to v4.1" is false, because v4.1 swarms on the small
+  fixtures where v5.0 correctly does not.
+- **Big-context cell (k=3, complete):** both arms 3/3. v5.0 $10.10 / 871s; v4.1 $11.00 /
+  1118s. Correctness ties at scale — v5.0's edge shrinks to 1.28× wall, 1.09× cost.
+- v5.0 runs 34–101 parent turns (p50 55) against a `max_turns: 100` cap on the small
+  fixtures where v4.1 runs 12–63 (p50 24). On the large fixture it delegates instead, so that ceiling is not the
+  binding constraint it first appeared to be.
+- **A mandatory clean phase (§9 in the live variant) measured as a null.** On the
+  `arena_cleanup` hygiene fixture at k=3, v4.1+§9 scored 3/3 at +30% cost and +34% wall
+  against v4.1 without it — zero correctness gain, and no over-deletion (the oracle's 8
+  restraint checks passed for every arm). Caveat: all arms hit the 16/16 ceiling, so the
+  fixture had no headroom for §9 to show value. The narrow finding is that on cleanup a
+  competent orchestrator already handles unaided, a mandatory phase is pure overhead.
+- **Report cost per successful run, never per attempt.** Per-attempt figures rank a skill
+  that fails half its runs as competitive. It is not.
+- The DIFFABLE/GENERATIVE call is itself a defect surface: mis-labeling a generative node
+  as diffable produces bad blocks. The gate is what catches it.
+- Opus effort for the emit step: low held 16/16 on scope; high did not improve it. Your
+  mileage will vary with task shape.
+- Fleet reuse across drifted targets reintroduces nomatch residue at scale — unmeasured
+  above single-digit target counts.

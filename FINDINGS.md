@@ -346,9 +346,123 @@ localized swaps. v5.0 changes *nothing* on generative work (new files, structura
 rewrites); there it *is* v4.1. The whole-skill economic win **scales with the diffable
 fraction** of the job. The v4.1 comparison ran its SOLO path (same toolset for fairness);
 its canonical **swarm** path (parallel Agent workers) is untested here and would likely
-narrow the wall gap at higher token cost. v5.0 is the crowned champion of the **DIFFABLE
+narrow the wall gap at higher token cost. **[2026-07-31: measured — see §4.7a. The
+prediction held, and more: given the Agent tool, v4.1's per-attempt wall gap does not
+merely narrow, it inverts, and the turn-count comparison above reverses. The
+cost-per-result claim survives; the wall and turn claims do not.]** v5.0 is the crowned champion of the **DIFFABLE
 tier**, graduated on both mechanism (k=25) and whole-skill (k=3) — not a universal
 replacement for v4.1.
+
+### 4.7a · v5.0 re-measured against v4.1's swarm path (2026-07-31)
+
+§4.7's figures were **hand-measured, never harness-recorded** — no `v5` arm existed in
+`arms.py` on any branch, and no v5 rows existed in any results file. This campaign
+registered the arm and produced the first recorded rows. All three arms run opus/low with
+an identical toolset (including `Agent`), so the skill text is the only variable.
+
+**k=5 complete, 30/30 cells.** The denominator is the finding: cost per attempt and cost
+per *successful run* rank these skills differently, and only the second is decidable in
+advance — you cannot keep the good attempts and discard the bad ones.
+
+| arm | fixture | correct | $/attempt | **$/success** | wall p50 | spawns |
+|---|---|---|---|---|---|---|
+| v5.0 (frozen) | arena_feature | **5/5** | $1.91 | **$1.91** | 248s | 0 |
+| v5.0 (frozen) | arena_refactor | **5/5** | $5.47 | **$5.47** | 571s | 0 |
+| v5.1 (live, +§9) | arena_feature | **5/5** | $1.90 | **$1.90** | 276s | 0 |
+| v5.1 (live, +§9) | arena_refactor | **5/5** | $5.51 | **$5.51** | 593s | 0 |
+| v4.1 | arena_feature | 4/5 | $3.22 | $4.03 | 397s | 0, 6–9 |
+| v4.1 | arena_refactor | 3/5 | $5.19 | $8.65 | 533s | 7–9 |
+
+Parent turn counts, recomputed from retained transcripts after the parser fix (n=41):
+**v4.1 12–63 (p50 24); v5.0 34–101 (p50 55); v5.1 14–115 (p50 55).**
+
+**v5 10/10 correct against v4.1's 7/10; 2.1× and 1.6× cheaper per result.** On
+`arena_refactor` the per-attempt costs are within 1% of each other — the entire economic
+win is conversion rate, not token thrift. Every v4.1 refactor failure is the same site,
+`SITE FAIL [N14] src/gateway/server.cjs`.
+
+**What §4.7 got wrong, and why.** It compared v5.0 against a solo-restricted v4.1. Given
+its swarm path, v4.1 delegates the grinding into worker contexts:
+
+- **Wall inverts.** v4.1 555s vs v5.0 597s per attempt on refactor. It is *faster* per
+  attempt, and faster still (506s) on the attempts it gets right. It just converts half.
+- **Turn profile inverts.** §4.7: *"v4.1 grinds 45–130 edit turns; v5.0 emits once."*
+  Measured: **v4.1 12–30, v5.0 47–110.** The 45–130 figure described solo v4.1. Parent
+  turn count does not see work done inside workers.
+
+**Three findings §4.7 could not have surfaced:**
+
+1. **v5's routing tracks context size — the scale gate works.** v5 spawns 0 workers on
+   these two ~28K-token fixtures and **11** on the 400K-token `bigctx_real`, from a single
+   parent turn. *(This supersedes a first reading of the 0-spawn counts as a MANDATE
+   violation: that inference generalized from two fixtures which both sit below the swarm
+   crossover, where staying solo is the correct call and the repo's own founding law.)*
+   The surviving claim is narrower: "behavior identical to v4.1" is false, because v4.1
+   swarms 6–9 on those same small fixtures where v5 correctly does not. v5 is the more
+   selective router, not the more monolithic one.
+2. **v5 runs at the turn ceiling on small fixtures** (47–110 against `max_turns: 100`;
+   v4.1 peaks at 30) — but delegates on the large one, so the ceiling is not the binding
+   constraint it appeared to be.
+3. **§9 (v5.1) is untested where it matters.** On these fixtures it costs ~$0.40 and ~84s
+   per run for no detectable gain — expected, as neither grades hygiene. `arena_cleanup`
+   is the cell that can settle it.
+
+**Context-pressure cell (`bigctx_real`, ~400K tokens of real hand-written code, 22 bugs
+planted by mutation testing).** Built to punish a single agent's attention and turn budget
+where a sharded audit can give each slice a lean context — the fixture that can falsify a
+"v5 is a context hog" reading. k=3, complete:
+
+| arm | correct | **$/success** | wall p50 | spawns |
+|---|---|---|---|---|
+| v5.0 | **3/3** | **$10.10** | 871s | 11, 13, 0 |
+| v4.1 | **3/3** | $11.00 | 1118s | 18, 9, 0 |
+
+**Correctness ties at scale**; v5.0 keeps only 1.28× wall and 1.09× cost — nothing like
+the 2× it holds on small work. Both arms swarm on the large surface and both went solo on
+one run apiece, so task-adaptive routing is not a v5.0 signature. The context-hog
+hypothesis is falsified; so is any claim that v5.0 dominates at scale. **The advantage is
+a small-and-medium-work advantage.**
+
+**§9 (the mandatory clean phase) measured in isolation — a null, at ceiling.**
+`arena_cleanup` (HYGIENE), k=3. `v41-clean` is byte-identical to v4.1 plus the 51-line §9
+block, so §9 is the only variable:
+
+| arm | correct | $/attempt | wall p50 |
+|---|---|---|---|
+| v4.1 (no §9) | 3/3 | **$0.53** | **82s** |
+| v4.1 + §9 | 3/3 | $0.69 (+30%) | 109s (+34%) |
+| v5.1 (+§9, +apply-tier) | 3/3 | $0.60 | 85s |
+
+§9 costs +30% cost and +34% wall for zero correctness gain. **Caveat that outweighs the
+headline:** the fixture's floor is 9/16 and its ceiling 16/16, and every arm scored the
+ceiling — including the one with no clean phase. There was no headroom in which §9 could
+demonstrate value, so this is a null at saturation, not a refutation. It does establish
+two things: on cleanup a competent orchestrator already handles unaided, a *mandatory*
+phase is pure overhead; and §9 did not over-delete — the oracle's 8 restraint checks
+passed for every arm. Testing §9 properly needs a hygiene fixture with headroom, or
+accumulated drift across successive runs — the case it was written for, which no
+single-run fixture expresses.
+
+**Action taken (2026-07-31):** §9 demoted from MANDATORY to OPTIONAL in the live skill.
+Run it when there is a reason — an untraced rename or signature migration, a run that
+removed or commented out code, a repo with known half-migrated state — not on a schedule.
+Its value is *unmeasured*, not disproven; a mandatory phase costing 30% for an unmeasured
+benefit is the same over-building this paper has now caught three times (§4.1's gate
+battery, §4.2's heavyweight apparatus, and now the clean phase). The pattern is worth more
+than the individual result: **ceremony added on reasoning, removed on measurement.**
+
+**Harness bug found and fixed mid-campaign (affects historical arena data).** Sessions that
+resume across a rate-limit pause emit MULTIPLE `result` events; `_parse_stream_lines` kept
+the last. `total_cost_usd` is cumulative, so **every cost figure ever recorded is
+unaffected**, and correctness comes from the oracle's exit code. But `num_turns` is
+per-segment, so last-wins reported the final fragment — **1 where the truth was 80**,
+across **48 of 137 retained streams (35%)**, including campaigns predating this one. Any
+published turn count from an affected run is understated. Fixed by summing turns across
+result events; verified against both a multi-segment stream (now 80, was 1) and a
+single-segment one (22, unchanged).
+
+Rows: `team/bench/results/v5_live_k25.jsonl` and `bigctx_contexthog.jsonl`; method and
+harness changes: `V5_LIVE_FINDINGS.md`. Ladder continues to k=10, then k=25.
 
 ## 5 · Discussion — the laws we keep re-measuring
 
