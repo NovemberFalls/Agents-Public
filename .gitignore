@@ -20,3 +20,8 @@ node_modules/
 # gives /orch-plan §0.5 nothing to audit, so the test measures interrogation rather
 # than a repo read. Nothing produced here belongs in a public repo.
 .drift-run/
+
+# Human-test sandbox (hard-scoped by test/CLAUDE.md + a PreToolUse hook). Whatever a
+# planning session writes here is internal product thinking in a PUBLIC repo -- it is
+# untracked by default, and one `git add -A` would publish it. Ignored so that cannot happen.
+test/
