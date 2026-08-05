@@ -595,7 +595,7 @@ Deterministic checks decide. Taste is a different tournament.
 - **The skill (v4.1, live champion):** [`.claude/commands/orchestrate.md`](.claude/commands/orchestrate.md)
   — copy into `~/.claude/commands/`, run the orchestrator at high effort.
 - **The skill (v5.0, apply-tier — DIFFABLE-tier champion, §4.7):**
-  [`.claude/commands/orch-code-anth.md`](.claude/commands/orch-code-anth.md) — v4.1 plus the
+  [`.claude/commands/orch-anth-5.0.md`](.claude/commands/orch-anth-5.0.md) — v4.1 plus the
   deterministic apply-tier: the orchestrator emits verbatim SEARCH/REPLACE for mechanical
   fan-out, a stdlib applier lands it, and a typed escalation loop closes the residue. Use
   for migrations, renames, and other localized-swap work; falls back to v4.1 on generative work.
